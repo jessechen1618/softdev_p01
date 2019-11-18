@@ -1,8 +1,13 @@
-# &lt;Project Name&gt; by put_me_to_REST
+# ArtPI by put_me_to_REST
 ## Roster
-- **Jesse Chen** (Project Manager)
-- **Kelvin Ng**
-- **David Xiedeng**
-- **Eric Lau**
+- **Jesse "McCree" Chen** (PM): 
+  - Design document, project flow, coding here and there
+- **Kelvin Ng**: 
+  - Back-end database and front-end implementation of Met API
+- **Eric "Morty" Lau**: 
+  - Front-end, CSS, Bootstrap, Implementation of Imagga API
+- **David Xiedeng**: 
+  - Back-end database and front-end implementation of Map Static API
 
 ## Description
+Browse art from the Metropolitan Museum of Art in a more enhancing way!
