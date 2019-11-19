@@ -1,7 +1,17 @@
 put me to REST - Jesse "McCree" Chen, Kelvin Ng, Eric "Morty" Lau, David Xiedeng
 SoftDev1 pd1
-P1 ArRESTed Development
+p01 - ArRESTed Development
 2019-11-17
+DEVLOG
 
 kelvinN -- 2019-18-11 21:33
-created devlog and added heading
+	- created devlog and added heading
+
+chenJ -- 2019-19-11 08:33
+	- updated design doc by reading over suggestions
+	- Morty is currently experimenting with a static map API and seems successful so far
+	- David is currently experimenting with the other APIs and picking out commands we need
+	  from the documentation.
+	- Kelvin and I are currently working on HTML files
+
+
