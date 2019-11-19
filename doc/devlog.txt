@@ -1,10 +1,6 @@
 put me to REST - Jesse "McCree" Chen, Kelvin Ng, Eric "Morty" Lau, David Xiedeng
 SoftDev1 pd1
-<<<<<<< HEAD
 p01 - ArRESTed Development
-=======
-P1 ArRESTed Development 
->>>>>>> 17a8b5bd8221eb7e7eb9c4b24c332f56dd05ef6e
 2019-11-17
 DEVLOG
 
@@ -12,7 +8,6 @@ lauE -- 2019-11-17 07:17
     Add boiler plate code 
 
 kelvinN -- 2019-18-11 21:33
-<<<<<<< HEAD
 	- created devlog and added heading
 
 chenJ -- 2019-19-11 08:33
@@ -21,8 +16,3 @@ chenJ -- 2019-19-11 08:33
 	- David is currently experimenting with the other APIs and picking out commands we need
 	  from the documentation.
 	- Kelvin and I are currently working on HTML files
-
-
-=======
-    created devlog and added heading
->>>>>>> 17a8b5bd8221eb7e7eb9c4b24c332f56dd05ef6e
