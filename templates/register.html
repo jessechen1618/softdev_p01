@@ -4,19 +4,19 @@
 {{super()}}
 <div id="landing">
     <h1 class="display-1"> ArtPI </h1>
-    <form class="p-5 bg-light text-dark text-center">
+    <form class="p-5 bg-light text-dark text-center" action="/register" method="POST">
         <p class="lead font-weight-bolder">REGISTER</h1>
             <div class="form-group">
                 <label for="username" class="font-weight-bold">Username</label>
-                <input type="text" class="form-control" id="username">
+                <input name="username" type="text" class="form-control" id="username">
             </div>
             <div class="form-group">
-                <label for="password-0" class="font-weight-bold">Password</label>
-                <input type="password" class="form-control" id="password-0">
+                <label for="password" class="font-weight-bold">Password</label>
+                <input name="password" type="password" class="form-control" id="password">
             </div>
             <div class="form-group">
-                <label for="password-1" class="font-weight-bold">Confirm Password</label>
-                <input type="password" class="form-control" id="password-1">
+                <label for="confirm" class="font-weight-bold">Confirm Password</label>
+                <input name="confirm" type="password" class="form-control" id="confirm">
             </div>
             <!-- <div class="form-group form-check">
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
