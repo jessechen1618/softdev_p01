@@ -21,9 +21,32 @@ data = json.loads(response)
 app = Flask(__name__)
 @app.route("/")
 def root():
+    # TODO: if not logged in 
+    return redirect(url_for('login'))
+    # TODO: if logged in
+    return redirect(url_for('home'))
+
+@app.route("/login")
+def login():
     return render_template(
         "login.html",
-        title = "Login"
+        title = "Login",
+        register = url_for('register')
+    )
+
+@app.route("/register")
+def register():
+    return render_template(
+        "register.html",
+        title = "Register",
+        login = url_for('login')
+    )
+
+@app.route("/home")
+def home():
+    return render_template(
+        "home.html",
+        title = "Home"
     )
 
 if __name__ == "__main__":

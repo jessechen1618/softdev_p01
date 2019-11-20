@@ -5,22 +5,26 @@
 <div id="landing">
     <h1 class="display-1"> ArtPI </h1>
     <form class="p-5 bg-light text-dark text-center">
-        <p class="lead font-weight-bolder">LOGIN</h1>
+        <p class="lead font-weight-bolder">REGISTER</h1>
             <div class="form-group">
                 <label for="username" class="font-weight-bold">Username</label>
                 <input type="text" class="form-control" id="username">
             </div>
             <div class="form-group">
-                <label for="password" class="font-weight-bold">Password</label>
-                <input type="password" class="form-control" id="password">
+                <label for="password-0" class="font-weight-bold">Password</label>
+                <input type="password" class="form-control" id="password-0">
+            </div>
+            <div class="form-group">
+                <label for="password-1" class="font-weight-bold">Confirm Password</label>
+                <input type="password" class="form-control" id="password-1">
             </div>
             <!-- <div class="form-group form-check">
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">Check me out</label>
             </div> -->
-            <button type="submit" class="btn btn-success">Login</button>
+            <button type="submit" class="btn btn-success">Register</button>
             <br>
-            <a href={{register}} class="badge badge-light mt-3">Don't have an account? Register</a>
+            <a href={{login}} class="badge badge-light mt-3">Already have an account? Login</a>
     </form>
 </div>
 {% endblock %}

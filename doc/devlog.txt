@@ -22,3 +22,5 @@ lauE -- 2019-11-19 19:41
 
 lauE -- 2019-11-18 20:39
 	- Add login form with styling
+
+	- Add register route and link with login 
