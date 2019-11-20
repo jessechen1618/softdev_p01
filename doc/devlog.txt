@@ -26,3 +26,5 @@ lauE -- 2019-11-19 20:39
 lauE -- 2019-11-19 21:37
 	- Add register route and link with login 
 	- Add navbar with home, saved art, search, and logout routes 
+	- Add flashing for logging out
+	- Figure out categories of flash

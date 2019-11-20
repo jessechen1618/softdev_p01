@@ -19,12 +19,14 @@ response = res.read()
 data = json.loads(response)
 
 app = Flask(__name__)
+app.secret_key = os.urandom(32)
+
 @app.route("/")
 def root():
-    # TODO: if not logged in 
-    return redirect(url_for('login'))
     # TODO: if logged in
     return redirect(url_for('home'))
+    # TODO: else  
+    return redirect(url_for('login'))
 
 @app.route("/login")
 def login():
@@ -72,7 +74,9 @@ def settings():
 
 @app.route("/logout")
 def logout():
-    return 0
+    # TODO session work 
+    flash('You have successfully logged out', "success")
+    return redirect(url_for('login'))
     
 if __name__ == "__main__":
     app.debug = True
