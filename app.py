@@ -20,9 +20,10 @@ data = json.loads(response)
 
 app = Flask(__name__)
 @app.route("/")
-def home():
+def root():
     return render_template(
-        "index.html",
+        "login.html",
+        title = "Login"
     )
 
 if __name__ == "__main__":
