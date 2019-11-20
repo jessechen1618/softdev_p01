@@ -17,66 +17,71 @@ req.add_header("Authorization", "Basic YWNjXzE2YWNmNWJlODE0Yzk0ODo1NzM2YzRiMmQ4N
 res = urllib.request.urlopen(req)
 response = res.read()
 data = json.loads(response)
-
+    
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
 
-@app.route("/")
+@app.route("/", methods=['GET'])
 def root():
     # TODO: if logged in
     return redirect(url_for('home'))
     # TODO: else  
     return redirect(url_for('login'))
 
-@app.route("/login")
+@app.route("/login", methods=['GET', 'POST'])
 def login():
+    # flash('Username does not exist', "error")
+    # flash('Incorrect password', "error")
+    # flash('You have successfully logged in', "success")
     return render_template(
         "login.html",
         title = "Login",
-        register = url_for('register')
     )
 
-@app.route("/register")
+@app.route("/register", methods=['GET', 'POST'])
 def register():
+    # flash('Passwords do not match', "error")
+    # flash('Username is taken', "error")
+    # flash('Fill out all fields', "error")
+    # flash('You have successfully registered', "success")
     return render_template(
         "register.html",
         title = "Register",
-        login = url_for('login')
     )
 
-@app.route("/home")
+@app.route("/logout", methods=['GET', 'POST'])
+def logout():
+    # TODO session work 
+    flash('You have successfully logged out', "success")
+    return redirect(url_for('login'))
+
+@app.route("/home", methods=['GET'])
 def home():
     return render_template(
         "home.html",
         title = "Home"
     )
 
-@app.route("/saved_art")
+@app.route("/saved_art", methods=['GET'])
 def saved_art():
     return render_template(
         "saved_art.html",
         title = "Saved Art"
     )
 
-@app.route("/search")
+@app.route("/search", methods=['GET', 'POST'])
 def search():
     return render_template(
         "search.html",
         title = "Search"
     )
 
-@app.route("/settings")
+@app.route("/settings", methods=['GET', 'POST'])
 def settings():
     return render_template(
         "settings.html",
         title = "Settings"
     )
-
-@app.route("/logout")
-def logout():
-    # TODO session work 
-    flash('You have successfully logged out', "success")
-    return redirect(url_for('login'))
     
 if __name__ == "__main__":
     app.debug = True

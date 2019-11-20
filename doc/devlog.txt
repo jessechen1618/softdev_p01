@@ -28,3 +28,7 @@ lauE -- 2019-11-19 21:37
 	- Add navbar with home, saved art, search, and logout routes 
 	- Add flashing for logging out
 	- Figure out categories of flash
+
+lauE -- 2019-11-19 22:47
+	- Add more flash messages temporarily
+	- Add methods for routes 
