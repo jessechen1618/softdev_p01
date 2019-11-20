@@ -22,10 +22,15 @@ data = json.loads(response)
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
 
+def check(): # checks if user is logged before allowing access to that page
+    if 'username' not in session:
+        return redirect('/login')
+
 @app.route("/", methods=['GET'])
 def root():
-    # TODO: if logged in
-    return redirect(url_for('home'))
+    if 'username' in session:
+        flash("Hello " + session['username'] + "!")
+        return redirect(url_for('home'))
     # TODO: else
     return redirect(url_for('login'))
 
@@ -52,12 +57,13 @@ def register():
 
 @app.route("/logout", methods=['GET', 'POST'])
 def logout():
-    # TODO session work
+    session.pop('username')
     flash('You have successfully logged out', "success")
     return redirect(url_for('login'))
 
 @app.route("/home", methods=['GET'])
 def home():
+    check()
     return render_template(
         "home.html",
         title = "Home"
@@ -65,6 +71,7 @@ def home():
 
 @app.route("/saved_art", methods=['GET'])
 def saved_art():
+    check()
     return render_template(
         "saved_art.html",
         title = "Saved Art"
@@ -72,6 +79,7 @@ def saved_art():
 
 @app.route("/search", methods=['GET', 'POST'])
 def search():
+    check()
     return render_template(
         "search.html",
         title = "Search"
@@ -79,6 +87,7 @@ def search():
 
 @app.route("/settings", methods=['GET', 'POST'])
 def settings():
+    check()
     # flash('You have successfully changed your password', "success")
     # flash('You could not change your password', "error")
     return render_template(
