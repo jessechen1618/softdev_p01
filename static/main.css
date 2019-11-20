@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
-/* .jumbotron {
-    font-family: 'Roberto', sans-serif;
-} */
+#landing {
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
