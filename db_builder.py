@@ -1,7 +1,7 @@
 '''
 put me to REST - Jesse "McCree" Chen, Kelvin Ng, Eric "Morty" Lau, David Xiedeng
 SoftDev1 pd1
-P1 ArRESTed Development 
+P1 ArRESTed Development
 2019-11-17
 '''
 
@@ -31,7 +31,7 @@ def buildTable(name, kc):
     output = c.fetchall()
     db.commit()
     db.close()
-    
+
 #@ adds data to table, whole row insertion
 #@ takes string table, and list val
 def addRow(table, val):
@@ -52,10 +52,35 @@ def addRow(table, val):
 
 #===============================================
 
-buildTable("Users", {"user":"TEXT", "password":"TEXT", "saved_art":"TEXT"})
-buildTable("Comments", {"artID":"INTEGER", "comment":"TEXT", "user":"TEXT", "timestamp":"BLOB"})
+#buildTable("Users", {"user":"TEXT", "password":"TEXT", "saved_art":"TEXT"})
+#buildTable("Comments", {"artID":"INTEGER", "comment":"TEXT", "user":"TEXT", "timestamp":"BLOB"})
 
 #addRow("Users", ("testUser0", "pword0", []))
+
+#===============================================
+
+#d# takes in three strings and reads from table accounts if data exists
+#d# creates account if suitable input is provided
+#d# returns String message
+def register(username, password, passwdverf):
+    db = sqlite3.connect("data/artpi.db")
+    c = db.cursor()
+    c.execute("SELECT user FROM Users WHERE user = \'{}\'".format(username))
+    fetched = c.fetchall()
+    db.close()
+    if len(username) < 1:
+        return "username too short"
+    elif "'" in username:
+        return "Please do not include ' in the username"
+    elif len(password) < 1:
+        return "password too short"
+    elif len(fetched) > 0:
+        return "username exists"
+    elif password != passwdverf:
+        return "password does not match"
+    else:
+        addRow("accounts", (username, password))
+        return "account created"
 
 #===============================================
 
