@@ -31,4 +31,10 @@ lauE -- 2019-11-19 21:37
 
 lauE -- 2019-11-19 22:47
 	- Add more flash messages temporarily
-	- Add methods for routes 
+	- Add methods for routes
+
+xiedengD -- 2019-11-19 23:49
+    - Reused methods from old project for table building
+    
+xiedengD -- 2019-11-19 00:13
+    - tested and implemented methods for creating tables and inserting rows

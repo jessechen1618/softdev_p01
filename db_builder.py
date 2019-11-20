@@ -16,7 +16,7 @@ c = db.cursor()
 #===============================================
 
 #@ create table and remove table if exists
-#@ takes in a table name and the keys(dict)
+#@ takes in a table name (string) and the keys(dict)
 def buildTable(name, kc):
     # formulates order to create a table
     # ie: "CREATE TABLE if not exists test ("hello":"TEXT")"
@@ -37,12 +37,25 @@ def buildTable(name, kc):
 def addRow(table, val):
     toDo = "INSERT INTO \"{}\" VALUES (".format(table)
     for el in val:
-        if type(el) == int:
-            toDo = toDo + str(el) + ", "
-        else:
+        if type(el) == str:
             toDo = toDo + "\'" + el + "\'" + ", "
+        else:
+            toDo = toDo + "\'" + str(el) + "\'" + ", "
     toDo = toDo[:-2] + ")"
-    command(toDo)
+    # executes the command string toBuild
+    db = sqlite3.connect("data/artpi.db") #open if file exists, otherwise create
+    c = db.cursor()
+    c.execute(toDo)
+    output = c.fetchall()
+    db.commit()
+    db.close()
+
+#===============================================
+
+buildTable("Users", {"user":"TEXT", "password":"TEXT", "saved_art":"TEXT"})
+buildTable("Comments", {"artID":"INTEGER", "comment":"TEXT", "user":"TEXT", "timestamp":"BLOB"})
+
+#addRow("Users", ("testUser0", "pword0", []))
 
 #===============================================
 
