@@ -17,7 +17,7 @@ req.add_header("Authorization", "Basic YWNjXzE2YWNmNWJlODE0Yzk0ODo1NzM2YzRiMmQ4N
 res = urllib.request.urlopen(req)
 response = res.read()
 data = json.loads(response)
-    
+
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
 
@@ -78,6 +78,8 @@ def search():
 
 @app.route("/settings", methods=['GET', 'POST'])
 def settings():
+    # flash('You have successfully changed your password', "success")
+    # flash('You could not change your password', "error")
     return render_template(
         "settings.html",
         title = "Settings"

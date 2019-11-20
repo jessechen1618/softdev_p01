@@ -38,3 +38,6 @@ xiedengD -- 2019-11-19 23:49
     
 xiedengD -- 2019-11-19 00:13
     - tested and implemented methods for creating tables and inserting rows
+
+lauE -- 2019-11-20 09:32
+	- add more jinja templating and settings form
