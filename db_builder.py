@@ -15,7 +15,34 @@ c = db.cursor()
 
 #===============================================
 
-#enter code here to build a database
+#@ create table and remove table if exists
+#@ takes in a table name and the keys(dict)
+def buildTable(name, kc):
+    # formulates order to create a table
+    # ie: "CREATE TABLE if not exists test ("hello":"TEXT")"
+    toBuild = "CREATE TABLE if not exists \"" + name + "\"("
+    for el in kc:
+        toBuild = toBuild + "\"{}\" {}, ".format(el, kc[el])
+    toBuild = toBuild[:-2] + ")"
+    # executes the command string toBuild
+    db = sqlite3.connect("data/artpi.db") #open if file exists, otherwise create
+    c = db.cursor()
+    c.execute(toBuild)
+    output = c.fetchall()
+    db.commit()
+    db.close()
+    
+#@ adds data to table, whole row insertion
+#@ takes string table, and list val
+def addRow(table, val):
+    toDo = "INSERT INTO \"{}\" VALUES (".format(table)
+    for el in val:
+        if type(el) == int:
+            toDo = toDo + str(el) + ", "
+        else:
+            toDo = toDo + "\'" + el + "\'" + ", "
+    toDo = toDo[:-2] + ")"
+    command(toDo)
 
 #===============================================
 
