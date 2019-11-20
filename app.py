@@ -49,6 +49,31 @@ def home():
         title = "Home"
     )
 
+@app.route("/saved_art")
+def saved_art():
+    return render_template(
+        "saved_art.html",
+        title = "Saved Art"
+    )
+
+@app.route("/search")
+def search():
+    return render_template(
+        "search.html",
+        title = "Search"
+    )
+
+@app.route("/settings")
+def settings():
+    return render_template(
+        "settings.html",
+        title = "Settings"
+    )
+
+@app.route("/logout")
+def logout():
+    return 0
+    
 if __name__ == "__main__":
     app.debug = True
     app.run()
