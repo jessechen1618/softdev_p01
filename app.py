@@ -41,7 +41,7 @@ def root():
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
-    if(request.method == 'GET'): 
+    if(request.method == 'GET'):
         return render_template(
             "register.html",
             title = "Register",
@@ -61,7 +61,7 @@ def register():
         return redirect(url_for('register'))
 
 @app.route("/login", methods=['GET', 'POST'])
-def login():     
+def login():
     if(request.method == 'GET'):
         if 'user' in session:
             return redirect(url_for('home'))
@@ -135,6 +135,15 @@ def settings():
         else:
             flash('New passwords do not match', "error")
         return redirect(url_for('settings'))
+
+@app.route("/image")
+def imagePage():
+    #temporary object for page creation
+    objectID = 199130
+    request = urllib.request.urlopen("https://collectionapi.metmuseum.org/public/collection/v1/objects/" + str(objectID))
+    response = request.read()
+    data = json.loads(response)
+    return render_template("image.html", image=data["primaryImage"], title=data["title"])
 
 if __name__ == "__main__":
     user.init()
