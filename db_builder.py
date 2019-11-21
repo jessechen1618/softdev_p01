@@ -52,10 +52,32 @@ def addRow(table, val):
 
 #===============================================
 
-#buildTable("Users", {"user":"TEXT", "password":"TEXT", "saved_art":"TEXT"})
-#buildTable("Comments", {"artID":"INTEGER", "comment":"TEXT", "user":"TEXT", "timestamp":"BLOB"})
+# quick setup for when database is completely empty
+def buildDB():
+    buildTable("Users", {"user":"TEXT", "password":"TEXT", "saved_art":"TEXT"})
+    buildTable("Comments", {"artID":"INTEGER", "comment":"TEXT", "user":"TEXT", "timestamp":"BLOB"})
 
-#addRow("Users", ("testUser0", "pword0", []))
+# empties content from tables
+def clearTables():
+    db = sqlite3.connect("data/artpi.db")
+    c = db.cursor()
+    c.execute("Delete from Users")
+    c.execute("Delete from Comments")
+    output = c.fetchall()
+    db.commit()
+    db.close()
+
+# ALERT: completely wipes database, then sets up DB
+# use if columns have been change for all tables
+def fromEmptyBuildDB():
+    db = sqlite3.connect("data/artpi.db")
+    c = db.cursor()
+    c.execute("DROP TABLE Users")
+    c.execute("DROP TABLE Comments")
+    output = c.fetchall()
+    db.commit()
+    db.close()
+    buildDB()
 
 #===============================================
 
