@@ -37,5 +37,5 @@ deactivate
 ### Dependencies 
 Run the following line in your virtual environment
 ```
-pip install -r requirements.txt
+pip install -r doc/requirements.txt
 ```
