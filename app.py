@@ -27,12 +27,10 @@ from utl import user
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
 
-def check(): # checks if user is logged before allowing access to that page
+def logged_in(): # checks if user is logged before allowing access to that page
     if not 'user' in session:
-        print("true")
-        # return 0
         return redirect(url_for('login'))
-        
+    return False
 @app.route("/", methods=['GET'])
 def root():
     if 'user' in session:
