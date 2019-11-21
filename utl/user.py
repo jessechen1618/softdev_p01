@@ -42,3 +42,22 @@ def get_id(un):
         return [item for item in id][0][0]
     except IndexError as error:
         print(error)
+
+def get_pw(userid):
+    db = sqlite3.connect(DB_FILE)
+    try: 
+        pw = db.execute('SELECT password FROM users WHERE userid=?;', (userid,))
+        return [item for item in pw][0][0]
+    except sqlite3.Error as error:
+        print(error)
+
+def set_pw(userid, npw):
+    db = sqlite3.connect(DB_FILE)
+    try:
+        db.execute('UPDATE users SET password=? WHERE userid=?;', (npw, userid))
+        db.commit()
+        db.close()
+        return True
+    except sqlite3.Error as error:
+        print(error)
+        return False

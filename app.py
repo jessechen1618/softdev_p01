@@ -44,19 +44,16 @@ def register():
     elif(request.method == 'POST'):
         if(request.form['username'] == '' or request.form['username'].isspace()):
             flash('Fill out username', "error")
-            return redirect(url_for('register'))
         elif(request.form['password'] == '' or request.form['password'].isspace()):
             flash('Fill out password', "error")
-            return redirect(url_for('register'))
         elif(request.form['password'] != request.form['confirm']):
             flash('Passwords do not match', "error")
-            return redirect(url_for('register'))
         elif(user.create_acc(request.form['username'], request.form['password'])):
             flash('You have successfully registered', "success")
             return redirect(url_for('login'))
         else:
             flash('Username already exists', "error")
-            return redirect(url_for('register'))
+        return redirect(url_for('register'))
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():     
@@ -115,16 +112,23 @@ def search():
 @app.route("/settings", methods=['GET', 'POST'])
 def settings():
     check()
-    # flash('You have successfully changed your password', "success")
-    # flash('New passwords do not match', "error")
-    # flash('Current password is incorrect', "error")
     if (request.method == 'GET'):
         return render_template(
             "settings.html",
             title = "Settings"
         )
     elif (request.method == 'POST'):
-        return 0
+        if(request.form['new'] == request.form['confirm']):
+            if(user.get_pw(session['userid']) == request.form['current']):
+                if(user.set_pw(session['userid'], request.form['new'])):
+                    flash('You have successfully changed your password!', "success")
+                else:
+                    flash('Could not change password', "error")
+            else:
+                flash('Current password is incorrect', "error")
+        else:
+            flash('New passwords do not match', "error")
+        return redirect(url_for('settings'))
 
 if __name__ == "__main__":
     user.init()
