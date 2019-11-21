@@ -1,11 +1,11 @@
 put me to REST - Jesse "McCree" Chen, Kelvin Ng, Eric "Morty" Lau, David Xiedeng
 SoftDev1 pd1
-P01 ArRESTed Development 
+P01 ArRESTed Development
 2019-11-17
 DEVLOG
 
 lauE -- 2019-11-17 07:17
-    - Add boiler plate code 
+    - Add boiler plate code
 
 kelvinN -- 2019-11-18 21:33
 	- created devlog and added heading
@@ -18,14 +18,14 @@ chenJ -- 2019-11-19 08:33
 	- Kelvin and I are currently working on HTML files
 
 lauE -- 2019-11-19 19:41
-	- Add template files and some inheritance 
+	- Add template files and some inheritance
 
 lauE -- 2019-11-19 20:39
 	- Add login form with styling
 
 lauE -- 2019-11-19 21:37
-	- Add register route and link with login 
-	- Add navbar with home, saved art, search, and logout routes 
+	- Add register route and link with login
+	- Add navbar with home, saved art, search, and logout routes
 	- Add flashing for logging out
 	- Figure out categories of flash
 
@@ -35,7 +35,7 @@ lauE -- 2019-11-19 22:47
 
 xiedengD -- 2019-11-19 23:49
     - Reused methods from old project for table building
-    
+
 xiedengD -- 2019-11-19 00:13
     - tested and implemented methods for creating tables and inserting rows
 
@@ -44,3 +44,9 @@ kelvinN -- 2019-11-20 08:16
 
 lauE -- 2019-11-20 09:32
 	- add more jinja templating and settings form
+
+kelvinN -- 2019-11-20 16:09
+  	- add/remove session in /login and /logout
+
+kelvinN -- 2019-11-20 16:16
+    - added check function to see if user is logged in before allowing access to that page

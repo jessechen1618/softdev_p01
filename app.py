@@ -22,23 +22,31 @@ data = json.loads(response)
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
 
+def check(): # checks if user is logged before allowing access to that page
+    if not 'user' in session:
+        return redirect(url_for('login'))
+
 @app.route("/", methods=['GET'])
 def root():
-    # TODO: if logged in
-    return redirect(url_for('home'))
-    # TODO: else
-    return redirect(url_for('login'))
+    if 'user' in session:
+        flash("Hello " + session['user'] + "!", "success")
+        return redirect(url_for('home'))
+    else:
+        return redirect(url_for('login'))
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     # flash('Username does not exist', "error")
     # flash('Incorrect password', "error")
-    # flash('You have successfully logged in', "success")
+    # flash('You have successfully logged in', "success")        
     if(request.method == 'GET'):
-        return render_template(
-            "login.html",
-            title = "Login",
-        )
+        if 'user' in session:
+            return redirect(url_for('home'))
+        else:
+            return render_template(
+                "login.html",
+                title = "Login",
+            )
     elif(request.method == 'POST'):
         return 0
 
@@ -68,12 +76,13 @@ def register():
 
 @app.route("/logout", methods=['GET', 'POST'])
 def logout():
-    # TODO session work
+    session.pop('user')
     flash('You have successfully logged out', "success")
     return redirect(url_for('login'))
 
 @app.route("/home", methods=['GET'])
 def home():
+    check()
     return render_template(
         "home.html",
         title = "Home"
@@ -81,6 +90,7 @@ def home():
 
 @app.route("/saved_art", methods=['GET'])
 def saved_art():
+    check()
     return render_template(
         "saved_art.html",
         title = "Saved Art"
@@ -88,6 +98,7 @@ def saved_art():
 
 @app.route("/search", methods=['GET', 'POST'])
 def search():
+    check()
     if (request.method == 'GET'):
         return render_template(
             "search.html",
@@ -98,6 +109,7 @@ def search():
 
 @app.route("/settings", methods=['GET', 'POST'])
 def settings():
+    check()
     # flash('You have successfully changed your password', "success")
     # flash('New passwords do not match', "error")
     # flash('Current password is incorrect', "error")
@@ -108,9 +120,6 @@ def settings():
         )
     elif (request.method == 'POST'):
         return 0
-
-# buildTable("Users", {"user":"TEXT", "password":"TEXT", "saved_art":"TEXT"})
-# buildTable("Comments", {"artID":"INTEGER", "comment":"TEXT", "user":"TEXT", "timestamp":"BLOB"})
 
 if __name__ == "__main__":
     user.init()
