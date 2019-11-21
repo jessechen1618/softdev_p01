@@ -54,18 +54,21 @@ kelvinN -- 2019-11-20 16:16
 lauE -- 2019-11-20 23:09
 	- complete login testing and session work with db implementation
 	- remove extraneous db builder file and csv files
-	- TODO: change design document to reflect new thoughts on storing comments and users 
-	- TODO: change role descriptions 
+	- TODO: change design document to reflect new thoughts on storing comments and users
+	- TODO: change role descriptions
 
 lauE -- 2019-11-20 23:31
 	- complete password change for settings
 
 lauE -- 2019-11-21 01:07
-	- change jinja templating to account for different styling of scroll behavior 
+	- change jinja templating to account for different styling of scroll behavior
 
 lauE -- 2019-11-21 06:54
-	- Ask other people who are not part of the team to review our code to get a fresh set of eyes on our code 
-	- Keep everyone in the loop of the latest updates and idea changes so nobody is coding something useless 
+	- Ask other people who are not part of the team to review our code to get a fresh set of eyes on our code
+	- Keep everyone in the loop of the latest updates and idea changes so nobody is coding something useless
 
 lauE -- 2019-11-21 11:26
 	- TODO: fix check for logged in users, check is currently broken
+
+kelvinN -- 2019-11-21 17:48
+    - added temporary solution to fix check for logged in users until better solution is found

@@ -27,10 +27,7 @@ from utl import user
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
 
-def logged_in(): # checks if user is logged before allowing access to that page
-    if not 'user' in session:
-        return redirect(url_for('login'))
-    return False
+
 @app.route("/", methods=['GET'])
 def root():
     if 'user' in session:
@@ -89,7 +86,8 @@ def logout():
 
 @app.route("/home", methods=['GET'])
 def home():
-    check()
+    if not 'user' in session:
+        return redirect(url_for('login'))
     return render_template(
         "home.html",
         title = "Home",
@@ -98,7 +96,8 @@ def home():
 
 @app.route("/saved_art", methods=['GET'])
 def saved_art():
-    check()
+    if not 'user' in session:
+        return redirect(url_for('login'))
     return render_template(
         "saved_art.html",
         title = "Saved Art"
@@ -106,7 +105,8 @@ def saved_art():
 
 @app.route("/search", methods=['GET', 'POST'])
 def search():
-    check()
+    if not 'user' in session:
+        return redirect(url_for('login'))
     if (request.method == 'GET'):
         return render_template(
             "search.html",
@@ -117,7 +117,8 @@ def search():
 
 @app.route("/settings", methods=['GET', 'POST'])
 def settings():
-    check()
+    if not 'user' in session:
+        return redirect(url_for('login'))
     if (request.method == 'GET'):
         return render_template(
             "settings.html",
@@ -138,7 +139,8 @@ def settings():
 
 @app.route("/image", methods=['GET', 'POST'])
 def image():
-    check()
+    if not 'user' in session:
+        return redirect(url_for('login'))
     #temporary object for page creation
     objectID = 199130
     req = urllib.request.urlopen("https://collectionapi.metmuseum.org/public/collection/v1/objects/" + str(objectID))
@@ -146,8 +148,8 @@ def image():
     data = json.loads(response)
     if(request.method == 'GET'):
         return render_template(
-            "image.html", 
-            image=data["primaryImage"], 
+            "image.html",
+            image=data["primaryImage"],
             title=data["title"]
             )
 
