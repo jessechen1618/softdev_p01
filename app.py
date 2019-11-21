@@ -29,8 +29,10 @@ app.secret_key = os.urandom(32)
 
 def check(): # checks if user is logged before allowing access to that page
     if not 'user' in session:
+        print("true")
+        # return 0
         return redirect(url_for('login'))
-
+        
 @app.route("/", methods=['GET'])
 def root():
     if 'user' in session:
@@ -136,14 +138,20 @@ def settings():
             flash('New passwords do not match', "error")
         return redirect(url_for('settings'))
 
-@app.route("/image")
-def imagePage():
+@app.route("/image", methods=['GET', 'POST'])
+def image():
+    check()
     #temporary object for page creation
     objectID = 199130
-    request = urllib.request.urlopen("https://collectionapi.metmuseum.org/public/collection/v1/objects/" + str(objectID))
-    response = request.read()
+    req = urllib.request.urlopen("https://collectionapi.metmuseum.org/public/collection/v1/objects/" + str(objectID))
+    response = req.read()
     data = json.loads(response)
-    return render_template("image.html", image=data["primaryImage"], title=data["title"])
+    if(request.method == 'GET'):
+        return render_template(
+            "image.html", 
+            image=data["primaryImage"], 
+            title=data["title"]
+            )
 
 if __name__ == "__main__":
     user.init()
