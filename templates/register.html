@@ -4,6 +4,12 @@
 {{super()}}
 <div id="landing">
     <h1 class="display-1"> ArtPI </h1>
+    
+    <!-- temporary for flashed messages -->
+    {% for error in get_flashed_messages() %}
+        <center><h4><font color="red">{{error}}</font></h4></center>
+    {% endfor %}
+    
     <form class="p-5 bg-light text-dark text-center" action="/register" method="POST">
         <p class="lead font-weight-bolder">REGISTER</h1>
             <div class="form-group">

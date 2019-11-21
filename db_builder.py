@@ -62,25 +62,23 @@ def addRow(table, val):
 #d# takes in three strings and reads from table accounts if data exists
 #d# creates account if suitable input is provided
 #d# returns String message
-def register(username, password, passwdverf):
+def registerUser(username, password, passwdverf):
     db = sqlite3.connect("data/artpi.db")
     c = db.cursor()
     c.execute("SELECT user FROM Users WHERE user = \'{}\'".format(username))
     fetched = c.fetchall()
     db.close()
-    if len(username) < 1:
-        return "username too short"
+    if len(username) < 1 or len(password) < 1 or len(passwdverf) < 1:
+        return "Please, fill out all fields."
     elif "'" in username:
         return "Please do not include ' in the username"
-    elif len(password) < 1:
-        return "password too short"
     elif len(fetched) > 0:
-        return "username exists"
+        return "Username is taken"
     elif password != passwdverf:
-        return "password does not match"
+        return "Passwords do not match"
     else:
-        addRow("accounts", (username, password))
-        return "account created"
+        addRow("Users", (username, password, "[]"))
+        return "You have successfully registered"
 
 #===============================================
 

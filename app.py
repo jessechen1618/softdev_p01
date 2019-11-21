@@ -38,7 +38,7 @@ def root():
 def login():
     # flash('Username does not exist', "error")
     # flash('Incorrect password', "error")
-    # flash('You have successfully logged in', "success")
+    # flash('You have successfully logged in', "success")    
     return render_template(
         "login.html",
         title = "Login",
@@ -46,14 +46,24 @@ def login():
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
-    # flash('Passwords do not match', "error")
-    # flash('Username is taken', "error")
-    # flash('Fill out all fields', "error")
-    # flash('You have successfully registered', "success")
-    return render_template(
-        "register.html",
-        title = "Register",
-    )
+    if request.method == 'GET':
+        return render_template(
+            "register.html",
+            title = "Register",
+        )
+    else:
+        # flash('Passwords do not match', "error")
+        # flash('Username is taken', "error")
+        # flash('Fill out all fields', "error")
+        # flash('You have successfully registered', "success")
+        
+        # method called from db_builder
+        message = registerUser(request.form["username"], request.form["password-0"], request.form["password-1"])#flash(request.form)
+        flash(message)
+        return render_template(
+            "register.html",
+            title = "Register",
+        )
 
 @app.route("/logout", methods=['GET', 'POST'])
 def logout():
