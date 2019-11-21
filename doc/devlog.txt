@@ -59,3 +59,6 @@ lauE -- 2019-11-20 23:09
 
 lauE -- 2019-11-20 23:31
 	- complete password change for settings
+
+lauE -- 2019-11-21 01:07
+	- change jinja templating to account for different styling of scroll behavior 

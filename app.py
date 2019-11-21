@@ -7,17 +7,22 @@ P1 ArRESTed Development
 
 from flask import Flask, request, redirect, session, render_template, url_for, flash
 import urllib.request
+import urllib.parse
 import os
 import json
 from utl import user
 
-imageurl ="https://imagga.com/static/images/tagging/wind-farm-538576_640.jpg"
-url = f"https://api.imagga.com/v2/colors?image_url={imageurl}&extract_object_colors=0"
-req = urllib.request.Request(url)
-req.add_header("Authorization", "Basic YWNjXzE2YWNmNWJlODE0Yzk0ODo1NzM2YzRiMmQ4NzU1NzYwNmM5MjJlMjcyYWUxOGU4Ng==")
-res = urllib.request.urlopen(req)
-response = res.read()
-data = json.loads(response)
+# imageurl = "https://www.mapquestapi.com/staticmap/v5/map?key=GN6wCdut6eE2QkB8ATz12lMHJV8tvVD5&center=San+Francisco,CA&zoom=10&type=hyb&size=600,400@2x"
+# print(imageurl)
+# url = f"https://api.imagga.com/v2/colors?image_url={imageurl}&extract_object_colors=0"
+# req = urllib.request.Request(url)
+# req.add_header("Authorization", "Basic YWNjXzE2YWNmNWJlODE0Yzk0ODo1NzM2YzRiMmQ4NzU1NzYwNmM5MjJlMjcyYWUxOGU4Ng==")
+# res = urllib.request.urlopen(req)
+# response = res.read()
+# data = json.loads(response)
+
+# mapquest GN6wCdut6eE2QkB8ATz12lMHJV8tvVD5
+# bitly 49758fd83aca5ad4f773441471c853dec4461543
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
@@ -87,7 +92,8 @@ def home():
     check()
     return render_template(
         "home.html",
-        title = "Home"
+        title = "Home",
+        src = "https://images.metmuseum.org/CRDImages/ep/web-large/DT1567.jpg"
     )
 
 @app.route("/saved_art", methods=['GET'])

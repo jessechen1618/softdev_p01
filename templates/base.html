@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html>
+{% block style %}
+<html style="overflow-y:hidden;">
+{% endblock %}
 
 <head>
     <title>
@@ -12,7 +14,7 @@
 
 <body>
     <div class="container mt-2">
-        {% block body %}
+        {% block nav %}
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
         {% for category, message in messages %}
@@ -31,7 +33,11 @@
         {% endif %}
         {% endwith %}
         {% endblock %}
+
         {% block header %}
+        {% endblock %}
+
+        {% block body %}
         {% endblock %}
 
     </div>
