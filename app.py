@@ -29,26 +29,10 @@ def check(): # checks if user is logged before allowing access to that page
 @app.route("/", methods=['GET'])
 def root():
     if 'user' in session:
-        flash("Hello " + session['user'] + "!", "success")
+        flash(f"Hello {session['user']}!", "success")
         return redirect(url_for('home'))
     else:
         return redirect(url_for('login'))
-
-@app.route("/login", methods=['GET', 'POST'])
-def login():
-    # flash('Username does not exist', "error")
-    # flash('Incorrect password', "error")
-    # flash('You have successfully logged in', "success")        
-    if(request.method == 'GET'):
-        if 'user' in session:
-            return redirect(url_for('home'))
-        else:
-            return render_template(
-                "login.html",
-                title = "Login",
-            )
-    elif(request.method == 'POST'):
-        return 0
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -68,15 +52,36 @@ def register():
             flash('Passwords do not match', "error")
             return redirect(url_for('register'))
         elif(user.create_acc(request.form['username'], request.form['password'])):
-                flash('You have successfully registered', "success")
-                return redirect(url_for('login'))
+            flash('You have successfully registered', "success")
+            return redirect(url_for('login'))
         else:
             flash('Username already exists', "error")
             return redirect(url_for('register'))
 
+@app.route("/login", methods=['GET', 'POST'])
+def login():     
+    if(request.method == 'GET'):
+        if 'user' in session:
+            return redirect(url_for('home'))
+        else:
+            return render_template(
+                "login.html",
+                title = "Login",
+            )
+    elif(request.method == 'POST'):
+        if(user.login(request.form['username'], request.form['password'])):
+            session['userid'] = user.get_id(request.form['username'])
+            session['user'] = request.form['username']
+            flash('You have successfully logged in!', "success")
+            return redirect(url_for('home'))
+        else:
+            flash('Invalid credentials', "error")
+            return redirect(url_for('login'))
+
 @app.route("/logout", methods=['GET', 'POST'])
 def logout():
-    session.pop('user')
+    session.pop('user', None)
+    session.pop('userid', None)
     flash('You have successfully logged out', "success")
     return redirect(url_for('login'))
 

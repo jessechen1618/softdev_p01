@@ -28,9 +28,17 @@ def login(un, pw):
     db = sqlite3.connect(DB_FILE)
     try:
         password = db.execute('''SELECT password FROM users
-                                    WHERE username=?''', (un,))
+                                    WHERE username=?;''', (un,))
         password = [item for item in password][0][0]
         return password == pw
-    except sqlite3.Error as error:
+    except IndexError as error:
         print(error)
         return False 
+
+def get_id(un):
+    db = sqlite3.connect(DB_FILE)
+    try:
+        id = db.execute('SELECT userid FROM users WHERE username=?;', (un,))
+        return [item for item in id][0][0]
+    except IndexError as error:
+        print(error)
