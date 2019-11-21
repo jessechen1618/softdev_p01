@@ -51,8 +51,14 @@ kelvinN -- 2019-11-20 16:09
 kelvinN -- 2019-11-20 16:16
     - added check function to see if user is logged in before allowing access to that page
 
-xiedengD -- 2019-11-21 01:30
-    - modified register.html to give form submission
-    - reused code to register user into database Users
-    - added flashing messages to register
-    - added methods to reset DB if necessary
+lauE -- 2019-11-20 23:09
+	- complete login testing and session work with db implementation
+	- remove extraneous db builder file and csv files
+	- TODO: change design document to reflect new thoughts on storing comments and users 
+	- TODO: change role descriptions 
+
+lauE -- 2019-11-20 23:31
+	- complete password change for settings
+
+lauE -- 2019-11-21 01:07
+	- change jinja templating to account for different styling of scroll behavior 

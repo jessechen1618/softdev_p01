@@ -1,23 +1,26 @@
 {% extends "home.html" %}
 
+{% block style %}
+<html style="overflow-y:hidden;">
+{% endblock %}
+
 {% block header %}
 {% endblock %}
 {% block body %}
-{{super()}}
-<div id="landing" style="height:100vh">
-    <form class="p-5 bg-light text-dark text-center">
+<div id="landing" style="height:100vh;">
+    <form class="p-5 bg-light text-dark text-center" action="/settings" method="POST">
         <p class="lead font-weight-bolder">SETTINGS</h1>
             <div class="form-group">
                 <label for="current" class="font-weight-bold">Current Password</label>
-                <input type="password" class="form-control" id="current">
+                <input name="current" type="password" class="form-control" id="current">
             </div>
             <div class="form-group">
                 <label for="new" class="font-weight-bold">New Password</label>
-                <input type="password" class="form-control" id="new">
+                <input name="new" type="password" class="form-control" id="new">
             </div>
             <div class="form-group">
                 <label for="confirm" class="font-weight-bold">Confirm New Password</label>
-                <input type="password" class="form-control" id="confirm">
+                <input name="confirm" type="password" class="form-control" id="confirm">
             </div>
             <button type="submit" class="btn btn-success">Change Password</button>
             <br>
