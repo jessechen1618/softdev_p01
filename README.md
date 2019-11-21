@@ -5,7 +5,7 @@
 - **Kelvin Ng**: 
   - Back-end database and front-end implementation of Met API
 - **Eric "Morty" Lau**: 
-  - Front-end, CSS, Bootstrap, Implementation of Imagga API
+  - Full stack, CSS, Bootstrap, Implementation of Imagga API
 - **David Xiedeng**: 
   - Back-end database and front-end implementation of Map Static API
 

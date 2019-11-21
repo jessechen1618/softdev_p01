@@ -51,5 +51,8 @@ kelvinN -- 2019-11-20 16:09
 kelvinN -- 2019-11-20 16:16
     - added check function to see if user is logged in before allowing access to that page
 
-lauE -- 2019-11-20 23:03
+lauE -- 2019-11-20 23:09
 	- complete login testing and session work with db implementation
+	- remove extraneous db builder file and csv files
+	- TODO: change design document to reflect new thoughts on storing comments and users 
+	- TODO: change role descriptions 

@@ -1,1 +1,1 @@
-This folder is for storing csv files, db files, and other important data.
+This folder is for storing database files
