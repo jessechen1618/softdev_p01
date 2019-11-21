@@ -12,6 +12,12 @@
 ## Description
 Browse art from the Metropolitan Museum of Art in a more enhancing way!
 
+## APIs used 
+- [OpenCage Geocoder API](https://docs.google.com/document/d/1w6FLEo8vgAL-kqxjWVTemKhiq-YjGXltEsu7V34pERs/edit?usp=sharing)
+- [Open Static Map API](https://docs.google.com/document/d/1Iwz9Y-7OM7KLxH0BLU1UOJUfYDMfiVOjfdQpDN2D6j4/edit?usp=sharing)
+- [Met Museum Collections](https://docs.google.com/document/d/1ibirjeZ4Xv7Kf4XK0KFyVePFToN01PLum0lwTA5-RTA/edit?usp=sharing)
+- [Imagga](https://docs.google.com/document/d/1rlxLfGuGFIJ13ac1FOr3LwlH_10Jsq8Vfe6aAZV4jYU/edit?usp=sharing)
+
 ## Instructions
 **Assuming python3 and pip are already installed**
 ### Virtual Environment 
