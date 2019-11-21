@@ -23,3 +23,14 @@ def create_acc(un, pw):
     except sqlite3.Error as error:
         print(error)
         return False  
+
+def login(un, pw):
+    db = sqlite3.connect(DB_FILE)
+    try:
+        password = db.execute('''SELECT password FROM users
+                                    WHERE username=?''', (un,))
+        password = [item for item in password][0][0]
+        return password == pw
+    except sqlite3.Error as error:
+        print(error)
+        return False 

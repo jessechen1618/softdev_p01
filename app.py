@@ -53,7 +53,7 @@ def register():
         if(request.form['username'] == '' or request.form['username'].isspace()):
             flash('Fill out username', "error")
             return redirect(url_for('register'))
-        elif(request.form['password'] == '' or request.form['password'].isspace() or request.form['confirm'] == '' or request.form['confirm'].isspace()):
+        elif(request.form['password'] == '' or request.form['password'].isspace()):
             flash('Fill out password', "error")
             return redirect(url_for('register'))
         elif(request.form['password'] != request.form['confirm']):
