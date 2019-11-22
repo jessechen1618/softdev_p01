@@ -173,7 +173,10 @@ def image():
         return render_template(
             "image.html",
             image=data["primaryImage"],
-            title=data["title"]
+            title=data["title"],
+            artist=data["artistDisplayName"],
+            moreImages=data["additionalImages"],
+            tags=data["tags"]
             )
 
 if __name__ == "__main__":
