@@ -16,12 +16,12 @@ Comment area
             <div id="Met_Images" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img src={{image}} class="d-block w-100">                  
+                        <img src={{image}} class="d-block w-100">
                     </div>
-                    
+
                     {% for addImage in moreImages %}
                         <div class="carousel-item">
-                            <img src={{addImage}} class="d-block w-100">                  
+                            <img src={{addImage}} class="d-block w-100">
                         </div>
                     {% endfor %}
                 </div>
@@ -40,11 +40,17 @@ Comment area
                 Artist: {{artist}} <br>
             </h2>
 
-            {% for tag in tags %}
-                <button type="button" class="btn">
-                #{{tag}}
-                </button>
-            {% endfor %}   
+            <div>
+                {% for tag in tags %}
+                    <button type="button" class="btn">
+                    #{{tag}}
+                    </button>
+                {% endfor %}
+            </div>
+
+            <div>
+                {{testjson}}
+            </div>
         </div>
     </div>
 </div>

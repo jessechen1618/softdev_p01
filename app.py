@@ -33,7 +33,7 @@ def querydata(link):
     url = urllib.request.urlopen(link)
     response = url.read()
     data = json.loads(response)
-    return data 
+    return data
 
 def protected(f):
     @functools.wraps(f)
@@ -154,7 +154,7 @@ def search():
             data = querydata(link)['primaryImageSmall']
             images.append(data)
         return render_template(
-            "search.html", 
+            "search.html",
             title= "Search",
             images=images)
 
@@ -186,15 +186,24 @@ def image():
     objectID = 40
     req = urllib.request.urlopen("https://collectionapi.metmuseum.org/public/collection/v1/objects/" + str(objectID))
     response = req.read()
-    data = json.loads(response)
+    metCol = json.loads(response)
+    #get color info on image
+    imageurl = metCol["primaryImage"]
+    url = f"https://api.imagga.com/v2/colors?image_url={imageurl}&extract_object_colors=0"
+    req = urllib.request.Request(url)
+    req.add_header("Authorization", "Basic YWNjXzE2YWNmNWJlODE0Yzk0ODo1NzM2YzRiMmQ4NzU1NzYwNmM5MjJlMjcyYWUxOGU4Ng==")
+    res = urllib.request.urlopen(req)
+    response = res.read()
+    imagga = json.loads(response)['result']['colors']
     if(request.method == 'GET'):
         return render_template(
             "image.html",
-            image=data["primaryImage"],
-            title=data["title"],
-            artist=data["artistDisplayName"],
-            moreImages=data["additionalImages"],
-            tags=data["tags"]
+            image=metCol["primaryImage"],
+            title=metCol["title"],
+            artist=metCol["artistDisplayName"],
+            moreImages=metCol["additionalImages"],
+            tags=metCol["tags"],
+            testjson=imagga
             )
 
 if __name__ == "__main__":
