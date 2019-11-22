@@ -31,11 +31,14 @@ def querydata(link):
     url = urllib.request.urlopen(link)
     response = url.read()
     data = json.loads(response)
-    return data 
+    return data
+     
+def logged_in(): # checks if user is logged before allowing access to that page
+    return 'user' in session 
 
 @app.route("/", methods=['GET'])
 def root():
-    if 'user' in session:
+    if logged_in():
         flash(f"Hello {session['user']}!", "success")
         return redirect(url_for('home'))
     else:
@@ -65,7 +68,7 @@ def register():
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if(request.method == 'GET'):
-        if 'user' in session:
+        if logged_in():
             return redirect(url_for('home'))
         else:
             return render_template(
@@ -150,12 +153,12 @@ def settings():
                 if(user.set_pw(session['userid'], request.form['new'])):
                     flash('You have successfully changed your password!', "success")
                 else:
-                    flash('Could not change password', "error")
+                    flash('Current password is incorrect', "error")
             else:
-                flash('Current password is incorrect', "error")
-        else:
-            flash('New passwords do not match', "error")
-        return redirect(url_for('settings'))
+                flash('New passwords do not match', "error")
+            return redirect(url_for('settings'))
+    else:
+        return redirect(url_for('login'))
 
 @app.route("/image", methods=['GET', 'POST'])
 def image():
