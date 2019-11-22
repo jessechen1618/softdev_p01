@@ -142,6 +142,8 @@ def search():
         )
     elif (request.method == 'POST'):
         search = request.form['search']
+        search = search.replace(" ", "+")
+        #if search.isspace():
         link = "https://collectionapi.metmuseum.org/public/collection/v1/search?q={}".format(search)
         data = querydata(link)['objectIDs']
         images = list()
