@@ -10,7 +10,7 @@
   - Back-end database and front-end implementation of Map Static API
 
 ## Description
-Browse art from the Metropolitan Museum of Art in a more enhancing way!
+Browse art from the Metropolitan Museum of Art in a more enhancing way! Our website allows users to browse the Metropolitan Museum of Art's collection and interact with the art. Users can save their favorite artworks, comment on them, search by multiple categories, find information about the art, locate the art's creation place, and identify the color palette. This is done via the interaction of many APIs which is detailed below.
 
 ## APIs used 
 - [OpenCage Geocoder API](https://docs.google.com/document/d/1w6FLEo8vgAL-kqxjWVTemKhiq-YjGXltEsu7V34pERs/edit?usp=sharing)
