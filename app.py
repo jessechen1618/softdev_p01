@@ -124,7 +124,7 @@ def search():
         search = request.form['search']
         link = "https://collectionapi.metmuseum.org/public/collection/v1/search?q={}".format(search)
         data = querydata(link)['objectIDs']
-        images = list
+        images = list()
         count = 0
         for ids in data:
             count += 1
