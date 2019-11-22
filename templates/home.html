@@ -49,5 +49,17 @@
 {% endblock %}
 
 {% block body %}
-<img src={{src}}>
+    {% for url, title, text in output%}
+        <div class="card rounded float-left" style="width: 20%; height: 500px">
+            <img src={{url}} class="card-img-top">
+            <div class="card-body">
+            
+                <h5 class="card-title">{{title}}</h5>
+                <p class="card-text">{{text}}</p>
+                <a href="#" class="btn btn-primary">Check Here</a>
+            </div>
+        </div>
+    {% endfor %}    
+            
+    
 {% endblock %}

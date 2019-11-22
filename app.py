@@ -6,6 +6,7 @@ P1 ArRESTed Development
 '''
 
 from flask import Flask, request, redirect, session, render_template, url_for, flash
+import sqlite3
 import urllib.request
 import urllib.parse
 import functools
@@ -103,10 +104,24 @@ def logout():
 @app.route("/home", methods=['GET'])
 @protected
 def home():
+    db = sqlite3.connect("data/artpi.db")
+    c = db.cursor()
+    c.execute("SELECT * FROM cache")
+    x = 0
+    output = []
+    while x < 10:
+        x += 1
+        temp = list(c.fetchmany()[0])[1:]
+        url = temp.pop()
+        temp.insert(0, url)
+        output.append(temp)
+    db.commit()
+    db.close()
     return render_template(
         "home.html",
         title = "Home",
-        src = "https://images.metmuseum.org/CRDImages/ep/web-large/DT1567.jpg"
+        src = "https://images.metmuseum.org/CRDImages/ep/web-large/DT1567.jpg",
+        output = output
     )
 
 @app.route("/saved_art", methods=['GET'])
@@ -168,7 +183,7 @@ def settings():
 @protected
 def image():
     #temporary object for page creation
-    objectID = 199130
+    objectID = 40
     req = urllib.request.urlopen("https://collectionapi.metmuseum.org/public/collection/v1/objects/" + str(objectID))
     response = req.read()
     data = json.loads(response)

@@ -87,5 +87,9 @@ lauE -- 2019-11-21 21:29
 lauE -- 2019-11-21 22:14
 	- make protected login decoration
 
-xiedengD-- 2019-11-21 23:05
+xiedengD -- 2019-11-21 23:05
     - added carousel, artist name and tags to image.html
+    
+xiedengD -- 2019-11-22 02:19
+    - downloaded cache of Met Gal to Database
+    - added temp gallery view in home.html
