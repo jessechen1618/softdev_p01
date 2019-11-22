@@ -109,7 +109,7 @@ def home():
     c.execute("SELECT * FROM cache")
     x = 0
     output = []
-    while x < 10:
+    while x < 100:
         x += 1
         temp = list(c.fetchmany()[0])[1:]
         url = temp.pop()
