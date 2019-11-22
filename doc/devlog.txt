@@ -99,10 +99,10 @@ chenJ -- 2019-11-21 23:13
 
 chenJ -- 2019-11-21 23:41
 	- final deliverables complete, all updates on repo
-
-xiedengD -- 2019-11-21 23:05
-    - added carousel, artist name and tags to image.html
     
 xiedengD -- 2019-11-22 02:19
     - downloaded cache of Met Gal to Database
     - added temp gallery view in home.html
+
+kelvinN -- 2019-11-22 7:16
+        - fixed duplicate entry in devlog
