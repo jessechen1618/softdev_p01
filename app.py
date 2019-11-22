@@ -8,6 +8,7 @@ P1 ArRESTed Development
 from flask import Flask, request, redirect, session, render_template, url_for, flash
 import urllib.request
 import urllib.parse
+import functools
 import os
 import json
 from utl import user
@@ -31,14 +32,21 @@ def querydata(link):
     url = urllib.request.urlopen(link)
     response = url.read()
     data = json.loads(response)
-    return data
-     
-def logged_in(): # checks if user is logged before allowing access to that page
-    return 'user' in session 
+    return data 
+
+def protected(f):
+    @functools.wraps(f)
+    def wrapper(*args, **kwargs):
+        if 'user' in session:
+            return f(*args, **kwargs)
+        else:
+            flash("You are not logged in", "error")
+            return redirect(url_for('login'))
+    return wrapper
 
 @app.route("/", methods=['GET'])
 def root():
-    if logged_in():
+    if 'user' in session:
         flash(f"Hello {session['user']}!", "success")
         return redirect(url_for('home'))
     else:
@@ -68,7 +76,7 @@ def register():
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if(request.method == 'GET'):
-        if logged_in():
+        if 'user' in session:
             return redirect(url_for('home'))
         else:
             return render_template(
@@ -93,9 +101,8 @@ def logout():
     return redirect(url_for('login'))
 
 @app.route("/home", methods=['GET'])
+@protected
 def home():
-    if not 'user' in session:
-        return redirect(url_for('login'))
     return render_template(
         "home.html",
         title = "Home",
@@ -103,18 +110,16 @@ def home():
     )
 
 @app.route("/saved_art", methods=['GET'])
+@protected
 def saved_art():
-    if not 'user' in session:
-        return redirect(url_for('login'))
     return render_template(
         "saved_art.html",
         title = "Saved Art"
     )
 
 @app.route("/search", methods=['GET', 'POST'])
+@protected
 def search():
-    if not 'user' in session:
-        return redirect(url_for('login'))
     if (request.method == 'GET'):
         return render_template(
             "search.html",
@@ -139,9 +144,8 @@ def search():
             images=images)
 
 @app.route("/settings", methods=['GET', 'POST'])
+@protected
 def settings():
-    if not 'user' in session:
-        return redirect(url_for('login'))
     if (request.method == 'GET'):
         return render_template(
             "settings.html",
@@ -161,9 +165,8 @@ def settings():
         return redirect(url_for('login'))
 
 @app.route("/image", methods=['GET', 'POST'])
+@protected
 def image():
-    if not 'user' in session:
-        return redirect(url_for('login'))
     #temporary object for page creation
     objectID = 199130
     req = urllib.request.urlopen("https://collectionapi.metmuseum.org/public/collection/v1/objects/" + str(objectID))

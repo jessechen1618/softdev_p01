@@ -84,5 +84,8 @@ lauE -- 2019-11-21 21:29
 	- refactor getting query data for MET API
 	- TODO: make a wrapper function w/ login decorations 
 
+lauE -- 2019-11-21 22:14
+	- make protected login decoration
+
 xiedengD-- 2019-11-21 23:05
     - added carousel, artist name and tags to image.html
