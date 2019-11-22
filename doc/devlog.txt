@@ -75,3 +75,6 @@ kelvinN -- 2019-11-21 17:48
 
 kelvinN -- 2019-11-21 20:15
     - adding search function that displays all art that matches the searched value
+
+kelvinN -- 2019-11-21 20:35
+    - debugging search function needed

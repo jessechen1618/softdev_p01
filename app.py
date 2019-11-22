@@ -123,7 +123,7 @@ def search():
         count = 0
         for ids in data:
             count += 1
-            if count == 5:
+            if count == 10: #displaying less results for now
                 return ""
             link = "https://collectionapi.metmuseum.org/public/collection/v1/objects/{}".format(ids)
             u = urllib.request.urlopen(link)
@@ -131,7 +131,8 @@ def search():
             data = json.loads(response)
             data = data["primaryImageSmall"]
             image.append(data)
-        return render_template("search.html", image=image.replace("'",""))
+            print(data)
+        return render_template("search.html", src=image)
 
 @app.route("/settings", methods=['GET', 'POST'])
 def settings():
