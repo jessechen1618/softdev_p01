@@ -28,12 +28,11 @@ app = Flask(__name__)
 app.secret_key = os.urandom(32)
 
 def logged_in(): # checks if user is logged before allowing access to that page
-    if not 'user' in session:
-        return redirect(url_for('login'))
-    return False
+    return 'user' in session 
+
 @app.route("/", methods=['GET'])
 def root():
-    if 'user' in session:
+    if logged_in():
         flash(f"Hello {session['user']}!", "success")
         return redirect(url_for('home'))
     else:
@@ -63,7 +62,7 @@ def register():
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if(request.method == 'GET'):
-        if 'user' in session:
+        if logged_in():
             return redirect(url_for('home'))
         else:
             return render_template(
@@ -89,67 +88,77 @@ def logout():
 
 @app.route("/home", methods=['GET'])
 def home():
-    check()
-    return render_template(
-        "home.html",
-        title = "Home",
-        src = "https://images.metmuseum.org/CRDImages/ep/web-large/DT1567.jpg"
-    )
+    if logged_in():
+        return render_template(
+            "home.html",
+            title = "Home",
+            src = "https://images.metmuseum.org/CRDImages/ep/web-large/DT1567.jpg"
+        )
+    else:
+        return redirect(url_for('login'))
 
 @app.route("/saved_art", methods=['GET'])
 def saved_art():
-    check()
-    return render_template(
-        "saved_art.html",
-        title = "Saved Art"
-    )
+    if logged_in():
+        return render_template(
+            "saved_art.html",
+            title = "Saved Art"
+        )
+    else: 
+        return redirect(url_for('login'))
 
 @app.route("/search", methods=['GET', 'POST'])
 def search():
-    check()
-    if (request.method == 'GET'):
-        return render_template(
-            "search.html",
-            title = "Search"
-        )
-    elif (request.method == 'POST'):
-        return 0
+    if logged_in():
+        if (request.method == 'GET'):
+            return render_template(
+                "search.html",
+                title = "Search"
+            )
+        elif (request.method == 'POST'):
+            return 0
+    else:
+        return redirect(url_for('login'))
 
 @app.route("/settings", methods=['GET', 'POST'])
 def settings():
-    check()
-    if (request.method == 'GET'):
-        return render_template(
-            "settings.html",
-            title = "Settings"
-        )
-    elif (request.method == 'POST'):
-        if(request.form['new'] == request.form['confirm']):
-            if(user.get_pw(session['userid']) == request.form['current']):
-                if(user.set_pw(session['userid'], request.form['new'])):
-                    flash('You have successfully changed your password!', "success")
+    if logged_in():
+        if (request.method == 'GET'):
+            return render_template(
+                "settings.html",
+                title = "Settings"
+            )
+        elif (request.method == 'POST'):
+            if(request.form['new'] == request.form['confirm']):
+                if(user.get_pw(session['userid']) == request.form['current']):
+                    if(user.set_pw(session['userid'], request.form['new'])):
+                        flash('You have successfully changed your password!', "success")
+                    else:
+                        flash('Could not change password', "error")
                 else:
-                    flash('Could not change password', "error")
+                    flash('Current password is incorrect', "error")
             else:
-                flash('Current password is incorrect', "error")
-        else:
-            flash('New passwords do not match', "error")
-        return redirect(url_for('settings'))
+                flash('New passwords do not match', "error")
+            return redirect(url_for('settings'))
+    else:
+        return redirect(url_for('login'))
 
 @app.route("/image", methods=['GET', 'POST'])
 def image():
-    check()
-    #temporary object for page creation
-    objectID = 199130
-    req = urllib.request.urlopen("https://collectionapi.metmuseum.org/public/collection/v1/objects/" + str(objectID))
-    response = req.read()
-    data = json.loads(response)
-    if(request.method == 'GET'):
-        return render_template(
-            "image.html", 
-            image=data["primaryImage"], 
-            title=data["title"]
-            )
+    if logged_in():
+        #temporary object for page creation
+        objectID = 199130
+        req = urllib.request.urlopen("https://collectionapi.metmuseum.org/public/collection/v1/objects/" + str(objectID))
+        response = req.read()
+        data = json.loads(response)
+        if(request.method == 'GET'):
+            return render_template(
+                "image.html", 
+                image=data["primaryImage"], 
+                title=data["title"]
+                )
+    else:
+        return redirect(url_for('login'))
 
 if __name__ == "__main__":
     user.init()

@@ -69,3 +69,7 @@ lauE -- 2019-11-21 06:54
 
 lauE -- 2019-11-21 11:26
 	- TODO: fix check for logged in users, check is currently broken
+
+lauE -- 2019-11-21 21:08
+	- Add repetitive code to check for logged in 
+	- TODO: make a wrapper function w/ login decorations 
