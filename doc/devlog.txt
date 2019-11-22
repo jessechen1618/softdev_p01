@@ -72,3 +72,6 @@ lauE -- 2019-11-21 11:26
 
 kelvinN -- 2019-11-21 17:48
     - added temporary solution to fix check for logged in users until better solution is found
+
+kelvinN -- 2019-11-21 20:15
+    - adding search function that displays all art that matches the searched value
