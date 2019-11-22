@@ -87,6 +87,19 @@ lauE -- 2019-11-21 21:29
 lauE -- 2019-11-21 22:14
 	- make protected login decoration
 
+xiedengD-- 2019-11-21 23:05
+    - added carousel, artist name and tags to image.html
+
+chenJ -- 2019-11-21 23:13
+	- Final design.pdf updated. New features that differ from the initial doc:
+	1. Addition of another table in the database. This table relates a user to his/her saved art. We chose to use this instead of a string of a list because it is easier to work with.
+	2. Added the APIs we're using (the specific names) as we have decided.
+	3. Added userIDs to identify users, instead of using usernames. This is easier to search for and is just a better design choice.
+	Everything else is solid. If we encounter more problems that we really can't work through with our collective knowledge, then we may have to change the design doc. I forsee this is highly unlikely, so this is probably the final version. Exceptions include typos, but I don't think there are any. At least Google Docs and my eyeballs didn't pick up any.
+
+chenJ -- 2019-11-21 23:41
+	- final deliverables complete, all updates on repo
+
 xiedengD -- 2019-11-21 23:05
     - added carousel, artist name and tags to image.html
     
