@@ -4,45 +4,45 @@ P01 ArRESTed Development
 2019-11-17
 DEVLOG
 
-lauE -- 2019-11-17 07:17
+ericL -- 2019-11-17 07:17
     - Add boiler plate code
 
 kelvinN -- 2019-11-18 21:33
 	- created devlog and added heading
 
-chenJ -- 2019-11-19 08:33
+jesseC -- 2019-11-19 08:33
 	- updated design doc by reading over suggestions
 	- Morty is currently experimenting with a static map API and seems successful so far
 	- David is currently experimenting with the other APIs and picking out commands we need
 	  from the documentation.
 	- Kelvin and I are currently working on HTML files
 
-lauE -- 2019-11-19 19:41
+ericL -- 2019-11-19 19:41
 	- Add template files and some inheritance
 
-lauE -- 2019-11-19 20:39
+ericL -- 2019-11-19 20:39
 	- Add login form with styling
 
-lauE -- 2019-11-19 21:37
+ericL -- 2019-11-19 21:37
 	- Add register route and link with login
 	- Add navbar with home, saved art, search, and logout routes
 	- Add flashing for logging out
 	- Figure out categories of flash
 
-lauE -- 2019-11-19 22:47
+ericL -- 2019-11-19 22:47
 	- Add more flash messages temporarily
 	- Add methods for routes
 
-xiedengD -- 2019-11-19 23:49
+davidX -- 2019-11-19 23:49
     - Reused methods from old project for table building
 
-xiedengD -- 2019-11-19 00:13
+davidX -- 2019-11-19 00:13
     - tested and implemented methods for creating tables and inserting rows
 
 kelvinN -- 2019-11-20 08:16
 	- requirements.txt is added
 
-lauE -- 2019-11-20 09:32
+ericL -- 2019-11-20 09:32
 	- add more jinja templating and settings form
 
 kelvinN -- 2019-11-20 16:09
@@ -51,23 +51,23 @@ kelvinN -- 2019-11-20 16:09
 kelvinN -- 2019-11-20 16:16
     - added check function to see if user is logged in before allowing access to that page
 
-lauE -- 2019-11-20 23:09
+ericL -- 2019-11-20 23:09
 	- complete login testing and session work with db implementation
 	- remove extraneous db builder file and csv files
 	- TODO: change design document to reflect new thoughts on storing comments and users
 	- TODO: change role descriptions
 
-lauE -- 2019-11-20 23:31
+ericL -- 2019-11-20 23:31
 	- complete password change for settings
 
-lauE -- 2019-11-21 01:07
+ericL -- 2019-11-21 01:07
 	- change jinja templating to account for different styling of scroll behavior
 
-lauE -- 2019-11-21 06:54
+ericL -- 2019-11-21 06:54
 	- Ask other people who are not part of the team to review our code to get a fresh set of eyes on our code
 	- Keep everyone in the loop of the latest updates and idea changes so nobody is coding something useless
 
-lauE -- 2019-11-21 11:26
+ericL -- 2019-11-21 11:26
 	- TODO: fix check for logged in users, check is currently broken
 
 kelvinN -- 2019-11-21 17:48
@@ -79,30 +79,33 @@ kelvinN -- 2019-11-21 20:15
 kelvinN -- 2019-11-21 20:35
     - debugging search function needed
 
-lauE -- 2019-11-21 21:29
-	- fix base search function 
+ericL -- 2019-11-21 21:29
+	- fix base search function
 	- refactor getting query data for MET API
-	- TODO: make a wrapper function w/ login decorations 
+	- TODO: make a wrapper function w/ login decorations
 
-lauE -- 2019-11-21 22:14
+ericL -- 2019-11-21 22:14
 	- make protected login decoration
 
-xiedengD-- 2019-11-21 23:05
+davidX-- 2019-11-21 23:05
     - added carousel, artist name and tags to image.html
 
-chenJ -- 2019-11-21 23:13
+jesseC -- 2019-11-21 23:13
 	- Final design.pdf updated. New features that differ from the initial doc:
 	1. Addition of another table in the database. This table relates a user to his/her saved art. We chose to use this instead of a string of a list because it is easier to work with.
 	2. Added the APIs we're using (the specific names) as we have decided.
 	3. Added userIDs to identify users, instead of using usernames. This is easier to search for and is just a better design choice.
 	Everything else is solid. If we encounter more problems that we really can't work through with our collective knowledge, then we may have to change the design doc. I forsee this is highly unlikely, so this is probably the final version. Exceptions include typos, but I don't think there are any. At least Google Docs and my eyeballs didn't pick up any.
 
-chenJ -- 2019-11-21 23:41
+jesseC -- 2019-11-21 23:41
 	- final deliverables complete, all updates on repo
-    
-xiedengD -- 2019-11-22 02:19
+
+davidX -- 2019-11-22 02:19
     - downloaded cache of Met Gal to Database
     - added temp gallery view in home.html
 
 kelvinN -- 2019-11-22 7:16
-        - fixed duplicate entry in devlog
+    - fixed duplicate entry in devlog
+
+kelvinN -- 2019-11-22 7:16
+    - fixed the naming in devlog
