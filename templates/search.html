@@ -1,4 +1,9 @@
 {% extends "home.html" %}
 
 {% block body %}
+<form method="POST" action="/search">
+  <input type="text" name="search">
+  <input type="submit" name="submit" value="search">
+</form><br><br>
+<img src = {{image}}>
 {% endblock %}

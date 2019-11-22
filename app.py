@@ -113,7 +113,25 @@ def search():
             title = "Search"
         )
     elif (request.method == 'POST'):
-        return 0
+        search = request.form['search']
+        link = "https://collectionapi.metmuseum.org/public/collection/v1/search?q={}".format(search)
+        u = urllib.request.urlopen(link)
+        response = u.read()
+        data = json.loads(response)
+        data = data["objectIDs"]
+        image = []
+        count = 0
+        for ids in data:
+            count += 1
+            if count == 5:
+                return ""
+            link = "https://collectionapi.metmuseum.org/public/collection/v1/objects/{}".format(ids)
+            u = urllib.request.urlopen(link)
+            response = u.read()
+            data = json.loads(response)
+            data = data["primaryImageSmall"]
+            image.append(data)
+        return render_template("search.html", image=image.replace("'",""))
 
 @app.route("/settings", methods=['GET', 'POST'])
 def settings():
