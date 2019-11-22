@@ -78,3 +78,7 @@ kelvinN -- 2019-11-21 20:15
 
 kelvinN -- 2019-11-21 20:35
     - debugging search function needed
+
+lauE -- 2019-11-21 21:29
+	- fix base search function 
+	- refactor getting query data for MET API

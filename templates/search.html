@@ -6,8 +6,9 @@
   <input type="submit" name="submit" value="search">
 </form>
 
-{% for a in image %}
-  <img src = {{a}}>
+{% for a in images %}
+  {{a}}
+  <img src = "{{a}}">
 {% endfor %}
 
 {% endblock %}

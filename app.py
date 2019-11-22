@@ -27,6 +27,11 @@ from utl import user
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
 
+def querydata(link):
+    url = urllib.request.urlopen(link)
+    response = url.read()
+    data = json.loads(response)
+    return data 
 
 @app.route("/", methods=['GET'])
 def root():
@@ -115,24 +120,20 @@ def search():
     elif (request.method == 'POST'):
         search = request.form['search']
         link = "https://collectionapi.metmuseum.org/public/collection/v1/search?q={}".format(search)
-        u = urllib.request.urlopen(link)
-        response = u.read()
-        data = json.loads(response)
-        data = data["objectIDs"]
-        image = []
+        data = querydata(link)['objectIDs']
+        images = list
         count = 0
         for ids in data:
             count += 1
-            if count == 10: #displaying less results for now
-                return ""
+            if count == 20: #displaying less results for now
+                break
             link = "https://collectionapi.metmuseum.org/public/collection/v1/objects/{}".format(ids)
-            u = urllib.request.urlopen(link)
-            response = u.read()
-            data = json.loads(response)
-            data = data["primaryImageSmall"]
-            image.append(data)
-            print(data)
-        return render_template("search.html", src=image)
+            data = querydata(link)['primaryImageSmall']
+            images.append(data)
+        return render_template(
+            "search.html", 
+            title= "Search",
+            images=images)
 
 @app.route("/settings", methods=['GET', 'POST'])
 def settings():
