@@ -107,5 +107,5 @@ davidX -- 2019-11-22 02:19
 kelvinN -- 2019-11-22 7:16
     - fixed duplicate entry in devlog
 
-kelvinN -- 2019-11-22 7:16
-    - fixed the naming in devlog
+kelvinN -- 2019-11-22 8:02
+    - fixed the naming to firstL in devlog
