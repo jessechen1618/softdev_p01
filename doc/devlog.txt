@@ -109,3 +109,7 @@ kelvinN -- 2019-11-22 7:16
 
 kelvinN -- 2019-11-22 8:02
     - fixed the naming to firstL in devlog
+
+kelvinN -- 2019-11-22 8:35
+    - started working on search by title/artist
+    - added dropdown in search.html

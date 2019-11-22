@@ -33,7 +33,7 @@ def querydata(link):
     url = urllib.request.urlopen(link)
     response = url.read()
     data = json.loads(response)
-    return data 
+    return data
 
 def protected(f):
     @functools.wraps(f)
@@ -148,13 +148,14 @@ def search():
         count = 0
         for ids in data:
             count += 1
-            if count == 20: #displaying less results for now
+            if count == 10: #displaying less results for now
                 break
             link = "https://collectionapi.metmuseum.org/public/collection/v1/objects/{}".format(ids)
             data = querydata(link)['primaryImageSmall']
+            print(link)
             images.append(data)
         return render_template(
-            "search.html", 
+            "search.html",
             title= "Search",
             images=images)
 

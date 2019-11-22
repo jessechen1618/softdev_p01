@@ -6,6 +6,12 @@
   <input type="submit" name="submit" value="search">
 </form>
 
+<select name="searchtype" form="searchtype">
+  <option value="keyword">Keyword</option>
+  <option value="artist">Artist</option>
+  <option value="name">Title</option>
+</select>
+
 {% for a in images %}
   <img src = "{{a}}">
 {% endfor %}
