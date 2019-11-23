@@ -54,6 +54,14 @@ def addRow(table, val):
 
 #===============================================
 
+def clearTables():
+    db = sqlite3.connect("data/artpi.db")
+    c = db.cursor()
+    c.execute("Delete from cache")
+    output = c.fetchall()
+    db.commit()
+    db.close()
+
 # use if columns have been change for all tables
 def drop(table):
     db = sqlite3.connect("data/artpi.db")
@@ -91,6 +99,7 @@ def buildGalleryCache():
             print((object, info["title"], info["artistDisplayName"], info["primaryImage"]))
 
 #===============================================
+buildGalleryCache()
 
 db.commit()
 db.close()
