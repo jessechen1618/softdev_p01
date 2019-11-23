@@ -67,7 +67,7 @@ def register():
             flash('Fill out password', "error")
         elif(request.form['password'] != request.form['confirm']):
             flash('Passwords do not match', "error")
-        elif(user.create_acc(request.form['username'], request.form['password'])):
+        elif(user.create(request.form['username'], request.form['password'])):
             flash('You have successfully registered', "success")
             return redirect(url_for('login'))
         else:
@@ -85,7 +85,7 @@ def login():
                 title = "Login",
             )
     elif(request.method == 'POST'):
-        if(user.login(request.form['username'], request.form['password'])):
+        if(user.get_pw(request.form['username']) == request.form['password']):
             session['userid'] = user.get_id(request.form['username'])
             session['user'] = request.form['username']
             flash('You have successfully logged in!', "success")
@@ -104,24 +104,24 @@ def logout():
 @app.route("/home", methods=['GET'])
 @protected
 def home():
-    db = sqlite3.connect("data/artpi.db")
-    c = db.cursor()
-    c.execute("SELECT * FROM cache")
-    x = 0
-    output = []
-    while x < 100:
-        x += 1
-        temp = list(c.fetchmany()[0])[1:]
-        url = temp.pop()
-        temp.insert(0, url)
-        output.append(temp)
-    db.commit()
-    db.close()
+    # db = sqlite3.connect("data/artpi.db")
+    # c = db.cursor()
+    # c.execute("SELECT * FROM cache")
+    # x = 0
+    # output = []
+    # while x < 100:
+    #     x += 1
+    #     temp = list(c.fetchmany()[0])[1:]
+    #     url = temp.pop()
+    #     temp.insert(0, url)
+    #     output.append(temp)
+    # db.commit()
+    # db.close()
     return render_template(
         "home.html",
         title = "Home",
         src = "https://images.metmuseum.org/CRDImages/ep/web-large/DT1567.jpg",
-        output = output
+        # output = output
     )
 
 @app.route("/saved_art", methods=['GET'])
@@ -143,6 +143,7 @@ def search():
     elif (request.method == 'POST'):
         search = request.form['search']
         link = "https://collectionapi.metmuseum.org/public/collection/v1/search?q={}".format(search)
+        print(link.encode('utf-8'))
         data = querydata(link)['objectIDs']
         images = list()
         count = 0
@@ -152,7 +153,7 @@ def search():
                 break
             link = "https://collectionapi.metmuseum.org/public/collection/v1/objects/{}".format(ids)
             data = querydata(link)['primaryImageSmall']
-            print(link)
+            # print(link)
             images.append(data)
         return render_template(
             "search.html",
@@ -169,14 +170,16 @@ def settings():
         )
     elif (request.method == 'POST'):
         if(request.form['new'] == request.form['confirm']):
-            if(user.get_pw(session['userid']) == request.form['current']):
-                if(user.set_pw(session['userid'], request.form['new'])):
+            if(user.get_pw(session['user']) == request.form['current']):
+                if(user.set_pw(request.form['new'], session['userid'])):
                     flash('You have successfully changed your password!', "success")
                 else:
-                    flash('Current password is incorrect', "error")
+                    flash('Could not change password', "error")
             else:
-                flash('New passwords do not match', "error")
-            return redirect(url_for('settings'))
+                flash('Current password is incorrect', "error")
+        else:
+            flash('New passwords do not match', "error")
+        return redirect(url_for('settings'))
     else:
         return redirect(url_for('login'))
 

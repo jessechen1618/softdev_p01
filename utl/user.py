@@ -1,63 +1,40 @@
 import sqlite3 
 import os 
+import functools
 
-DB_FILE = "./data/artpi.db"
+def execute(err_type, command):
+    def decorator(f):
+        @functools.wraps(f) #allows for several methods to have this decorator
+        def wrapper(*args, **kwargs):
+            try:
+                db = sqlite3.connect('./data/artpi.db')
+                select = db.execute(command, tuple(args)) # turn all user args into a format that command takes 
+                db.commit()
+                if(err_type != IndexError): # getter methods have index error exception
+                    return True # should not return a boolean if method is a getter 
+                else: return [item for item in select][0][0] # correctly retrieves data from select cursor
+            except err_type as error:
+                print(error)
+                if(err_type != IndexError): return False
+            finally: db.close() # close after everything is finished
+        return wrapper
+    return decorator
 
-def init():
-    db = sqlite3.connect(DB_FILE)
-    db.execute('''CREATE TABLE IF NOT EXISTS users (
-                    userid INTEGER PRIMARY KEY AUTOINCREMENT,
-                    username TEXT UNIQUE NOT NULL,
-                    password TEXT NOT NULL);''')
-    db.commit()
-    db.close()
+# initializes new users table 
+@execute(err_type = sqlite3.Error,
+    command = '''CREATE TABLE IF NOT EXISTS users ( userid INTEGER PRIMARY KEY AUTOINCREMENT,
+                                                    username TEXT UNIQUE CHECK (length(username) > 0),
+                                                    password TEXT CHECK (length(password) > 0));''')
+def init(): pass
 
-def create_acc(un, pw):
-    db = sqlite3.connect(DB_FILE)
-    try:
-        db.execute('''INSERT INTO users(username, password) 
-                        VALUES (?,?);''', (un, pw,))
-        db.commit()
-        db.close()
-        return True
-    except sqlite3.Error as error:
-        print(error)
-        return False  
+@execute(err_type = sqlite3.Error, command = 'INSERT INTO users(username, password) VALUES (?,?);')
+def create(un, pw): pass
 
-def login(un, pw):
-    db = sqlite3.connect(DB_FILE)
-    try:
-        password = db.execute('''SELECT password FROM users
-                                    WHERE username=?;''', (un,))
-        password = [item for item in password][0][0]
-        return password == pw
-    except IndexError as error:
-        print(error)
-        return False 
+@execute(err_type = sqlite3.Error, command = 'UPDATE users SET password=? WHERE userid=?;')
+def set_pw(npw, userid): pass
 
-def get_id(un):
-    db = sqlite3.connect(DB_FILE)
-    try:
-        id = db.execute('SELECT userid FROM users WHERE username=?;', (un,))
-        return [item for item in id][0][0]
-    except IndexError as error:
-        print(error)
+@execute(err_type = IndexError, command = 'SELECT userid FROM users WHERE username=?;')
+def get_id(un): pass
 
-def get_pw(userid):
-    db = sqlite3.connect(DB_FILE)
-    try: 
-        pw = db.execute('SELECT password FROM users WHERE userid=?;', (userid,))
-        return [item for item in pw][0][0]
-    except sqlite3.Error as error:
-        print(error)
-
-def set_pw(userid, npw):
-    db = sqlite3.connect(DB_FILE)
-    try:
-        db.execute('UPDATE users SET password=? WHERE userid=?;', (npw, userid))
-        db.commit()
-        db.close()
-        return True
-    except sqlite3.Error as error:
-        print(error)
-        return False
+@execute(err_type = IndexError, command = 'SELECT password FROM users WHERE username=?;')
+def get_pw(un): pass
