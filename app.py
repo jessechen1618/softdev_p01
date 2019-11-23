@@ -111,9 +111,7 @@ def home():
     output = []
     while x < 100:
         x += 1
-        temp = list(c.fetchmany()[0])[1:]
-        url = temp.pop()
-        temp.insert(0, url)
+        temp = list(c.fetchmany()[0])
         output.append(temp)
     db.commit()
     db.close()
@@ -190,20 +188,22 @@ def settings():
 @app.route("/image", methods=['GET', 'POST'])
 @protected
 def image():
-    #temporary object for page creation
-    objectID = 40
-    req = urllib.request.urlopen("https://collectionapi.metmuseum.org/public/collection/v1/objects/" + str(objectID))
-    response = req.read()
-    metCol = json.loads(response)
-    #get color info on image
-    imageurl = metCol["primaryImage"]
-    url = f"https://api.imagga.com/v2/colors?image_url={imageurl}&extract_object_colors=0"
-    req = urllib.request.Request(url)
-    req.add_header("Authorization", "Basic YWNjXzE2YWNmNWJlODE0Yzk0ODo1NzM2YzRiMmQ4NzU1NzYwNmM5MjJlMjcyYWUxOGU4Ng==")
-    res = urllib.request.urlopen(req)
-    response = res.read()
-    imagga = json.loads(response)['result']['colors']
     if(request.method == 'GET'):
+        #temporary object for page creation
+        objectID = request.args['id']
+        req = urllib.request.urlopen("https://collectionapi.metmuseum.org/public/collection/v1/objects/" + str(objectID))
+        response = req.read()
+        metCol = json.loads(response)
+        #get color info on image
+        '''
+        imageurl = metCol["primaryImage"]
+        url = f"https://api.imagga.com/v2/colors?image_url={imageurl}&extract_object_colors=0"
+        req = urllib.request.Request(url)
+        req.add_header("Authorization", "Basic YWNjXzE2YWNmNWJlODE0Yzk0ODo1NzM2YzRiMmQ4NzU1NzYwNmM5MjJlMjcyYWUxOGU4Ng==")
+        res = urllib.request.urlopen(req)
+        response = res.read()
+        imagga = json.loads(response)['result']['colors']
+        '''
         return render_template(
             "image.html",
             image=metCol["primaryImage"],
@@ -211,7 +211,7 @@ def image():
             artist=metCol["artistDisplayName"],
             moreImages=metCol["additionalImages"],
             tags=metCol["tags"],
-            testjson=imagga
+            #testjson=imagga
             )
 
 if __name__ == "__main__":

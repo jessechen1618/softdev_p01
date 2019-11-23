@@ -119,3 +119,6 @@ kelvinN -- 2019-11-22 17:24
 
 kelvinN -- 2019-11-22 18:16
     - search now shows title of the piece and name of artist
+
+davidX -- 2019-11-22 20:47
+    - added way to view image from home page
