@@ -143,23 +143,28 @@ def search():
     elif (request.method == 'POST'):
         search = request.form['search']
         search = search.replace(" ", "+")
-        #if search.isspace():
         link = "https://collectionapi.metmuseum.org/public/collection/v1/search?q={}".format(search)
         data = querydata(link)['objectIDs']
-        images = list()
-        count = 0
-        for ids in data:
-            count += 1
-            if count == 10: #displaying less results for now
-                break
-            link = "https://collectionapi.metmuseum.org/public/collection/v1/objects/{}".format(ids)
-            data = querydata(link)['primaryImageSmall']
-            print(link)
-            images.append(data)
-        return render_template(
-            "search.html",
-            title= "Search",
-            images=images)
+        if request.form['searchtype'] == 'keyword':
+            images = list()
+            artTitle = list()
+            name = list()
+            count = 0
+            for ids in data:
+                count += 1
+                if count == 10: #displaying less results for now
+                    break
+                link = "https://collectionapi.metmuseum.org/public/collection/v1/objects/{}".format(ids)
+                print(link)
+                images.append(querydata(link)['primaryImageSmall'])
+                artTitle.append(querydata(link)['title'])
+                name.append(querydata(link)['artistDisplayName'])
+                counter = 0
+                for names in name:
+                    if len(names) < 1:
+                        name[counter] = 'Unknown Artist'
+                    counter += 1
+            return render_template("search.html", info=zip(images,artTitle,name))
 
 @app.route("/settings", methods=['GET', 'POST'])
 @protected

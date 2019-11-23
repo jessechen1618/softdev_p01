@@ -116,3 +116,6 @@ kelvinN -- 2019-11-22 8:35
 
 kelvinN -- 2019-11-22 17:24
     - search can now accept more than 1 word
+
+kelvinN -- 2019-11-22 18:16
+    - search now shows title of the piece and name of artist
