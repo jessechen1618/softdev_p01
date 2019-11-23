@@ -49,13 +49,15 @@
 {% endblock %}
 
 {% block body %}
-    <!-- {% for url, title, text in output%}
-        <div class="card rounded float-left" style="width: 20%; height: 500px">
-            <img src={{url}} class="card-img-top">
-            <div class="card-body">
+    {% for id, title, text, url in output%}
+        <div class="card rounded float-left" style="width: 20%">
+            <img src={{url}} class="card-img-top" style="height: 250px">
+            <div class="card-body" style="height:200px">
                 <h5 class="card-title">{{title}}</h5>
                 <p class="card-text">{{text}}</p>
-                <a href="#" class="btn btn-primary">Check Here</a>
+                <form action="/image" method='GET'>
+                    <button type="submit" class="btn btn-success" name="id" value={{id}}>Check Here</button>
+                </form>
             </div>
         </div>
     {% endfor %}     -->

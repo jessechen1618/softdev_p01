@@ -48,9 +48,12 @@ Comment area
                 {% endfor %}
             </div>
 
-            <div>
-                {{testjson}}
+            Colors:
+            {% for color in imageColors %}
+            <div style="background-color:{{color}}">
+                    {{color}}
             </div>
+            {% endfor %}
         </div>
     </div>
 </div>

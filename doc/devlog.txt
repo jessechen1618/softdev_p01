@@ -114,5 +114,17 @@ kelvinN -- 2019-11-22 8:35
     - started working on search by title/artist
     - added dropdown in search.html
 
+kelvinN -- 2019-11-22 17:24
+    - search can now accept more than 1 word
+
+kelvinN -- 2019-11-22 18:16
+    - search now shows title of the piece and name of artist
+
+davidX -- 2019-11-22 20:47
+    - added way to view image from home page
+    
+davidX -- 2019-11-22 21:14    
+    - added colors to image page using imagga
+
 ericL -- 2019-11-22 21:30
 	- refactored databasing for users with decorators and wrapper function

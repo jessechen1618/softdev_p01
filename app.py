@@ -104,19 +104,17 @@ def logout():
 @app.route("/home", methods=['GET'])
 @protected
 def home():
-    # db = sqlite3.connect("data/artpi.db")
-    # c = db.cursor()
-    # c.execute("SELECT * FROM cache")
-    # x = 0
-    # output = []
-    # while x < 100:
-    #     x += 1
-    #     temp = list(c.fetchmany()[0])[1:]
-    #     url = temp.pop()
-    #     temp.insert(0, url)
-    #     output.append(temp)
-    # db.commit()
-    # db.close()
+    db = sqlite3.connect("data/artpi.db")
+    c = db.cursor()
+    c.execute("SELECT * FROM cache")
+    x = 0
+    output = []
+    while x < 100:
+        x += 1
+        temp = list(c.fetchmany()[0])
+        output.append(temp)
+    db.commit()
+    db.close()
     return render_template(
         "home.html",
         title = "Home",
@@ -142,23 +140,30 @@ def search():
         )
     elif (request.method == 'POST'):
         search = request.form['search']
+        search = search.replace(" ", "+")
         link = "https://collectionapi.metmuseum.org/public/collection/v1/search?q={}".format(search)
         print(link.encode('utf-8'))
         data = querydata(link)['objectIDs']
-        images = list()
-        count = 0
-        for ids in data:
-            count += 1
-            if count == 10: #displaying less results for now
-                break
-            link = "https://collectionapi.metmuseum.org/public/collection/v1/objects/{}".format(ids)
-            data = querydata(link)['primaryImageSmall']
-            # print(link)
-            images.append(data)
-        return render_template(
-            "search.html",
-            title= "Search",
-            images=images)
+        if request.form['searchtype'] == 'keyword':
+            images = list()
+            artTitle = list()
+            name = list()
+            count = 0
+            for ids in data:
+                count += 1
+                if count == 10: #displaying less results for now
+                    break
+                link = "https://collectionapi.metmuseum.org/public/collection/v1/objects/{}".format(ids)
+                print(link)
+                images.append(querydata(link)['primaryImageSmall'])
+                artTitle.append(querydata(link)['title'])
+                name.append(querydata(link)['artistDisplayName'])
+                counter = 0
+                for names in name:
+                    if len(names) < 1:
+                        name[counter] = 'Unknown Artist'
+                    counter += 1
+            return render_template("search.html", info=zip(images,artTitle,name))
 
 @app.route("/settings", methods=['GET', 'POST'])
 @protected
@@ -186,20 +191,23 @@ def settings():
 @app.route("/image", methods=['GET', 'POST'])
 @protected
 def image():
-    #temporary object for page creation
-    objectID = 40
-    req = urllib.request.urlopen("https://collectionapi.metmuseum.org/public/collection/v1/objects/" + str(objectID))
-    response = req.read()
-    metCol = json.loads(response)
-    #get color info on image
-    imageurl = metCol["primaryImage"]
-    url = f"https://api.imagga.com/v2/colors?image_url={imageurl}&extract_object_colors=0"
-    req = urllib.request.Request(url)
-    req.add_header("Authorization", "Basic YWNjXzE2YWNmNWJlODE0Yzk0ODo1NzM2YzRiMmQ4NzU1NzYwNmM5MjJlMjcyYWUxOGU4Ng==")
-    res = urllib.request.urlopen(req)
-    response = res.read()
-    imagga = json.loads(response)['result']['colors']
     if(request.method == 'GET'):
+        #temporary object for page creation
+        objectID = request.args['id']
+        req = urllib.request.urlopen("https://collectionapi.metmuseum.org/public/collection/v1/objects/" + str(objectID))
+        response = req.read()
+        metCol = json.loads(response)
+        #get color info on image
+        imageurl = metCol["primaryImage"]
+        url = f"https://api.imagga.com/v2/colors?image_url={imageurl}&extract_object_colors=0"
+        req = urllib.request.Request(url)
+        req.add_header("Authorization", "Basic YWNjXzE2YWNmNWJlODE0Yzk0ODo1NzM2YzRiMmQ4NzU1NzYwNmM5MjJlMjcyYWUxOGU4Ng==")
+        res = urllib.request.urlopen(req)
+        response = res.read()
+        imagga = json.loads(response)['result']['colors']["image_colors"]
+        colors = []
+        for image_colors in imagga:
+            colors.append(image_colors["html_code"])
         return render_template(
             "image.html",
             image=metCol["primaryImage"],
@@ -207,7 +215,7 @@ def image():
             artist=metCol["artistDisplayName"],
             moreImages=metCol["additionalImages"],
             tags=metCol["tags"],
-            testjson=imagga
+            imageColors=colors,
             )
 
 if __name__ == "__main__":
