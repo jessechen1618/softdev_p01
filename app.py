@@ -195,15 +195,16 @@ def image():
         response = req.read()
         metCol = json.loads(response)
         #get color info on image
-        '''
         imageurl = metCol["primaryImage"]
         url = f"https://api.imagga.com/v2/colors?image_url={imageurl}&extract_object_colors=0"
         req = urllib.request.Request(url)
         req.add_header("Authorization", "Basic YWNjXzE2YWNmNWJlODE0Yzk0ODo1NzM2YzRiMmQ4NzU1NzYwNmM5MjJlMjcyYWUxOGU4Ng==")
         res = urllib.request.urlopen(req)
         response = res.read()
-        imagga = json.loads(response)['result']['colors']
-        '''
+        imagga = json.loads(response)['result']['colors']["image_colors"]
+        colors = []
+        for image_colors in imagga:
+            colors.append(image_colors["html_code"])
         return render_template(
             "image.html",
             image=metCol["primaryImage"],
@@ -211,7 +212,7 @@ def image():
             artist=metCol["artistDisplayName"],
             moreImages=metCol["additionalImages"],
             tags=metCol["tags"],
-            #testjson=imagga
+            imageColors=colors,
             )
 
 if __name__ == "__main__":

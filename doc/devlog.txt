@@ -122,3 +122,6 @@ kelvinN -- 2019-11-22 18:16
 
 davidX -- 2019-11-22 20:47
     - added way to view image from home page
+    
+davidX -- 2019-11-22 21:14    
+    - added colors to image page using imagga
