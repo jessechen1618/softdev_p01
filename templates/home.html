@@ -50,9 +50,9 @@
 
 {% block body %}
     {% for id, title, text, url in cache %}
-        <div class="card rounded float-left" style="width: 20%">
-            <img src={{url}} class="card-img-top" style="height: 250px">
-            <div class="card-body" style="height:200px">
+        <div class="card rounded float-left w-25" style="min-width: 250px">
+            <img src={{url}} class="card-img-top img-fluid">
+            <div class="card-body">
                 <h5 class="card-title">{{title}}</h5>
                 <p class="card-text">{{text}}</p>
                 <a href="/image/{{id}}" class="btn btn-outline-success">Check Here</a>
