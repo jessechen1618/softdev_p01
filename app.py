@@ -30,61 +30,56 @@ from utl.builder import builder
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
 
-def querydata(link):
-    url = urllib.request.urlopen(link)
-    response = url.read()
+def querydata(link, headers=False):
+    req = urllib.request.Request(link) ## create a request object 
+    # add headers only if necessary (for imagga)
+    if headers: req.add_header('Authorization', 'Basic YWNjXzE2YWNmNWJlODE0Yzk0ODo1NzM2YzRiMmQ4NzU1NzYwNmM5MjJlMjcyYWUxOGU4Ng==')
+    res = urllib.request.urlopen(req)
+    response = res.read()
     data = json.loads(response)
     return data
 
 def protected(f):
     @functools.wraps(f)
     def wrapper(*args, **kwargs):
-        if 'user' in session:
-            return f(*args, **kwargs)
+        if 'user' in session: return f(*args, **kwargs) # if logged in, continue with expected function 
         else:
-            flash("You are not logged in", "error")
+            flash("You are not logged in", 'error')
             return redirect(url_for('login'))
     return wrapper
 
-@app.route("/", methods=['GET'])
+@app.route('/', methods=['GET'])
 def root():
     if 'user' in session:
-        flash(f"Hello {session['user']}!", "success")
+        flash(f"Hello {session['user']}!", 'success')
         return redirect(url_for('home'))
     else:
         return redirect(url_for('login'))
 
-@app.route("/register", methods=['GET', 'POST'])
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-    if(request.method == 'GET'):
-        return render_template(
-            "register.html",
-            title = "Register",
-        )
+    if(request.method == 'GET'): return render_template('register.html', title = "Register")
+
     elif(request.method == 'POST'):
         if(request.form['username'] == '' or request.form['username'].isspace()):
-            flash('Fill out username', "error")
+            flash("Fill out username", 'error')
         elif(request.form['password'] == '' or request.form['password'].isspace()):
-            flash('Fill out password', "error")
+            flash("Fill out password", 'error')
         elif(request.form['password'] != request.form['confirm']):
-            flash('Passwords do not match', "error")
+            flash("Passwords do not match", 'error')
         elif(user.create(request.form['username'], request.form['password'])):
-            flash('You have successfully registered', "success")
+            flash("You have successfully registered", 'success')
             return redirect(url_for('login'))
         else:
-            flash('Username already exists', "error")
+            flash("Username already exists", 'error')
         return redirect(url_for('register'))
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if(request.method == 'GET'):
-        if 'user' in session:
-            return redirect(url_for('home'))
-        else:
-            return render_template(
-                "login.html",
-                title = "Login",
-            )
+        if 'user' in session: return redirect(url_for('home'))
+        else: return render_template("login.html", title = "Login" )
+
     elif(request.method == 'POST'):
         if(user.get_pw(request.form['username']) == request.form['password']):
             session['userid'] = user.get_id(request.form['username'])
@@ -105,74 +100,48 @@ def logout():
 @app.route("/home", methods=['GET'])
 @protected
 def home():
-    # cache.build()
-    db = sqlite3.connect("data/artpi.db")
-    c = db.cursor()
-    c.execute("SELECT * FROM cache")
-    output = []
-    for image in range(0, cache.size()):
-        temp = list(c.fetchmany()[0])
-        output.append(temp)
-    db.commit()
-    db.close()
-    return render_template(
-        "home.html",
-        title = "Home",
-        src = "https://images.metmuseum.org/CRDImages/ep/web-large/DT1567.jpg",
-        output = output
-    )
+    return render_template("home.html", title = "Home", cache = cache.get())      
 
 @app.route("/saved_art", methods=['GET'])
 @protected
 def saved_art():
-    return render_template(
-        "saved_art.html",
-        title = "Saved Art"
-    )
+    return render_template("saved_art.html", title = "Saved Art")
 
 @app.route("/search", methods=['GET', 'POST'])
 @protected
 def search():
-    if (request.method == 'GET'):
-        return render_template(
-            "search.html",
-            title = "Search"
-        )
+    if (request.method == 'GET'): return render_template("search.html", title = "Search")
+
     elif (request.method == 'POST'):
         search = request.form['search']
         search = search.replace(" ", "+")
-        link = "https://collectionapi.metmuseum.org/public/collection/v1/search?q={}".format(search)
-        print(link.encode('utf-8'))
+        link = f"https://collectionapi.metmuseum.org/public/collection/v1/search?q={search}"
         data = querydata(link)['objectIDs']
         if request.form['searchtype'] == 'keyword':
-            images = list()
-            artTitle = list()
-            name = list()
+            images, artTitle, name, ids = list(), list(), list(), list()
             count = 0
-            for ids in data:
+            for id in data:
                 count += 1
-                if count == 10: #displaying less results for now
-                    break
-                link = "https://collectionapi.metmuseum.org/public/collection/v1/objects/{}".format(ids)
-                print(link)
-                images.append(querydata(link)['primaryImageSmall'])
-                artTitle.append(querydata(link)['title'])
-                name.append(querydata(link)['artistDisplayName'])
+                if count == 10: break #displaying less results for now
+                data = querydata(f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}")
+                images.append(data['primaryImageSmall'])
+                artTitle.append(data['title'])
+                name.append(data['artistDisplayName'])
+                ids.append(id)
                 counter = 0
                 for names in name:
-                    if len(names) < 1:
-                        name[counter] = 'Unknown Artist'
+                    if len(names) < 1: name[counter] = 'Unknown Artist'
                     counter += 1
-            return render_template("search.html", info=zip(images,artTitle,name))
+            return render_template(
+                "search.html", 
+                title="Search",
+                info=zip(images,artTitle,name,ids))
 
 @app.route("/settings", methods=['GET', 'POST'])
 @protected
 def settings():
-    if (request.method == 'GET'):
-        return render_template(
-            "settings.html",
-            title = "Settings"
-        )
+    if (request.method == 'GET'): return render_template("settings.html", title = "Settings")
+
     elif (request.method == 'POST'):
         if(request.form['new'] == request.form['confirm']):
             if(user.get_pw(session['user']) == request.form['current']):
@@ -188,26 +157,17 @@ def settings():
     else:
         return redirect(url_for('login'))
 
-@app.route("/image", methods=['GET', 'POST'])
+@app.route("/image/<id>", methods=['GET', 'POST'])
 @protected
-def image():
+def image(id):
     if(request.method == 'GET'):
-        #temporary object for page creation
-        objectID = request.args['id']
-        req = urllib.request.urlopen("https://collectionapi.metmuseum.org/public/collection/v1/objects/" + str(objectID))
-        response = req.read()
-        metCol = json.loads(response)
+        # get image of artwork
+        metCol = querydata(f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}")
         #get color info on image
         imageurl = metCol["primaryImage"]
-        url = f"https://api.imagga.com/v2/colors?image_url={imageurl}&extract_object_colors=0"
-        req = urllib.request.Request(url)
-        req.add_header("Authorization", "Basic YWNjXzE2YWNmNWJlODE0Yzk0ODo1NzM2YzRiMmQ4NzU1NzYwNmM5MjJlMjcyYWUxOGU4Ng==")
-        res = urllib.request.urlopen(req)
-        response = res.read()
-        imagga = json.loads(response)['result']['colors']["image_colors"]
-        colors = []
-        for image_colors in imagga:
-            colors.append(image_colors["html_code"])
+        imagga = querydata(f"https://api.imagga.com/v2/colors?image_url={imageurl}&extract_object_colors=0", headers=True)
+        imagga = imagga['result']['colors']["image_colors"]
+        colors = [image_colors['html_code'] for image_colors in imagga]
         return render_template(
             "image.html",
             image=metCol["primaryImage"],

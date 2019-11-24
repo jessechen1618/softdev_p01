@@ -47,3 +47,19 @@ def build():
         info = querydata(f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{objects[checked]}")
         add_image(objects[checked], info['title'], info['artistDisplayName'], info['primaryImage'])
         checked += 1
+
+def get():
+    try:
+        db = sqlite3.connect("data/artpi.db")
+        c = db.cursor()
+        c.execute("SELECT * FROM cache")
+        output = [list(c.fetchmany()[0]) for image in range(0, size())]
+        db.commit()
+        db.close()
+        return output
+    except sqlite3.Error as error:
+        print(error)
+        return None
+    except IndexError as error:
+        print(error)
+        return None
