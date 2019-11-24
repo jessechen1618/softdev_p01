@@ -128,3 +128,7 @@ davidX -- 2019-11-22 21:14
 
 ericL -- 2019-11-22 21:30
 	- refactored databasing for users with decorators and wrapper function
+
+ericL -- 2019-11-23 23:05
+	- refactored user databasing again with builder module
+	- changed caching databasing to use builder module

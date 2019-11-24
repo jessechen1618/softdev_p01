@@ -12,7 +12,8 @@ import urllib.parse
 import functools
 import os
 import json
-from utl import user
+from utl import user, cache
+from utl.builder import builder 
 
 # imageurl = "https://www.mapquestapi.com/staticmap/v5/map?key=GN6wCdut6eE2QkB8ATz12lMHJV8tvVD5&center=San+Francisco,CA&zoom=10&type=hyb&size=600,400@2x"
 # print(imageurl)
@@ -104,13 +105,12 @@ def logout():
 @app.route("/home", methods=['GET'])
 @protected
 def home():
+    # cache.build()
     db = sqlite3.connect("data/artpi.db")
     c = db.cursor()
     c.execute("SELECT * FROM cache")
-    x = 0
     output = []
-    while x < 100:
-        x += 1
+    for image in range(0, cache.size()):
         temp = list(c.fetchmany()[0])
         output.append(temp)
     db.commit()
@@ -119,7 +119,7 @@ def home():
         "home.html",
         title = "Home",
         src = "https://images.metmuseum.org/CRDImages/ep/web-large/DT1567.jpg",
-        # output = output
+        output = output
     )
 
 @app.route("/saved_art", methods=['GET'])
