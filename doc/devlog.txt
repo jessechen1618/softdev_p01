@@ -151,3 +151,8 @@ kelvinN -- 2019-11-24 16:03
 
 kelvinN -- 2019-11-24 17:01
   - added search by title but only based on results from search by keyword
+
+kelvinN -- 2019-11-24 17:23
+  - fixed no result because of capitalization
+  - added search by name of artist but only based on results from search by keyword
+  - may need to fix duplicate code later

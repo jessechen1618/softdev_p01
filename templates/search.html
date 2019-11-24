@@ -1,10 +1,12 @@
 {% extends "home.html" %}
 
 {% block body %}
+<h5> Please note: The works of art that can be displayed are limited to only what is available in the Met Museum </h5> <br>
 <form method="POST" action="/search">
   <input type="text" name="search">
   <input type="submit" name="submit" value="search">
 
+Search By:
   <select name="searchtype">
     <option value="keyword">Keyword</option>
     <option value="artist">Artist</option>
