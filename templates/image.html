@@ -1,5 +1,9 @@
 {% extends "home.html" %}
 
+{% block backstyle %}
+<body style="background-color: {{imageColors[0]}}">
+{% endblock %}
+
 {% block body %}
 <!--
 Image display
@@ -10,7 +14,7 @@ Comment area
 </section>
 -->
 
-<div class="container">
+<div class="container p-5 bg-light">
     <div class="row">
         <div class="col-md">
             <div id="Met_Images" class="carousel slide" data-ride="carousel">

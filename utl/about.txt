@@ -1,1 +1,1 @@
-This folder contains python modules for database management
+This folder contains python modules for database management and cleaner API querying.

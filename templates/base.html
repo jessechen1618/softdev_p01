@@ -12,8 +12,16 @@
     <link rel="stylesheet" href="../static/main.css">
 </head>
 
+{% block backstyle %}
 <body>
-    <div class="container mt-2">
+{% endblock %}
+    <div class="container my-2 p-5" 
+    {% if imageColors | length > 0 %} 
+    style="background-color: {{imageColors[1]}}"
+    {% else %}
+    style="background-color: white"
+    {% endif %}
+    >
         {% block nav %}
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}

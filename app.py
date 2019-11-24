@@ -14,6 +14,7 @@ import os
 import json
 from utl import user, cache
 from utl.builder import builder 
+from utl.query import query
 
 # imageurl = "https://www.mapquestapi.com/staticmap/v5/map?key=GN6wCdut6eE2QkB8ATz12lMHJV8tvVD5&center=San+Francisco,CA&zoom=10&type=hyb&size=600,400@2x"
 # print(imageurl)
@@ -29,15 +30,6 @@ from utl.builder import builder
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
-
-def querydata(link, headers=False):
-    req = urllib.request.Request(link) ## create a request object 
-    # add headers only if necessary (for imagga)
-    if headers: req.add_header('Authorization', 'Basic YWNjXzE2YWNmNWJlODE0Yzk0ODo1NzM2YzRiMmQ4NzU1NzYwNmM5MjJlMjcyYWUxOGU4Ng==')
-    res = urllib.request.urlopen(req)
-    response = res.read()
-    data = json.loads(response)
-    return data
 
 def protected(f):
     @functools.wraps(f)
@@ -99,13 +91,11 @@ def logout():
 
 @app.route("/home", methods=['GET'])
 @protected
-def home():
-    return render_template("home.html", title = "Home", cache = cache.get())      
+def home(): return render_template("home.html", title = "Home", cache = cache.get())      
 
 @app.route("/saved_art", methods=['GET'])
 @protected
-def saved_art():
-    return render_template("saved_art.html", title = "Saved Art")
+def saved_art(): return render_template("saved_art.html", title = "Saved Art")
 
 @app.route("/search", methods=['GET', 'POST'])
 @protected
@@ -116,14 +106,14 @@ def search():
         search = request.form['search']
         search = search.replace(" ", "+")
         link = f"https://collectionapi.metmuseum.org/public/collection/v1/search?q={search}"
-        data = querydata(link)['objectIDs']
+        data = query.data(link)['objectIDs']
         if request.form['searchtype'] == 'keyword':
             images, artTitle, name, ids = list(), list(), list(), list()
             count = 0
             for id in data:
                 count += 1
                 if count == 10: break #displaying less results for now
-                data = querydata(f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}")
+                data = query.data(f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}")
                 images.append(data['primaryImageSmall'])
                 artTitle.append(data['title'])
                 name.append(data['artistDisplayName'])
@@ -132,10 +122,7 @@ def search():
                 for names in name:
                     if len(names) < 1: name[counter] = 'Unknown Artist'
                     counter += 1
-            return render_template(
-                "search.html", 
-                title="Search",
-                info=zip(images,artTitle,name,ids))
+            return render_template("search.html", title="Search", info=zip(images,artTitle,name,ids))
 
 @app.route("/settings", methods=['GET', 'POST'])
 @protected
@@ -161,11 +148,13 @@ def settings():
 @protected
 def image(id):
     if(request.method == 'GET'):
+
         # get image of artwork
-        metCol = querydata(f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}")
+        metCol = query.data(f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}")
+
         #get color info on image
         imageurl = metCol["primaryImage"]
-        imagga = querydata(f"https://api.imagga.com/v2/colors?image_url={imageurl}&extract_object_colors=0", headers=True)
+        imagga = query.data(f"https://api.imagga.com/v2/colors?image_url={imageurl}&extract_object_colors=0", headers=True)
         imagga = imagga['result']['colors']["image_colors"]
         colors = [image_colors['html_code'] for image_colors in imagga]
         return render_template(

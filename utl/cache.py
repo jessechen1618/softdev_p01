@@ -5,15 +5,8 @@ P1 ArRESTed Development
 '''
 
 import sqlite3	#enable control of an sqlite database
-import urllib.request
-import json
 from .builder import builder 
-
-def querydata(link):
-    url = urllib.request.urlopen(link)
-    response = url.read()
-    data = json.loads(response)
-    return data
+from .query import query
 
 # initializes new cache table
 @builder.execute(err_type=sqlite3.Error,
@@ -40,11 +33,11 @@ def build():
     init()
     clear()
     #get list of objects
-    objects = querydata('https://collectionapi.metmuseum.org/public/collection/v1/search?artistOrCulture=true&q=van+gogh')['objectIDs']
+    objects = query.data('https://collectionapi.metmuseum.org/public/collection/v1/search?artistOrCulture=true&q=van+gogh')['objectIDs']
     #get object info and input into database
     checked = 0 
     while size() < 20 and checked < len(objects):
-        info = querydata(f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{objects[checked]}")
+        info = query.data(f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{objects[checked]}")
         add_image(objects[checked], info['title'], info['artistDisplayName'], info['primaryImage'])
         checked += 1
 
@@ -54,12 +47,6 @@ def get():
         c = db.cursor()
         c.execute("SELECT * FROM cache")
         output = [list(c.fetchmany()[0]) for image in range(0, size())]
-        db.commit()
         db.close()
         return output
-    except sqlite3.Error as error:
-        print(error)
-        return None
-    except IndexError as error:
-        print(error)
-        return None
+    except:return None
