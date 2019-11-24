@@ -13,7 +13,7 @@ import functools
 import os
 import json
 from utl import user, cache
-from utl.builder import builder 
+from utl.builder import builder
 from utl.query import query
 
 # imageurl = "https://www.mapquestapi.com/staticmap/v5/map?key=GN6wCdut6eE2QkB8ATz12lMHJV8tvVD5&center=San+Francisco,CA&zoom=10&type=hyb&size=600,400@2x"
@@ -34,7 +34,7 @@ app.secret_key = os.urandom(32)
 def protected(f):
     @functools.wraps(f)
     def wrapper(*args, **kwargs):
-        if 'user' in session: return f(*args, **kwargs) # if logged in, continue with expected function 
+        if 'user' in session: return f(*args, **kwargs) # if logged in, continue with expected function
         else:
             flash("You are not logged in", 'error')
             return redirect(url_for('login'))
@@ -91,7 +91,7 @@ def logout():
 
 @app.route("/home", methods=['GET'])
 @protected
-def home(): return render_template("home.html", title = "Home", cache = cache.get())      
+def home(): return render_template("home.html", title = "Home", cache = cache.get())
 
 @app.route("/saved_art", methods=['GET'])
 @protected
@@ -103,25 +103,27 @@ def search():
     if (request.method == 'GET'): return render_template("search.html", title = "Search")
 
     elif (request.method == 'POST'):
-        search = request.form['search']
-        search = search.replace(" ", "+")
+        search = request.form['search'].replace(" ", "+")
         link = f"https://collectionapi.metmuseum.org/public/collection/v1/search?q={search}"
         data = query.data(link)['objectIDs']
+        images, artTitle, name, ids = list(), list(), list(), list()
         if request.form['searchtype'] == 'keyword':
-            images, artTitle, name, ids = list(), list(), list(), list()
             count = 0
-            for id in data:
-                count += 1
-                if count == 10: break #displaying less results for now
-                data = query.data(f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}")
-                images.append(data['primaryImageSmall'])
-                artTitle.append(data['title'])
-                name.append(data['artistDisplayName'])
-                ids.append(id)
-                counter = 0
-                for names in name:
-                    if len(names) < 1: name[counter] = 'Unknown Artist'
-                    counter += 1
+            if data != None:
+                for id in data:
+                    count += 1
+                    if count == 10: break #displaying less results for now
+                    data = query.data(f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}")
+                    images.append(data['primaryImageSmall'])
+                    artTitle.append(data['title'])
+                    name.append(data['artistDisplayName'])
+                    ids.append(id)
+                    counter = 0
+                    for names in name:
+                        if len(names) < 1: name[counter] = 'Unknown Artist'
+                        counter += 1
+            else:
+                flash('No Results Found')
             return render_template("search.html", title="Search", info=zip(images,artTitle,name,ids))
 
 @app.route("/settings", methods=['GET', 'POST'])

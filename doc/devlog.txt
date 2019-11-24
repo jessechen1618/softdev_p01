@@ -122,8 +122,8 @@ kelvinN -- 2019-11-22 18:16
 
 davidX -- 2019-11-22 20:47
     - added way to view image from home page
-    
-davidX -- 2019-11-22 21:14    
+
+davidX -- 2019-11-22 21:14
     - added colors to image page using imagga
 
 ericL -- 2019-11-22 21:30
@@ -134,13 +134,16 @@ ericL -- 2019-11-23 23:05
 	- changed caching databasing to use builder module
 
 ericL -- 2019-11-24 05:39
-	- generalize querydata function to handle headers 
+	- generalize querydata function to handle headers
 	- change query calls to use function
 	- start the war against double quotes
-	- stylize search results 
-	- add button to link search results to image page 
-	- move cache request to cache module 
+	- stylize search results
+	- add button to link search results to image page
+	- move cache request to cache module
 
 ericL -- 2019-11-24 06:31
-	- encapsulate data query in own module 
-	- change background colors depending on image color 
+	- encapsulate data query in own module
+	- change background colors depending on image color
+
+kelvinN -- 2019-11-24 16:
+  - fixed error if no results are found when searching
