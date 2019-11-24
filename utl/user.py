@@ -1,63 +1,28 @@
+'''
+put me to REST - Jesse "McCree" Chen, Kelvin Ng, Eric "Morty" Lau, David Xiedeng
+SoftDev1 pd1
+P1 ArRESTed Development
+'''
+
 import sqlite3 
-import os 
+from .builder import builder 
 
-DB_FILE = "./data/artpi.db"
+# initializes new users table 
+@builder.execute(err_type = sqlite3.Error,
+    command = '''CREATE TABLE IF NOT EXISTS users ( 
+                userid INTEGER PRIMARY KEY AUTOINCREMENT,
+                username TEXT UNIQUE CHECK (length(username) > 0),
+                password TEXT CHECK (length(password) > 0));''')
+def init(): pass
 
-def init():
-    db = sqlite3.connect(DB_FILE)
-    db.execute('''CREATE TABLE IF NOT EXISTS users (
-                    userid INTEGER PRIMARY KEY AUTOINCREMENT,
-                    username TEXT UNIQUE NOT NULL,
-                    password TEXT NOT NULL);''')
-    db.commit()
-    db.close()
+@builder.execute(err_type = sqlite3.Error, command = 'INSERT INTO users(username, password) VALUES (?,?);')
+def create(un, pw): pass
 
-def create_acc(un, pw):
-    db = sqlite3.connect(DB_FILE)
-    try:
-        db.execute('''INSERT INTO users(username, password) 
-                        VALUES (?,?);''', (un, pw,))
-        db.commit()
-        db.close()
-        return True
-    except sqlite3.Error as error:
-        print(error)
-        return False  
+@builder.execute(err_type = sqlite3.Error, command = 'UPDATE users SET password=? WHERE userid=?;')
+def set_pw(npw, userid): pass
 
-def login(un, pw):
-    db = sqlite3.connect(DB_FILE)
-    try:
-        password = db.execute('''SELECT password FROM users
-                                    WHERE username=?;''', (un,))
-        password = [item for item in password][0][0]
-        return password == pw
-    except IndexError as error:
-        print(error)
-        return False 
+@builder.execute(err_type = IndexError, command = 'SELECT userid FROM users WHERE username=?;')
+def get_id(un): pass
 
-def get_id(un):
-    db = sqlite3.connect(DB_FILE)
-    try:
-        id = db.execute('SELECT userid FROM users WHERE username=?;', (un,))
-        return [item for item in id][0][0]
-    except IndexError as error:
-        print(error)
-
-def get_pw(userid):
-    db = sqlite3.connect(DB_FILE)
-    try: 
-        pw = db.execute('SELECT password FROM users WHERE userid=?;', (userid,))
-        return [item for item in pw][0][0]
-    except sqlite3.Error as error:
-        print(error)
-
-def set_pw(userid, npw):
-    db = sqlite3.connect(DB_FILE)
-    try:
-        db.execute('UPDATE users SET password=? WHERE userid=?;', (npw, userid))
-        db.commit()
-        db.close()
-        return True
-    except sqlite3.Error as error:
-        print(error)
-        return False
+@builder.execute(err_type = IndexError, command = 'SELECT password FROM users WHERE username=?;')
+def get_pw(un): pass

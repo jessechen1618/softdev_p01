@@ -12,7 +12,8 @@ import urllib.parse
 import functools
 import os
 import json
-from utl import user
+from utl import user, cache
+from utl.builder import builder 
 
 # imageurl = "https://www.mapquestapi.com/staticmap/v5/map?key=GN6wCdut6eE2QkB8ATz12lMHJV8tvVD5&center=San+Francisco,CA&zoom=10&type=hyb&size=600,400@2x"
 # print(imageurl)
@@ -67,7 +68,7 @@ def register():
             flash('Fill out password', "error")
         elif(request.form['password'] != request.form['confirm']):
             flash('Passwords do not match', "error")
-        elif(user.create_acc(request.form['username'], request.form['password'])):
+        elif(user.create(request.form['username'], request.form['password'])):
             flash('You have successfully registered', "success")
             return redirect(url_for('login'))
         else:
@@ -85,7 +86,7 @@ def login():
                 title = "Login",
             )
     elif(request.method == 'POST'):
-        if(user.login(request.form['username'], request.form['password'])):
+        if(user.get_pw(request.form['username']) == request.form['password']):
             session['userid'] = user.get_id(request.form['username'])
             session['user'] = request.form['username']
             flash('You have successfully logged in!', "success")
@@ -104,13 +105,12 @@ def logout():
 @app.route("/home", methods=['GET'])
 @protected
 def home():
+    # cache.build()
     db = sqlite3.connect("data/artpi.db")
     c = db.cursor()
     c.execute("SELECT * FROM cache")
-    x = 0
     output = []
-    while x < 100:
-        x += 1
+    for image in range(0, cache.size()):
         temp = list(c.fetchmany()[0])
         output.append(temp)
     db.commit()
@@ -142,6 +142,7 @@ def search():
         search = request.form['search']
         search = search.replace(" ", "+")
         link = "https://collectionapi.metmuseum.org/public/collection/v1/search?q={}".format(search)
+        print(link.encode('utf-8'))
         data = querydata(link)['objectIDs']
         if request.form['searchtype'] == 'keyword':
             images = list()
@@ -174,14 +175,16 @@ def settings():
         )
     elif (request.method == 'POST'):
         if(request.form['new'] == request.form['confirm']):
-            if(user.get_pw(session['userid']) == request.form['current']):
-                if(user.set_pw(session['userid'], request.form['new'])):
+            if(user.get_pw(session['user']) == request.form['current']):
+                if(user.set_pw(request.form['new'], session['userid'])):
                     flash('You have successfully changed your password!', "success")
                 else:
-                    flash('Current password is incorrect', "error")
+                    flash('Could not change password', "error")
             else:
-                flash('New passwords do not match', "error")
-            return redirect(url_for('settings'))
+                flash('Current password is incorrect', "error")
+        else:
+            flash('New passwords do not match', "error")
+        return redirect(url_for('settings'))
     else:
         return redirect(url_for('login'))
 

@@ -108,7 +108,7 @@ kelvinN -- 2019-11-22 7:16
     - fixed duplicate entry in devlog
 
 kelvinN -- 2019-11-22 8:02
-    - fixed the naming to firstL in devlog
+    - fixed the naming to firstL in devlogk
 
 kelvinN -- 2019-11-22 8:35
     - started working on search by title/artist
@@ -125,3 +125,10 @@ davidX -- 2019-11-22 20:47
     
 davidX -- 2019-11-22 21:14    
     - added colors to image page using imagga
+
+ericL -- 2019-11-22 21:30
+	- refactored databasing for users with decorators and wrapper function
+
+ericL -- 2019-11-23 23:05
+	- refactored user databasing again with builder module
+	- changed caching databasing to use builder module
