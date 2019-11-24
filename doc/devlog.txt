@@ -150,4 +150,4 @@ kelvinN -- 2019-11-24 16:03
   - need to fix error when searching with a character with an accent mark
 
 kelvinN -- 2019-11-24 17:01
-  - added search by title
+  - added search by title but only based on results from search by keyword
