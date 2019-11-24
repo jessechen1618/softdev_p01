@@ -108,7 +108,9 @@ def search():
         link = f"https://collectionapi.metmuseum.org/public/collection/v1/search?q={search}"
         data = query.data(link)['objectIDs']
         images, artTitle, name, ids = list(), list(), list(), list()
-        if data != None:
+        if data == None:
+            flash('No Results Found')
+        else:
             if request.form['searchtype'] == 'keyword':
                 count = 0
                 for id in data:
@@ -147,8 +149,8 @@ def search():
                         artTitle.append(data['title'])
                         name.append(data['artistDisplayName'])
                         ids.append(id)
-        else:
-            flash('No Results Found')
+            if len(images) < 1:
+                flash('No Results Found')
         return render_template("search.html", title="Search", info=zip(images,artTitle,name,ids))
 
 @app.route("/settings", methods=['GET', 'POST'])
