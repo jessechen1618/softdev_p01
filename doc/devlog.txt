@@ -157,6 +157,10 @@ kelvinN -- 2019-11-24 17:23
   - added search by name of artist but only based on results from search by keyword
   - may need to fix duplicate code later
 
+kelvinN -- 2019-11-24 18:19
+  - fixed flashing when no results found
+  - TODO: fix css when flashing after searching
+
 davidX -- 2019-11-24 18:38
     - unsquashed images on home-page
     - made images responsive on home-page
