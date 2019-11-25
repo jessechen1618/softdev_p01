@@ -172,3 +172,7 @@ davidX -- 2019-11-24 19:14
 
 davidX -- 2019-11-24 19:46
     - formatted search similar to home
+    
+davidX -- 2019-11-24 23:56
+    - added formatting for location on image page
+    - removed calls to imagga temporarily

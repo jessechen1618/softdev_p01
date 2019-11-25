@@ -1,8 +1,10 @@
 {% extends "home.html" %}
 
 {% block backstyle %}
-<body style="background-color: {{imageColors[0]}}">
 {% endblock %}
+<!--
+<body style="background-color: {{imageColors[0]}}">
+-->
 
 {% block body %}
 <!--
@@ -51,11 +53,26 @@ Comment area
                 {% endfor %}
             </div>
 
-            Colors:
-            {% for color in imageColors %}
-            <div style="background-color:{{color}}">
-                    {{color}}
+            <div>
+                Colors:
+                <!--
+                {% for color in imageColors %}
+                <div style="background-color:{{color}}">
+                        {{color}}
+                </div>
+                {% endfor %}
+                -->
             </div>
+            
+            Location:
+            {% for part in location %}
+                {% if part %}
+                    {% if loop.nextitem is defined %}
+                        {{part}},
+                    {% else %}
+                        {{part}}
+                    {% endif %}
+                {% endif %}
             {% endfor %}
         </div>
     </div>

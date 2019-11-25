@@ -180,12 +180,14 @@ def image(id):
 
         # get image of artwork
         metCol = query.data(f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}")
-
+        
+        '''
         #get color info on image
         imageurl = metCol["primaryImage"]
         imagga = query.data(f"https://api.imagga.com/v2/colors?image_url={imageurl}&extract_object_colors=0", headers=True)
         imagga = imagga['result']['colors']["image_colors"]
         colors = [image_colors['html_code'] for image_colors in imagga]
+        '''
         return render_template(
             "image.html",
             image=metCol["primaryImage"],
@@ -193,7 +195,8 @@ def image(id):
             artist=metCol["artistDisplayName"],
             moreImages=metCol["additionalImages"],
             tags=metCol["tags"],
-            imageColors=colors,
+            location=(metCol["city"],metCol["state"],metCol["country"])
+            #imageColors=colors,
             )
 
 if __name__ == "__main__":
