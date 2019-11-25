@@ -164,17 +164,28 @@ kelvinN -- 2019-11-24 18:19
 davidX -- 2019-11-24 18:38
     - unsquashed images on home-page
     - made images responsive on home-page
-    
+
 davidX -- 2019-11-24 19:14
     - removed button from cards
     - made entire card clickable
     - used card groups to unify formatting
 
 ericL -- 2019-11-24 19:39
-	- refactor searching process to be more efficient and clean 
-	
+	- refactor searching process to be more efficient and clean
+
 davidX -- 2019-11-24 19:46
     - formatted search similar to home
+
+chenJ -- 2019-11-25 08:07
+
+HOME STRETCH PLAN
+- Save artwork
+- Add descriptions to art profiles (e.g. location, medium, department, etc)
+- Location of artwork with the map API
+- Commenting on art pieces
+
+kelvinN -- 2019-11-25 08:26
+  - added description of art piece
 
 ericL -- 2019-11-25 12:48
 	- add commenting feature for each artpiece 

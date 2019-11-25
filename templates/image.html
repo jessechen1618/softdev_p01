@@ -42,6 +42,11 @@ Comment area
             <h2 class="bg-light">Artist: {{artist}} <br></h2>
 
             <div>
+                Artist bio: {{ artistDisplayBio }} <br>
+                Year published: {{ objectEndDate }} <br>
+                Medium: {{ medium }} <br>
+                Classification: {{ classification }} <br>
+                Currently in: {{ repository }} <br>
                 {% for tag in tags %}
                     <button type="button" class="btn">#{{tag}}</button>
                 {% endfor %}
