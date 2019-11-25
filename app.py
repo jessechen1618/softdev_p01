@@ -101,15 +101,15 @@ def results(searchtype, data, entered):
     images, artTitle, name, ids = list(), list(), list(), list()
     count = 0
     for id in data:
-        if count == 10: break # displaying less results for now 
+        if count == 10: break # displaying less results for now
         data = query.data(f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}")
-        toAdd = True 
-        if searchtype == 'name': 
+        toAdd = True
+        if searchtype == 'name':
             if entered.lower() in data['title'].lower(): pass
-            else: toAdd = False  
-        if searchtype == 'artist': 
+            else: toAdd = False
+        if searchtype == 'artist':
             if entered.lower() in data['artistDisplayName'].lower(): pass
-            else: toAdd = False  
+            else: toAdd = False
         if toAdd:
             images.append(data['primaryImageSmall'])
             artTitle.append(data['title'])
@@ -121,7 +121,7 @@ def results(searchtype, data, entered):
             counter += 1
         count += 1
     return images, artTitle, name, ids
-    
+
 @app.route("/search", methods=['GET', 'POST'])
 @protected
 def search():
@@ -181,6 +181,11 @@ def image(id):
             moreImages=metCol["additionalImages"],
             tags=metCol["tags"],
             imageColors=colors,
+            artistDisplayBio=metCol["artistDisplayBio"],
+            objectEndDate=metCol["objectEndDate"],
+            medium=metCol["medium"],
+            classification=metCol["classification"],
+            repository=metCol["repository"]
             )
 
 if __name__ == "__main__":
