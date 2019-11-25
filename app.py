@@ -91,7 +91,10 @@ def logout():
 
 @app.route("/home", methods=['GET'])
 @protected
-def home(): return render_template("home.html", title = "Home", cache = cache.get())
+def home(): 
+    # cache.clear()
+    # cache.build()
+    return render_template("home.html", title = "Home", cache = cache.get())
 
 @app.route("/saved_art", methods=['GET'])
 @protected
@@ -183,6 +186,7 @@ def image(id):
             )
 
 if __name__ == "__main__":
+    # cache.build()
     user.init()
     app.debug = True
     app.run()
