@@ -49,17 +49,17 @@
 {% endblock %}
 
 {% block body %}
-    <div class="card-group">
-        {% for id, title, text, url in cache %}
-            <div class="card rounded float-left" style="min-width: 250px">
-                <a href="/image/{{id}}" style="color: black">
-                    <img src={{url}} class="card-img-top img-fluid">
-                    <div class="card-body">
-                        <h5 class="card-title">{{title}}</h5>
-                        <p class="card-text">{{text}}</p>
-                    </div>
-                </a>
+<div class="card-group">
+    {% for id, title, text, url in cache %}
+    <div class="card rounded float-left" style="min-width: 250px">
+        <a href="/image/{{id}}" style="color: black">
+            <img src={{url}} class="card-img-top img-fluid">
+            <div class="card-body">
+                <h5 class="card-title">{{title}}</h5>
+                <p class="card-text">{{text}}</p>
             </div>
-        {% endfor %}
+        </a>
     </div>
+    {% endfor %}
+</div>
 {% endblock %}
