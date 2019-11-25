@@ -158,5 +158,10 @@ kelvinN -- 2019-11-24 17:23
   - may need to fix duplicate code later
 
 davidX -- 2019-11-24 18:38
-    -unsquashed images on home-page
+    - unsquashed images on home-page
     - made images responsive on home-page
+    
+davidX -- 2019-11-24 19:14
+    - removed button from cards
+    - made entire card clickable
+    - used card groups to unify formatting
