@@ -22,8 +22,7 @@ def init(): pass
 @builder.execute(err_type=sqlite3.Error, command='DELETE FROM cache;')
 def clear(): pass
 
-@builder.execute(err_type=sqlite3.Error, command = '''
-                INSERT INTO cache(id, title, artist, image) VALUES(?,?,?,?);''')
+@builder.execute(err_type=sqlite3.Error, command = 'INSERT INTO cache(id, title, artist, image) VALUES(?,?,?,?);')
 def add_image(id, title, artist, image): pass
 
 @builder.execute(err_type=IndexError, command = 'SELECT COUNT(*) FROM cache;')

@@ -12,18 +12,13 @@ import urllib.parse
 import functools
 import os
 import json
+import datetime
 from utl import user, cache
 from utl.builder import builder
 from utl.query import query
 
 # imageurl = "https://www.mapquestapi.com/staticmap/v5/map?key=GN6wCdut6eE2QkB8ATz12lMHJV8tvVD5&center=San+Francisco,CA&zoom=10&type=hyb&size=600,400@2x"
 # print(imageurl)
-# url = f"https://api.imagga.com/v2/colors?image_url={imageurl}&extract_object_colors=0"
-# req = urllib.request.Request(url)
-# req.add_header("Authorization", "Basic YWNjXzE2YWNmNWJlODE0Yzk0ODo1NzM2YzRiMmQ4NzU1NzYwNmM5MjJlMjcyYWUxOGU4Ng==")
-# res = urllib.request.urlopen(req)
-# response = res.read()
-# data = json.loads(response)
 
 # mapquest GN6wCdut6eE2QkB8ATz12lMHJV8tvVD5
 # bitly 49758fd83aca5ad4f773441471c853dec4461543
@@ -156,8 +151,6 @@ def settings():
         else:
             flash('New passwords do not match', "error")
         return redirect(url_for('settings'))
-    else:
-        return redirect(url_for('login'))
 
 @app.route("/image/<id>", methods=['GET', 'POST'])
 @protected
@@ -175,13 +168,22 @@ def image(id):
         colors = [image_colors['html_code'] for image_colors in imagga]
         return render_template(
             "image.html",
+            id = id,
             image=metCol["primaryImage"],
             title=metCol["title"],
             artist=metCol["artistDisplayName"],
             moreImages=metCol["additionalImages"],
             tags=metCol["tags"],
             imageColors=colors,
+            comments = user.get_comments(id)
             )
+    if (request.method == 'POST'):
+        if(request.form['content'] == '' or request.form['content'].isspace()): flash("Please enter some text", 'error')
+        else:
+            if(user.comment(session['userid'], id, request.form['content'], datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))): 
+                pass 
+            else: flash("Could not make comment", 'error') 
+        return redirect(url_for("image", id=id))
 
 if __name__ == "__main__":
     # cache.build()
