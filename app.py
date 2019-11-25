@@ -97,6 +97,31 @@ def home(): return render_template("home.html", title = "Home", cache = cache.ge
 @protected
 def saved_art(): return render_template("saved_art.html", title = "Saved Art")
 
+def results(searchtype, data, entered):
+    images, artTitle, name, ids = list(), list(), list(), list()
+    count = 0
+    for id in data:
+        if count == 10: break # displaying less results for now 
+        data = query.data(f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}")
+        toAdd = True 
+        if searchtype == 'name': 
+            if entered.lower() in data['title'].lower(): pass
+            else: toAdd = False  
+        if searchtype == 'artist': 
+            if entered.lower() in data['artistDisplayName'].lower(): pass
+            else: toAdd = False  
+        if toAdd:
+            images.append(data['primaryImageSmall'])
+            artTitle.append(data['title'])
+            name.append(data['artistDisplayName'])
+            ids.append(id)
+        counter = 0
+        for names in name:
+            if len(names) < 1: name[counter] = 'Unknown Artist'
+            counter += 1
+        count += 1
+    return images, artTitle, name, ids
+    
 @app.route("/search", methods=['GET', 'POST'])
 @protected
 def search():
@@ -108,49 +133,10 @@ def search():
         link = f"https://collectionapi.metmuseum.org/public/collection/v1/search?q={search}"
         data = query.data(link)['objectIDs']
         images, artTitle, name, ids = list(), list(), list(), list()
-        if data == None:
-            flash('No Results Found')
+        if data == None: flash("No Results Found", 'error')
         else:
-            if request.form['searchtype'] == 'keyword':
-                count = 0
-                for id in data:
-                    count += 1
-                    if count == 10: break #displaying less results for now
-                    data = query.data(f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}")
-                    images.append(data['primaryImageSmall'])
-                    artTitle.append(data['title'])
-                    name.append(data['artistDisplayName'])
-                    ids.append(id)
-                    counter = 0
-                    for names in name:
-                        if len(names) < 1: name[counter] = 'Unknown Artist'
-                        counter += 1
-
-            if request.form['searchtype'] == 'name':
-                count = 0
-                for id in data:
-                    count += 1
-                    if count == 10: break #displaying less results for now
-                    data = query.data(f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}")
-                    if entered.lower() in data['title'].lower():
-                        images.append(data['primaryImageSmall'])
-                        artTitle.append(data['title'])
-                        name.append(data['artistDisplayName'])
-                        ids.append(id)
-
-            if request.form['searchtype'] == 'artist':
-                count = 0
-                for id in data:
-                    count += 1
-                    if count == 10: break #displaying less results for now
-                    data = query.data(f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}")
-                    if entered.lower() in data['artistDisplayName'].lower():
-                        images.append(data['primaryImageSmall'])
-                        artTitle.append(data['title'])
-                        name.append(data['artistDisplayName'])
-                        ids.append(id)
-            if len(images) < 1:
-                flash('No Results Found')
+            images, artTitle, name, ids = results(request.form['searchtype'], data, entered)
+            if len(images) < 1: flash("No Results Found", 'error')
         return render_template("search.html", title="Search", info=zip(images,artTitle,name,ids))
 
 @app.route("/settings", methods=['GET', 'POST'])
