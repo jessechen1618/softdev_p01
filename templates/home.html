@@ -49,8 +49,7 @@
 {% endblock %}
 
 {% block body %}
-    {% for card in range(4) %}
-        <div class="card-group">
+    <div class="card-group">
         {% for id, title, text, url in cache %}
             <div class="card rounded float-left" style="min-width: 250px">
                 <a href="/image/{{id}}" style="color: black">
@@ -62,6 +61,5 @@
                 </a>
             </div>
         {% endfor %}
-        </div>
-    {% endfor %}
+    </div>
 {% endblock %}
