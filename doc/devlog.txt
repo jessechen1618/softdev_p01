@@ -175,3 +175,12 @@ ericL -- 2019-11-24 19:39
 	
 davidX -- 2019-11-24 19:46
     - formatted search similar to home
+
+chenJ -- 2019-11-25-08:07
+
+HOME STRETCH PLAN
+- Save artwork
+- Add descriptions to art profiles (e.g. location, medium, department, etc)
+- Location of artwork with the map API
+- Commenting on art pieces
+
