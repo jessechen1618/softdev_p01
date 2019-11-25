@@ -172,6 +172,6 @@ davidX -- 2019-11-24 19:14
 
 ericL -- 2019-11-24 19:39
 	- refactor searching process to be more efficient and clean 
-
-ericL -- 2019-11-24 19:51
-	- fix duplicate images in homepage 
+	
+davidX -- 2019-11-24 19:46
+    - formatted search similar to home

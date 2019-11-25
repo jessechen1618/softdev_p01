@@ -91,10 +91,7 @@ def logout():
 
 @app.route("/home", methods=['GET'])
 @protected
-def home(): 
-    # cache.clear()
-    # cache.build()
-    return render_template("home.html", title = "Home", cache = cache.get())
+def home(): return render_template("home.html", title = "Home", cache = cache.get())
 
 @app.route("/saved_art", methods=['GET'])
 @protected
@@ -172,6 +169,7 @@ def image(id):
 
         #get color info on image
         imageurl = metCol["primaryImage"]
+        print(imageurl)
         imagga = query.data(f"https://api.imagga.com/v2/colors?image_url={imageurl}&extract_object_colors=0", headers=True)
         imagga = imagga['result']['colors']["image_colors"]
         colors = [image_colors['html_code'] for image_colors in imagga]
