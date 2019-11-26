@@ -181,7 +181,7 @@ def image(id):
         address = ""
         for part in location:
             address += part + ","
-        geocoded = geocoder.geocode(address)
+        geocoded = geocoder.geocode(address)[0]["geometry"]
         
         return render_template(
             "image.html",
