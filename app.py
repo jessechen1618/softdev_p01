@@ -12,6 +12,7 @@ import urllib.parse
 import functools
 import os
 import json
+import datetime
 from utl import user, cache
 from utl.builder import builder
 from utl.query import query
@@ -19,12 +20,6 @@ from opencage.geocoder import OpenCageGeocode # for finding longitude and latitu
 
 # imageurl = "https://www.mapquestapi.com/staticmap/v5/map?key=GN6wCdut6eE2QkB8ATz12lMHJV8tvVD5&center=San+Francisco,CA&zoom=10&type=hyb&size=600,400@2x"
 # print(imageurl)
-# url = f"https://api.imagga.com/v2/colors?image_url={imageurl}&extract_object_colors=0"
-# req = urllib.request.Request(url)
-# req.add_header("Authorization", "Basic YWNjXzE2YWNmNWJlODE0Yzk0ODo1NzM2YzRiMmQ4NzU1NzYwNmM5MjJlMjcyYWUxOGU4Ng==")
-# res = urllib.request.urlopen(req)
-# response = res.read()
-# data = json.loads(response)
 
 # mapquest GN6wCdut6eE2QkB8ATz12lMHJV8tvVD5
 # bitly 49758fd83aca5ad4f773441471c853dec4461543
@@ -102,15 +97,15 @@ def results(searchtype, data, entered):
     images, artTitle, name, ids = list(), list(), list(), list()
     count = 0
     for id in data:
-        if count == 10: break # displaying less results for now 
+        if count == 10: break # displaying less results for now
         data = query.data(f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}")
-        toAdd = True 
-        if searchtype == 'name': 
+        toAdd = True
+        if searchtype == 'name':
             if entered.lower() in data['title'].lower(): pass
-            else: toAdd = False  
-        if searchtype == 'artist': 
+            else: toAdd = False
+        if searchtype == 'artist':
             if entered.lower() in data['artistDisplayName'].lower(): pass
-            else: toAdd = False  
+            else: toAdd = False
         if toAdd:
             images.append(data['primaryImageSmall'])
             artTitle.append(data['title'])
@@ -122,7 +117,7 @@ def results(searchtype, data, entered):
             counter += 1
         count += 1
     return images, artTitle, name, ids
-    
+
 @app.route("/search", methods=['GET', 'POST'])
 @protected
 def search():
@@ -157,8 +152,6 @@ def settings():
         else:
             flash('New passwords do not match', "error")
         return redirect(url_for('settings'))
-    else:
-        return redirect(url_for('login'))
 
 @app.route("/image/<id>", methods=['GET', 'POST'])
 @protected
@@ -167,14 +160,14 @@ def image(id):
         # get image of artwork
         metCol = query.data(f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}")
         location=[metCol["city"],metCol["state"],metCol["country"]]
-        '''
+        
         #get color info on image
         imageurl = metCol["primaryImage"]
         print(imageurl)
         imagga = query.data(f"https://api.imagga.com/v2/colors?image_url={imageurl}&extract_object_colors=0", headers=True)
         imagga = imagga['result']['colors']["image_colors"]
         colors = [image_colors['html_code'] for image_colors in imagga]
-        '''
+        
         # get longitude and latitude
         key = '9104fa024a004ae2866cf65a080b75fb'
         geocoder = OpenCageGeocode(key)
@@ -187,15 +180,29 @@ def image(id):
             geocoded = ""
         return render_template(
             "image.html",
+            id = id,
             image=metCol["primaryImage"],
             title=metCol["title"],
             artist=metCol["artistDisplayName"],
             moreImages=metCol["additionalImages"],
             tags=metCol["tags"],
             location=location,
-            #imageColors=colors,
-            longlat = geocoded
+            imageColors=colors,
+            longlat = geocoded,
+            comments = user.get_comments(id),
+            artistDisplayBio=metCol["artistDisplayBio"],
+            objectEndDate=metCol["objectEndDate"],
+            medium=metCol["medium"],
+            classification=metCol["classification"],
+            repository=metCol["repository"]
             )
+    if (request.method == 'POST'):
+        if(request.form['content'] == '' or request.form['content'].isspace()): flash("Please enter some text", 'error')
+        else:
+            if(user.comment(session['userid'], id, request.form['content'], datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))): 
+                pass 
+            else: flash("Could not make comment", 'error') 
+        return redirect(url_for("image", id=id))
 
 if __name__ == "__main__":
     # cache.build()

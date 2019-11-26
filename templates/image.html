@@ -1,10 +1,8 @@
 {% extends "home.html" %}
 
 {% block backstyle %}
+    <body style="background-color: {{imageColors[0]}}">
 {% endblock %}
-<!--
-<body style="background-color: {{imageColors[0]}}">
--->
 
 {% block body %}
 <!--
@@ -41,15 +39,16 @@ Comment area
             </div>
         </div>
         <div class="col-sm">
-            <h2 class="bg-light">
-                Artist: {{artist}} <br>
-            </h2>
+            <h2 class="bg-light">Artist: {{artist}} <br></h2>
 
             <div>
+                Artist bio: {{ artistDisplayBio }} <br>
+                Year published: {{ objectEndDate }} <br>
+                Medium: {{ medium }} <br>
+                Classification: {{ classification }} <br>
+                Currently in: {{ repository }} <br>
                 {% for tag in tags %}
-                    <button type="button" class="btn">
-                    #{{tag}}
-                    </button>
+                    <button type="button" class="btn">#{{tag}}</button>
                 {% endfor %}
             </div>
 
@@ -80,5 +79,18 @@ Comment area
             {% endif %}
         </div>
     </div>
+</div>
+<div class="contatiner p-5 bg-light">
+    <div class="row"> 
+        <form method="POST" action="/image/{{id}}">
+            <input type="text" name="content">
+            <input type="submit" name="submit" value="comment">
+          </form>
+    </div>
+</div>
+<div class="container p-2 bg-light">
+    {% for comment in comments %}
+    {{comment}}
+    {% endfor %}
 </div>
 {% endblock %}

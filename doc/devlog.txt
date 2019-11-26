@@ -164,21 +164,43 @@ kelvinN -- 2019-11-24 18:19
 davidX -- 2019-11-24 18:38
     - unsquashed images on home-page
     - made images responsive on home-page
-    
+
 davidX -- 2019-11-24 19:14
     - removed button from cards
     - made entire card clickable
     - used card groups to unify formatting
 
 ericL -- 2019-11-24 19:39
-	- refactor searching process to be more efficient and clean 
-	
+	- refactor searching process to be more efficient and clean
+
 davidX -- 2019-11-24 19:46
     - formatted search similar to home
     
 davidX -- 2019-11-24 23:56
     - added formatting for location on image page
     - removed calls to imagga temporarily
+
+chenJ -- 2019-11-25 08:07
+	- home stretch plan (see below)
+
+kelvinN -- 2019-11-25 08:26
+  - added description of art piece
+
+ericL -- 2019-11-25 12:48
+	- add commenting feature for each artpiece 
+
+HOME STRETCH PLAN
+- Save artwork [David, Kelvin]
+	- Completed by end of Thanksgiving break
+- Add descriptions to art profiles (e.g. location, medium, department, etc) [Kelvin]
+	- Completed before Thanksgiving break
+- Location of artwork with the map API [David, Eric]
+	- Completed by end of Thanksgiving break
+- Commenting on art pieces [Eric]
+	- Completed before Thanksgiving break
+In the case we need to cut features, we will cut the feature to comment and save art. These are the least important in showcasing the function of the APIs; they just help enhance the web experience.
+In the case we finish beforehand, we will test the rigidity by actively testing for bugs, improving the frontend CSS, and making sure it runs on a foreign computer (perhaps borrowing a friend's). As PM, I will also polish the design doc and summary doc and make sure all parts of the final deliverable is complete.
+Finally, once the project is completely done, whether we got to implement all features or not, we will set up a demo route and practice that. This way, we can ensure no errors happen during presentation. The user may clone the repo themselves and play around with it during their free time.
 
 davidX -- 2019-11-26 01:00
     - used open cache to find longitude and latitude for given location
