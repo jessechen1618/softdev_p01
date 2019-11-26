@@ -75,7 +75,9 @@ Comment area
                 {% endif %}
             {% endfor %}
             
-            {{longlat}}
+            {% if longlat %}
+                {{longlat}}
+            {% endif %}
         </div>
     </div>
 </div>

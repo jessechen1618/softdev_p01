@@ -181,8 +181,10 @@ def image(id):
         address = ""
         for part in location:
             address += part + ","
-        geocoded = geocoder.geocode(address)[0]["geometry"]
-        
+        try:
+            geocoded = geocoder.geocode(address)[0]["geometry"]
+        except:
+            geocoded = ""
         return render_template(
             "image.html",
             image=metCol["primaryImage"],
