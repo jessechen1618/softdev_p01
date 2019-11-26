@@ -15,6 +15,7 @@ import json
 from utl import user, cache
 from utl.builder import builder
 from utl.query import query
+from opencage.geocoder import OpenCageGeocode # for finding longitude and latitude
 
 # imageurl = "https://www.mapquestapi.com/staticmap/v5/map?key=GN6wCdut6eE2QkB8ATz12lMHJV8tvVD5&center=San+Francisco,CA&zoom=10&type=hyb&size=600,400@2x"
 # print(imageurl)
@@ -163,10 +164,9 @@ def settings():
 @protected
 def image(id):
     if(request.method == 'GET'):
-
         # get image of artwork
         metCol = query.data(f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}")
-        
+        location=[metCol["city"],metCol["state"],metCol["country"]]
         '''
         #get color info on image
         imageurl = metCol["primaryImage"]
@@ -175,6 +175,14 @@ def image(id):
         imagga = imagga['result']['colors']["image_colors"]
         colors = [image_colors['html_code'] for image_colors in imagga]
         '''
+        # get longitude and latitude
+        key = '9104fa024a004ae2866cf65a080b75fb'
+        geocoder = OpenCageGeocode(key)
+        address = ""
+        for part in location:
+            address += part + ","
+        geocoded = geocoder.geocode(address)
+        
         return render_template(
             "image.html",
             image=metCol["primaryImage"],
@@ -182,8 +190,9 @@ def image(id):
             artist=metCol["artistDisplayName"],
             moreImages=metCol["additionalImages"],
             tags=metCol["tags"],
-            location=(metCol["city"],metCol["state"],metCol["country"])
+            location=location,
             #imageColors=colors,
+            longlat = geocoded
             )
 
 if __name__ == "__main__":
