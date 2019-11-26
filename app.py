@@ -16,8 +16,6 @@ import datetime
 from utl import user, cache
 from utl.builder import builder
 from utl.query import query
-from opencage.geocoder import OpenCageGeocode # for finding longitude and latitude
-
 # imageurl = "https://www.mapquestapi.com/staticmap/v5/map?key=GN6wCdut6eE2QkB8ATz12lMHJV8tvVD5&center=San+Francisco,CA&zoom=10&type=hyb&size=600,400@2x"
 # print(imageurl)
 
@@ -113,7 +111,7 @@ def results(searchtype, data, entered):
             ids.append(id)
         counter = 0
         for names in name:
-            if len(names) < 1: name[counter] = 'Unknown Artist'
+            if len(names) < 1: name[counter] = "Unknown Artist"
             counter += 1
         count += 1
     return images, artTitle, name, ids
@@ -126,7 +124,7 @@ def search():
     elif (request.method == 'POST'):
         entered = request.form['search']
         search = entered.replace(" ", "+")
-        link = f"https://collectionapi.metmuseum.org/public/collection/v1/search?q={search}"
+        link = f"https://collectionapi.metmuseum.org/public/collection/v1/search?q={urllib.parse.quote(search)}"
         data = query.data(link)['objectIDs']
         images, artTitle, name, ids = list(), list(), list(), list()
         if data == None: flash("No Results Found", 'error')
@@ -153,6 +151,14 @@ def settings():
             flash('New passwords do not match', "error")
         return redirect(url_for('settings'))
 
+@app.route("/cache", methods=['GET', 'POST'])
+@protected
+def caching():
+    return render_template(
+        "cache.html",
+        title="Cache"
+    )
+
 @app.route("/image/<id>", methods=['GET', 'POST'])
 @protected
 def image(id):
@@ -163,11 +169,11 @@ def image(id):
 
         #get color info on image
         imageurl = metCol["primaryImage"]
-        print(imageurl)
-        imagga = query.data(f"https://api.imagga.com/v2/colors?image_url={imageurl}&extract_object_colors=0", headers=True)
+        imagga = query.data(f"https://api.imagga.com/v2/colors?image_url={urllib.parse.quote(imageurl)}&extract_object_colors=0", headers=True)
         imagga = imagga['result']['colors']["image_colors"]
         colors = [image_colors['html_code'] for image_colors in imagga]
 
+<<<<<<< HEAD
         '''
         # get longitude and latitude
         key = '9104fa024a004ae2866cf65a080b75fb'
@@ -189,6 +195,22 @@ def image(id):
         print(map)
 
 
+=======
+        # get longitude and latitude
+        key = '9104fa024a004ae2866cf65a080b75fb'
+
+        # geocoder = OpenCageGeocode(key)
+        # address = ""
+        # for part in location:
+        #     address += part + ","
+        # try:
+        #     geocoded = geocoder.geocode(address)[0]["geometry"]
+        # except:
+        #     geocoded = ""
+        comments = []
+        for comment in user.get_comments(id):
+            comments.append(comment[3])
+>>>>>>> 57dc8b3960024675d87eac14f9a99c3d16021e6c
         return render_template(
             "image.html",
             id = id,
@@ -199,9 +221,14 @@ def image(id):
             tags=metCol["tags"],
             location=location,
             imageColors=colors,
+<<<<<<< HEAD
             #longlat = geocoded
             map=map,
             comments = user.get_comments(id),
+=======
+            # longlat = geocoded,
+            comments = comments,
+>>>>>>> 57dc8b3960024675d87eac14f9a99c3d16021e6c
             artistDisplayBio=metCol["artistDisplayBio"],
             objectEndDate=metCol["objectEndDate"],
             medium=metCol["medium"],
