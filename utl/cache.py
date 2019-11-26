@@ -37,7 +37,6 @@ def build():
     #get object info and input into database
     checked = 0 
     while size() < 20 and checked < len(objects):
-        print("Caching...")
         info = query.data(f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{objects[checked]}")
         add_image(objects[checked], info['title'], info['artistDisplayName'], info['primaryImage'])
         checked += 1
@@ -50,4 +49,4 @@ def get():
         output = [list(c.fetchmany()[0]) for image in range(0, size())]
         db.close()
         return output
-    except: return None
+    except:return None
