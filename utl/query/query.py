@@ -1,11 +1,16 @@
 import urllib.request
-import json 
+import base64
+import json
 
-def data(link, headers=False):
-    req = urllib.request.Request(link) ## create a request object 
+def data(link, headers=False, mapquest=False):
+    req = urllib.request.Request(link) ## create a request object
     # add headers only if necessary (for imagga)
-    if headers: req.add_header('Authorization', 'Basic YWNjXzE2YWNmNWJlODE0Yzk0ODo1NzM2YzRiMmQ4NzU1NzYwNmM5MjJlMjcyYWUxOGU4Ng==')
+    if headers: req.add_header("Authorization", "Basic YWNjXzE2YWNmNWJlODE0Yzk0ODo1NzM2YzRiMmQ4NzU1NzYwNmM5MjJlMjcyYWUxOGU4Ng==")
     res = urllib.request.urlopen(req)
     response = res.read()
+    if mapquest:
+    #     response =  base64.b64decode(response).decode('utf-8')
+         print("this is what it print", response)
+         return response
     data = json.loads(response)
     return data

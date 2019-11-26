@@ -62,7 +62,7 @@ Comment area
                 {% endfor %}
                 -->
             </div>
-            
+
             Location:
             {% for part in location %}
                 {% if part %}
@@ -73,15 +73,18 @@ Comment area
                     {% endif %}
                 {% endif %}
             {% endfor %}
-            
+
             {% if longlat %}
                 {{longlat}}
             {% endif %}
+              {{map}}
+            <img src={{map}}>
+
         </div>
     </div>
 </div>
 <div class="contatiner p-5 bg-light">
-    <div class="row"> 
+    <div class="row">
         <form method="POST" action="/image/{{id}}">
             <input type="text" name="content">
             <input type="submit" name="submit" value="comment">

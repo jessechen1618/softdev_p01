@@ -160,24 +160,35 @@ def image(id):
         # get image of artwork
         metCol = query.data(f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}")
         location=[metCol["city"],metCol["state"],metCol["country"]]
-        
+
         #get color info on image
         imageurl = metCol["primaryImage"]
         print(imageurl)
         imagga = query.data(f"https://api.imagga.com/v2/colors?image_url={imageurl}&extract_object_colors=0", headers=True)
         imagga = imagga['result']['colors']["image_colors"]
         colors = [image_colors['html_code'] for image_colors in imagga]
-        
+
+        '''
         # get longitude and latitude
         key = '9104fa024a004ae2866cf65a080b75fb'
         geocoder = OpenCageGeocode(key)
-        address = ""
-        for part in location:
-            address += part + ","
+
         try:
             geocoded = geocoder.geocode(address)[0]["geometry"]
         except:
             geocoded = ""
+        '''
+        address = ""
+        for part in location:
+            address += part + ","
+
+        address = urllib.parse.quote(address)
+        imageurl = "https://www.mapquestapi.com/staticmap/v5/map?key=GN6wCdut6eE2QkB8ATz12lMHJV8tvVD5&center={}".format(address)
+        print(imageurl)
+        map = query.data(imageurl, mapquest=True)
+        print(map)
+
+
         return render_template(
             "image.html",
             id = id,
@@ -188,7 +199,8 @@ def image(id):
             tags=metCol["tags"],
             location=location,
             imageColors=colors,
-            longlat = geocoded,
+            #longlat = geocoded
+            map=map,
             comments = user.get_comments(id),
             artistDisplayBio=metCol["artistDisplayBio"],
             objectEndDate=metCol["objectEndDate"],
@@ -199,9 +211,9 @@ def image(id):
     if (request.method == 'POST'):
         if(request.form['content'] == '' or request.form['content'].isspace()): flash("Please enter some text", 'error')
         else:
-            if(user.comment(session['userid'], id, request.form['content'], datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))): 
-                pass 
-            else: flash("Could not make comment", 'error') 
+            if(user.comment(session['userid'], id, request.form['content'], datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))):
+                pass
+            else: flash("Could not make comment", 'error')
         return redirect(url_for("image", id=id))
 
 if __name__ == "__main__":
