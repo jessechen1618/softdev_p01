@@ -177,15 +177,25 @@ davidX -- 2019-11-24 19:46
     - formatted search similar to home
 
 chenJ -- 2019-11-25 08:07
-
-HOME STRETCH PLAN
-- Save artwork
-- Add descriptions to art profiles (e.g. location, medium, department, etc)
-- Location of artwork with the map API
-- Commenting on art pieces
+	- home stretch plan (see below)
 
 kelvinN -- 2019-11-25 08:26
   - added description of art piece
 
 ericL -- 2019-11-25 12:48
 	- add commenting feature for each artpiece 
+
+HOME STRETCH PLAN
+- Save artwork [David, Kelvin]
+	- Completed by end of Thanksgiving break
+- Add descriptions to art profiles (e.g. location, medium, department, etc) [Kelvin]
+	- Completed before Thanksgiving break
+- Location of artwork with the map API [David, Eric]
+	- Completed by end of Thanksgiving break
+- Commenting on art pieces [Eric]
+	- Completed before Thanksgiving break
+In the case we need to cut features, we will cut the feature to comment and save art. These are the least important in showcasing the function of the APIs; they just help enhance the web experience.
+In the case we finish beforehand, we will test the rigidity by actively testing for bugs, improving the frontend CSS, and making sure it runs on a foreign computer (perhaps borrowing a friend's). As PM, I will also polish the design doc and summary doc and make sure all parts of the final deliverable is complete.
+Finally, once the project is completely done, whether we got to implement all features or not, we will set up a demo route and practice that. This way, we can ensure no errors happen during presentation. The user may clone the repo themselves and play around with it during their free time.
+
+
