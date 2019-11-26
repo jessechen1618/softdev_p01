@@ -166,13 +166,13 @@ def image(id):
         # get image of artwork
         metCol = query.data(f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}")
         location=[metCol["city"],metCol["state"],metCol["country"]]
-        
+
         #get color info on image
         imageurl = metCol["primaryImage"]
         imagga = query.data(f"https://api.imagga.com/v2/colors?image_url={urllib.parse.quote(imageurl)}&extract_object_colors=0", headers=True)
         imagga = imagga['result']['colors']["image_colors"]
         colors = [image_colors['html_code'] for image_colors in imagga]
-        
+
         # get longitude and latitude
         key = '9104fa024a004ae2866cf65a080b75fb'
 
@@ -184,6 +184,9 @@ def image(id):
         #     geocoded = geocoder.geocode(address)[0]["geometry"]
         # except:
         #     geocoded = ""
+        comments = []
+        for comment in user.get_comments(id):
+            comments.append(comment[3])
         return render_template(
             "image.html",
             id = id,
@@ -195,7 +198,7 @@ def image(id):
             location=location,
             imageColors=colors,
             # longlat = geocoded,
-            comments = user.get_comments(id),
+            comments = comments,
             artistDisplayBio=metCol["artistDisplayBio"],
             objectEndDate=metCol["objectEndDate"],
             medium=metCol["medium"],
@@ -205,9 +208,9 @@ def image(id):
     if (request.method == 'POST'):
         if(request.form['content'] == '' or request.form['content'].isspace()): flash("Please enter some text", 'error')
         else:
-            if(user.comment(session['userid'], id, request.form['content'], datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))): 
-                pass 
-            else: flash("Could not make comment", 'error') 
+            if(user.comment(session['userid'], id, request.form['content'], datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))):
+                pass
+            else: flash("Could not make comment", 'error')
         return redirect(url_for("image", id=id))
 
 if __name__ == "__main__":
