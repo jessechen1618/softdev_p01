@@ -175,13 +175,14 @@ def image(id):
 
         address = ""
         for part in location:
-            address += part + ","
-
+            if part != "":
+                address += part + ","
+        
+        print(address)
         address = urllib.parse.quote(address)
         imageurl = "https://www.mapquestapi.com/staticmap/v5/map?key=GN6wCdut6eE2QkB8ATz12lMHJV8tvVD5&center={}".format(address)
+        print(address)
         print(imageurl)
-        map = query.data(imageurl, mapquest=True)
-        print(map)
 
         comments = []
         for comment in user.get_comments(id):
@@ -197,13 +198,9 @@ def image(id):
             tags=metCol["tags"],
             location=location,
             imageColors=colors,
-
-            #longlat = geocoded
-            map=map,
-
-            # longlat = geocoded,
+            address=address,
+            map=imageurl,
             comments = comments,
-
             artistDisplayBio=metCol["artistDisplayBio"],
             objectEndDate=metCol["objectEndDate"],
             medium=metCol["medium"],

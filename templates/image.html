@@ -54,32 +54,28 @@ Comment area
 
             <div>
                 Colors:
-                <!--
                 {% for color in imageColors %}
                 <div style="background-color:{{color}}">
                         {{color}}
                 </div>
                 {% endfor %}
-                -->
             </div>
 
-            Location:
-            {% for part in location %}
-                {% if part %}
-                    {% if loop.nextitem is defined %}
-                        {{part}},
-                    {% else %}
-                        {{part}}
+            <div>
+            {% if address %}
+                Location:
+                {% for part in location %}
+                    {% if part %}
+                        {% if loop.nextitem is defined %}
+                            {{part}},
+                        {% else %}
+                            {{part}}
+                        {% endif %}
                     {% endif %}
-                {% endif %}
-            {% endfor %}
-
-            {% if longlat %}
-                {{longlat}}
+                {% endfor %}
+                <img src={{map}}>
             {% endif %}
-              {{map}}
-            <img src={{map}}>
-
+            </div>
         </div>
     </div>
 </div>

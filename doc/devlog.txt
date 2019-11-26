@@ -212,3 +212,7 @@ ericL -- 2019-11-26 08:18
 kelvinN -- 2019-11-26 08:35
   - fixed comments (previously loads a list instead of the comments)
   - will add date/time posted and username later
+
+davidX -- 2019-11-26 18:18
+    - implemented Open Static Map on image.html
+    - readded colors from imagga on image.html
