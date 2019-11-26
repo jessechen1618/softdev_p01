@@ -205,3 +205,6 @@ Finally, once the project is completely done, whether we got to implement all fe
 davidX -- 2019-11-26 01:00
     - used open cache to find longitude and latitude for given location
     - made exception for when no location is given
+
+ericL -- 2019-11-26 08:18
+	- fix parsing of url queries
