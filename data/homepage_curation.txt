@@ -19,4 +19,18 @@ Medieval and Gothic:
 471237
 201926
 
+Renaissance:
+437827
+336656
+459016
+435809
+436282
+
+Baroque:
+435844
+437397
+437406
+437881
+<one more>
+
 To be continued...
