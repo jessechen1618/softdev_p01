@@ -9,8 +9,10 @@ def data(link, headers=False, mapquest=False):
     res = urllib.request.urlopen(req)
     response = res.read()
     if mapquest:
-    #     response =  base64.b64decode(response).decode('utf-8')
-         print("this is what it print", response)
+         # altResponse =  base64.b64decode(response).decode('utf-8')
+         # altResponse = open(response, encoding = "ISO-8859-1")
+         print("this is what it prints", response)
+         # print("alternate response", altResponse)
          return response
     data = json.loads(response)
     return data

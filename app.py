@@ -173,17 +173,6 @@ def image(id):
         imagga = imagga['result']['colors']["image_colors"]
         colors = [image_colors['html_code'] for image_colors in imagga]
 
-<<<<<<< HEAD
-        '''
-        # get longitude and latitude
-        key = '9104fa024a004ae2866cf65a080b75fb'
-        geocoder = OpenCageGeocode(key)
-
-        try:
-            geocoded = geocoder.geocode(address)[0]["geometry"]
-        except:
-            geocoded = ""
-        '''
         address = ""
         for part in location:
             address += part + ","
@@ -194,23 +183,10 @@ def image(id):
         map = query.data(imageurl, mapquest=True)
         print(map)
 
-
-=======
-        # get longitude and latitude
-        key = '9104fa024a004ae2866cf65a080b75fb'
-
-        # geocoder = OpenCageGeocode(key)
-        # address = ""
-        # for part in location:
-        #     address += part + ","
-        # try:
-        #     geocoded = geocoder.geocode(address)[0]["geometry"]
-        # except:
-        #     geocoded = ""
         comments = []
         for comment in user.get_comments(id):
             comments.append(comment[3])
->>>>>>> 57dc8b3960024675d87eac14f9a99c3d16021e6c
+
         return render_template(
             "image.html",
             id = id,
@@ -221,14 +197,13 @@ def image(id):
             tags=metCol["tags"],
             location=location,
             imageColors=colors,
-<<<<<<< HEAD
+
             #longlat = geocoded
             map=map,
-            comments = user.get_comments(id),
-=======
+
             # longlat = geocoded,
             comments = comments,
->>>>>>> 57dc8b3960024675d87eac14f9a99c3d16021e6c
+
             artistDisplayBio=metCol["artistDisplayBio"],
             objectEndDate=metCol["objectEndDate"],
             medium=metCol["medium"],
