@@ -177,20 +177,23 @@ def image(id):
         for part in location:
             if part != "":
                 address += part + ","
-        
-        print(address)
+
+        #print(address)
         address = urllib.parse.quote(address)
         imageurl = "https://www.mapquestapi.com/staticmap/v5/map?key=GN6wCdut6eE2QkB8ATz12lMHJV8tvVD5&center={}".format(address)
-        print(address)
-        print(imageurl)
+        #print(address)
+        #print(imageurl)
 
-        comments = []
+        comments, time = list(), list()
         for comment in user.get_comments(id):
             comments.append(comment[3])
-
+            time.append(comment[4])
+        print(comments)
+        print(time)
+        print(user.get_comments(id))
         return render_template(
             "image.html",
-            id = id,
+            id=id,
             image=metCol["primaryImage"],
             title=metCol["title"],
             artist=metCol["artistDisplayName"],
@@ -200,7 +203,7 @@ def image(id):
             imageColors=colors,
             address=address,
             map=imageurl,
-            comments = comments,
+            input=zip(time, comments),
             artistDisplayBio=metCol["artistDisplayBio"],
             objectEndDate=metCol["objectEndDate"],
             medium=metCol["medium"],

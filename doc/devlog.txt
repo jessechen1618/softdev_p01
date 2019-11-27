@@ -216,3 +216,7 @@ kelvinN -- 2019-11-26 08:35
 davidX -- 2019-11-26 18:18
     - implemented Open Static Map on image.html
     - readded colors from imagga on image.html
+
+kelvinN -- 2019-11-26 20:11
+    - now displays date/time in comments
+    - bug: still same user id if I comment using a different account

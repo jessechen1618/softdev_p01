@@ -88,8 +88,8 @@ Comment area
     </div>
 </div>
 <div class="container p-2 bg-light">
-    {% for comment in comments %}
-      {{comment}} <br>
+    {% for time, comments in input %}
+      {{time}} {{comments}} <br>
     {% endfor %}
 </div>
 {% endblock %}
