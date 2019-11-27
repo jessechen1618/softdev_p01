@@ -219,4 +219,4 @@ davidX -- 2019-11-26 18:18
 
 kelvinN -- 2019-11-26 20:11
     - now displays date/time in comments
-    - bug: still same user id if I comment using a different account
+    - need to add username of the person who commented
