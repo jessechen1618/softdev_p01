@@ -216,13 +216,16 @@ kelvinN -- 2019-11-26 08:35
 davidX -- 2019-11-26 18:18
     - implemented Open Static Map on image.html
     - readded colors from imagga on image.html
-    
+
 davidX -- 2019-11-26 18:59
     - changed comment area to text box
 
 kelvinN -- 2019-11-26 20:11
     - now displays date/time in comments
     - need to add username of the person who commented
-    
+
 davidX -- 2019-11-26 22:23
     - changed formatting of comment section
+
+davidX -- 2019-11-27 08:09
+    - changed formatting of cards on home and search
