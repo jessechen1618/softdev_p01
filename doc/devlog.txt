@@ -219,6 +219,12 @@ davidX -- 2019-11-26 18:18
     
 davidX -- 2019-11-26 18:59
     - changed comment area to text box
+
+kelvinN -- 2019-11-26 20:11
+    - now displays date/time in comments
+    - need to add username of the person who commented
     
 davidX -- 2019-11-26 22:23
     - changed formatting of comment section
+
+
