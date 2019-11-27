@@ -49,9 +49,9 @@
 {% endblock %}
 
 {% block body %}
-<div class="card-group">
+<div class="card-columns">
     {% for id, title, text, url in cache %}
-    <div class="card rounded float-left" style="min-width: 250px">
+    <div class="card rounded" style="min-width: 250px">
         <a href="/image/{{id}}" style="color: black">
             <img src={{url}} class="card-img-top img-fluid">
             <div class="card-body">
