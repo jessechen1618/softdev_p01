@@ -229,3 +229,6 @@ davidX -- 2019-11-26 22:23
 
 davidX -- 2019-11-27 08:09
     - changed formatting of cards on home and search
+
+davidX -- 2019-11-27 09:28
+    - added username display in comments

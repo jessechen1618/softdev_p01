@@ -33,7 +33,7 @@
         <!-- info section -->
         <div class="col-sm">
             <h2 class="bg-light">Artist: {{artist}} <br></h2>
-            
+
             <div>
                 <b>Artist bio:</b> {{ artistDisplayBio }} <br>
                 <b>Year published:</b> {{ objectEndDate }} <br>
@@ -53,7 +53,7 @@
                 </div>
                 {% endfor %}
             </div>
-            
+
             <!-- location info -->
             <div>
             {% if address %}
@@ -80,14 +80,15 @@
             <label>Share Your thoughts</label>
             <textarea class="form-control" name="content" rows="3"></textarea>
             <button class="button" type="submit">Comment</button>
-        </div>    
+        </div>
     </form>
 </div>
 <!-- comment section -->
 <div class="container p-2 bg-light">
-    {% for comment,date in comments %}
+    {% for comment,date,user in comments %}
     <div style="background-color:lightgrey">
         {{date}}
+        {{user}}
     </div>
     <div style="background-color:white">
         {{comment}}
