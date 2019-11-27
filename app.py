@@ -184,7 +184,7 @@ def image(id):
         #print(address)
         #print(imageurl)
 
-        comments, time = list(), list()
+        comments = []
         for comment in user.get_comments(id):
             comments.append(comment[3:])
 
@@ -200,7 +200,7 @@ def image(id):
             imageColors=colors,
             address=address,
             map=imageurl,
-            input=zip(time, comments),
+            comments = comments,
             artistDisplayBio=metCol["artistDisplayBio"],
             objectEndDate=metCol["objectEndDate"],
             medium=metCol["medium"],
