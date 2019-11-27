@@ -216,3 +216,6 @@ kelvinN -- 2019-11-26 08:35
 davidX -- 2019-11-26 18:18
     - implemented Open Static Map on image.html
     - readded colors from imagga on image.html
+    
+davidX -- 2019-11-26 18:59
+    - changed comment area to text box

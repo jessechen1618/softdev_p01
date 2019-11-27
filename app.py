@@ -186,7 +186,7 @@ def image(id):
 
         comments = []
         for comment in user.get_comments(id):
-            comments.append(comment[3])
+            comments.append(comment[3:])
 
         return render_template(
             "image.html",

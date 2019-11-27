@@ -5,17 +5,9 @@
 {% endblock %}
 
 {% block body %}
-<!--
-Image display
-Image info
-Image Colors
-Map
-Comment area
-</section>
--->
-
 <div class="container p-5 bg-light">
     <div class="row">
+        <!-- gallery section -->
         <div class="col-md">
             <div id="Met_Images" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
@@ -38,32 +30,34 @@ Comment area
                 </a>
             </div>
         </div>
+        <!-- info section -->
         <div class="col-sm">
             <h2 class="bg-light">Artist: {{artist}} <br></h2>
-
+            
             <div>
-                Artist bio: {{ artistDisplayBio }} <br>
-                Year published: {{ objectEndDate }} <br>
-                Medium: {{ medium }} <br>
-                Classification: {{ classification }} <br>
-                Currently in: {{ repository }} <br>
+                <b>Artist bio:</b> {{ artistDisplayBio }} <br>
+                <b>Year published:</b> {{ objectEndDate }} <br>
+                <b>Medium:</b> {{ medium }} <br>
+                <b>Classification:</b> {{ classification }} <br>
+                <b>Currently in:</b> {{ repository }} <br>
                 {% for tag in tags %}
                     <button type="button" class="btn">#{{tag}}</button>
                 {% endfor %}
             </div>
-
+            <!-- color info -->
             <div>
-                Colors:
+                <h4>Colors:</h4>
                 {% for color in imageColors %}
                 <div style="background-color:{{color}}">
                         {{color}}
                 </div>
                 {% endfor %}
             </div>
-
+            
+            <!-- location info -->
             <div>
             {% if address %}
-                Location:
+                <h4>Location:</h4>
                 {% for part in location %}
                     {% if part %}
                         {% if loop.nextitem is defined %}
@@ -79,14 +73,17 @@ Comment area
         </div>
     </div>
 </div>
+<!-- post comment -->
 <div class="contatiner p-5 bg-light">
-    <div class="row">
-        <form method="POST" action="/image/{{id}}">
-            <input type="text" name="content">
-            <input type="submit" name="submit" value="comment">
-          </form>
-    </div>
+    <form method="POST" action="/image/{{id}}">
+        <div class="form-group">
+            <label>Share Your thoughts</label>
+            <textarea class="form-control" name="content" rows="3"></textarea>
+            <button class="button" type="submit">Comment</button>
+        </div>    
+    </form>
 </div>
+<!-- comment section -->
 <div class="container p-2 bg-light">
     {% for comment in comments %}
       {{comment}} <br>

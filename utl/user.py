@@ -20,7 +20,8 @@ def inituser(): pass
 def initart(): pass 
 
 @builder.execute(err_type = sqlite3.Error, command= 
-'''CREATE TABLE IF NOT EXISTS comments(commentid INTEGER PRIMARY KEY AUTOINCREMENT, 
+'''CREATE TABLE IF NOT EXISTS comments(
+    commentid INTEGER PRIMARY KEY AUTOINCREMENT, 
     userid INTEGER, artid INTEGER, 
     content TEXT CHECK (length(content) > 0), 
     timestamp BLOB);''')
