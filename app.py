@@ -100,6 +100,8 @@ def results(searchtype, data, entered):
         if searchtype == 'artist':
             if entered.lower() in data['artistDisplayName'].lower(): pass
             else: toAdd = False
+        if searchtype == 'saved':
+            pass
         if toAdd:
             images.append(data['primaryImageSmall'])
             artTitle.append(data['title'])
@@ -231,7 +233,8 @@ def saved_art():
         artids.append(art[1])
     artids = list(dict.fromkeys(artids))
     print(artids)
-    return render_template("saved_art.html", title = "Saved Art")
+    images, artTitle, name, ids = results('saved', artids, '')
+    return render_template("saved_art.html", title = "Saved Art", info=zip(images,artTitle,name,ids))
 
 if __name__ == "__main__":
     # cache.build()

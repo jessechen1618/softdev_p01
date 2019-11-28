@@ -1,4 +1,19 @@
 {% extends "home.html" %}
 
 {% block body %}
+
+<div class="card-columns">
+    {% for link,title,artist,id in info %}
+        <div class="card rounded" style="min-width: 250px">
+            <a href="/image/{{id}}" style="color:black">
+                <img src={{link}} class="card-img-top img-fluid">
+                <div class="card-body">
+                    <h5 class="card-title">{{title}}</h5>
+                    <p class="card-text">{{artist}}</p>
+                </div>
+            </a>
+        </div>
+    {% endfor %}
+</div>
+
 {% endblock %}
