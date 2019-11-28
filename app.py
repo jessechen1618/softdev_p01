@@ -222,11 +222,15 @@ def image(id):
 @app.route("/saved_art", methods=['GET'])
 @protected
 def saved_art():
-    print(user.get_saved(session['userid']))
-    saved = []
-    for art in user.get_saved(session['userid'])
-        saved.append(art)
-    return render_template("saved_art.html", title = "Saved Art", link=saved)
+    db = sqlite3.connect("data/artpi.db")
+    c = db.cursor()
+    c.execute("SELECT * FROM art WHERE userid={}".format(session['userid']))
+    fetched = c.fetchall()
+    artid = []
+    for art in fetched:
+        artid.append(art[1])
+    print(artid)
+    return render_template("saved_art.html", title = "Saved Art")
 
 if __name__ == "__main__":
     # cache.build()

@@ -16,7 +16,7 @@ from .builder import builder
 def inituser(): pass
 
 @builder.execute(err_type = sqlite3.Error, command=
-'CREATE TABLE IF NOT EXISTS art (userid INTEGER PRIMARY KEY, artid INTEGER);')
+'CREATE TABLE IF NOT EXISTS art (userid INTEGER, artid INTEGER);')
 def initart(): pass
 
 @builder.execute(err_type = sqlite3.Error, command=
@@ -44,6 +44,7 @@ def num_comments(artid): pass
 
 @builder.execute(err_type = IndexError, command = 'SELECT artid FROM art WHERE userid=?;')
 def get_saved(id): pass
+
 
 def get_comments(artid):
     try:

@@ -244,3 +244,11 @@ ericL -- 2019-11-27 08:30
 kelvinN -- 2019-11-27 19:43
   - started working on save feature that allows users to bookmark art pieces
   - TODO: add next/previous page of results in search; add cards to saved_art
+
+kelvinN -- 2019-11-27 20:16
+  - fixed 'UNIQUE constraint failed' error
+  - TODO: fix duplicate art in saved_art; fix/add css when saving
+
+kelvinN -- 2019-11-27 21:12
+  - search now returns all art saved by currently logged in user
+  - TODO: implement returned art into saved_art.html
