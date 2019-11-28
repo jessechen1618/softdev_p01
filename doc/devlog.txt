@@ -252,3 +252,6 @@ kelvinN -- 2019-11-27 20:16
 kelvinN -- 2019-11-27 21:12
   - search now returns all art saved by currently logged in user
   - TODO: implement returned art into saved_art.html
+
+kelvinN -- 2019-11-27 21:19
+  - now removes duplicate saved arts

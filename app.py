@@ -226,10 +226,11 @@ def saved_art():
     c = db.cursor()
     c.execute("SELECT * FROM art WHERE userid={}".format(session['userid']))
     fetched = c.fetchall()
-    artid = []
+    artids = []
     for art in fetched:
-        artid.append(art[1])
-    print(artid)
+        artids.append(art[1])
+    artids = list(dict.fromkeys(artids))
+    print(artids)
     return render_template("saved_art.html", title = "Saved Art")
 
 if __name__ == "__main__":
