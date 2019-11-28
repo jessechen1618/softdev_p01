@@ -33,7 +33,6 @@
         <!-- info section -->
         <div class="col-sm">
             <h2 class="bg-light">Artist: {{artist}} <br></h2>
-
             <div>
                 <b>Artist bio:</b> {{ artistDisplayBio }} <br>
                 <b>Year published:</b> {{ objectEndDate }} <br>
@@ -73,13 +72,15 @@
         </div>
     </div>
 </div>
+
 <!-- post comment -->
 <div class="contatiner p-5 bg-light">
     <form method="POST" action="/image/{{id}}">
         <div class="form-group">
             <label>Share Your thoughts</label>
             <textarea class="form-control" name="content" rows="3"></textarea>
-            <button class="button" type="submit">Comment</button>
+            <button class="button" name="send" type="submit" value="com">Comment</button>
+            <button class="button" name="send" type="submit" value="save">Save</button>
         </div>
     </form>
 </div>

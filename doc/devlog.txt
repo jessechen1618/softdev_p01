@@ -240,3 +240,7 @@ davidX -- 2019-11-27 08:28
 
 ericL -- 2019-11-27 08:30
 	- style style style
+
+kelvinN -- 2019-11-27 19:43
+  - started working on save feature that allows users to bookmark art pieces
+  - TODO: add next/previous page of results in search; add cards to saved_art

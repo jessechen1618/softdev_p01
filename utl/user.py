@@ -4,12 +4,12 @@ SoftDev1 pd1
 P1 ArRESTed Development
 '''
 
-import sqlite3 
+import sqlite3
 import datetime
-from .builder import builder 
+from .builder import builder
 
 @builder.execute(err_type = sqlite3.Error,
-    command = '''CREATE TABLE IF NOT EXISTS users ( 
+    command = '''CREATE TABLE IF NOT EXISTS users (
                 userid INTEGER PRIMARY KEY AUTOINCREMENT,
                 username TEXT UNIQUE CHECK (length(username) > 0),
                 password TEXT CHECK (length(password) > 0));''')
@@ -17,15 +17,15 @@ def inituser(): pass
 
 @builder.execute(err_type = sqlite3.Error, command=
 'CREATE TABLE IF NOT EXISTS art (userid INTEGER PRIMARY KEY, artid INTEGER);')
-def initart(): pass 
+def initart(): pass
 
-@builder.execute(err_type = sqlite3.Error, command= 
+@builder.execute(err_type = sqlite3.Error, command=
 '''CREATE TABLE IF NOT EXISTS comments(
-    commentid INTEGER PRIMARY KEY AUTOINCREMENT, 
-    userid INTEGER, artid INTEGER, 
-    content TEXT CHECK (length(content) > 0), 
+    commentid INTEGER PRIMARY KEY AUTOINCREMENT,
+    userid INTEGER, artid INTEGER,
+    content TEXT CHECK (length(content) > 0),
     timestamp BLOB);''')
-def initcomment(): pass 
+def initcomment(): pass
 
 @builder.execute(err_type = sqlite3.Error, command = 'INSERT INTO users(username, password) VALUES (?,?);')
 def create(un, pw): pass
@@ -34,13 +34,16 @@ def create(un, pw): pass
 def get_id(un): pass
 
 @builder.execute(err_type = IndexError, command = 'SELECT username FROM users WHERE userid=?;')
-def get_un(userid): pass 
+def get_un(userid): pass
 
 @builder.execute(err_type = IndexError, command = 'SELECT password FROM users WHERE username=?;')
 def get_pw(un): pass
 
 @builder.execute(err_type = IndexError, command = 'SELECT COUNT(*) FROM comments where artid=?;')
-def num_comments(artid): pass 
+def num_comments(artid): pass
+
+@builder.execute(err_type = IndexError, command = 'SELECT artid FROM art WHERE userid=?;')
+def get_saved(id): pass
 
 def get_comments(artid):
     try:
@@ -64,7 +67,7 @@ def comment(userid, artid, content, datetime): pass
 def set_pw(npw, userid): pass
 
 @builder.execute(err_type = sqlite3.Error, command = 'INSERT INTO art(userid, artid) VALUES (?,?);')
-def save(userid, artid): pass 
+def save(userid, artid): pass
 
 def init():
     inituser()

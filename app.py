@@ -87,10 +87,6 @@ def logout():
 @protected
 def home(): return render_template("home.html", title = "Home", cache = cache.get())
 
-@app.route("/saved_art", methods=['GET'])
-@protected
-def saved_art(): return render_template("saved_art.html", title = "Saved Art")
-
 def results(searchtype, data, entered):
     images, artTitle, name, ids = list(), list(), list(), list()
     count = 0
@@ -209,13 +205,28 @@ def image(id):
             classification=metCol["classification"],
             repository=metCol["repository"]
             )
+
     if (request.method == 'POST'):
-        if(request.form['content'] == '' or request.form['content'].isspace()): flash("Please enter some text", 'error')
+        if request.form['send'] == 'save':
+            user.save(session['userid'], id)
+            flash("Saved!")
+            return redirect(url_for("image", id=id))
         else:
-            if(user.comment(session['userid'], id, request.form['content'], datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))):
-                pass
-            else: flash("Could not make comment", 'error')
-        return redirect(url_for("image", id=id))
+            if(request.form['content'] == '' or request.form['content'].isspace()): flash("Please enter some text", 'error')
+            else:
+                if(user.comment(session['userid'], id, request.form['content'], datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))):
+                    pass
+                else: flash("Could not make comment", 'error')
+            return redirect(url_for("image", id=id))
+
+@app.route("/saved_art", methods=['GET'])
+@protected
+def saved_art():
+    print(user.get_saved(session['userid']))
+    saved = []
+    for art in user.get_saved(session['userid'])
+        saved.append(art)
+    return render_template("saved_art.html", title = "Saved Art", link=saved)
 
 if __name__ == "__main__":
     # cache.build()
