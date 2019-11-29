@@ -258,3 +258,10 @@ kelvinN -- 2019-11-27 21:19
 kelvinN -- 2019-11-28 15:25
   - added cards for art saved in saved_art
   - TODO: add 'remove a saved art' feature
+
+ericL -- 2019-11-29 03:58
+	- add remove art feature 
+	- more styling for buttons 
+	- reorganize database queries 
+	- update readme
+	- TODO: add remove art on saved image page card 

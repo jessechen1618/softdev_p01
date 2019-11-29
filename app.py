@@ -178,7 +178,7 @@ def image(id):
 
         #print(address)
         address = urllib.parse.quote(address)
-        imageurl = "https://www.mapquestapi.com/staticmap/v5/map?key=GN6wCdut6eE2QkB8ATz12lMHJV8tvVD5&center={}".format(address)
+        imageurl = f"https://www.mapquestapi.com/staticmap/v5/map?key=GN6wCdut6eE2QkB8ATz12lMHJV8tvVD5&center={address}"
         #print(address)
         #print(imageurl)
 
@@ -191,6 +191,7 @@ def image(id):
         return render_template(
             "image.html",
             id=id,
+            is_saved = user.is_saved(session['userid'],id) > 0,
             image=metCol["primaryImage"],
             title=metCol["title"],
             artist=metCol["artistDisplayName"],
@@ -209,9 +210,13 @@ def image(id):
             )
 
     if (request.method == 'POST'):
-        if request.form['send'] == 'save':
+        if request.form['save'] == 'save':
             user.save(session['userid'], id)
-            flash("Saved!")
+            flash("Saved to your collection!", 'success')
+            return redirect(url_for("image", id=id))
+        elif request.form['save'] == 'unsave':
+            user.unsave(session['userid'], id)
+            flash("Deleted from your collection!", 'success')
             return redirect(url_for("image", id=id))
         else:
             if(request.form['content'] == '' or request.form['content'].isspace()): flash("Please enter some text", 'error')
@@ -224,17 +229,10 @@ def image(id):
 @app.route("/saved_art", methods=['GET'])
 @protected
 def saved_art():
-    db = sqlite3.connect("data/artpi.db")
-    c = db.cursor()
-    c.execute("SELECT * FROM art WHERE userid={}".format(session['userid']))
-    fetched = c.fetchall()
-    artids = []
-    for art in fetched:
-        artids.append(art[1])
-    artids = list(dict.fromkeys(artids))
-    print(artids)
+    artids = user.get_saved(session['userid'])
     images, artTitle, name, ids = results('saved', artids, '')
     return render_template("saved_art.html", title = "Saved Art", info=zip(images,artTitle,name,ids))
+
 
 if __name__ == "__main__":
     # cache.build()

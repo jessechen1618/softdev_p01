@@ -45,3 +45,11 @@ Run the following line in your virtual environment
 ```
 pip install -r doc/requirements.txt
 ```
+
+### Running
+Run the following line in your virtual environment
+```
+python app.py
+```
+
+Open a browser and head to http://127.0.0.1:5000/ 

@@ -48,4 +48,4 @@ def get():
         output = [list(c.fetchmany()[0]) for image in range(0, size())]
         db.close()
         return output
-    except:return None
+    except: return None

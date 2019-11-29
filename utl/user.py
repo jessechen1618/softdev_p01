@@ -42,9 +42,24 @@ def get_pw(un): pass
 @builder.execute(err_type = IndexError, command = 'SELECT COUNT(*) FROM comments where artid=?;')
 def num_comments(artid): pass
 
-@builder.execute(err_type = IndexError, command = 'SELECT artid FROM art WHERE userid=?;')
-def get_saved(id): pass
+@builder.execute(err_type = IndexError, command = 'SELECT COUNT(1) FROM art WHERE userid=? AND artid=?;')
+def is_saved(userid, artid): pass
 
+@builder.execute(err_type = sqlite3.Error, command = 'DELETE FROM art WHERE userid=? AND artid=?;')
+def unsave(userid, artid): pass
+
+def get_saved(userid): 
+    try:
+        artids = list()
+        db = sqlite3.connect("data/artpi.db")
+        c = db.cursor()
+        c.execute(f"SELECT * FROM art WHERE userid=?", (userid,))
+        fetched = c.fetchall()
+        artids = [art[1] for art in fetched]
+        return artids
+    except sqlite3.Error as error:
+        print(error)
+        return None
 
 def get_comments(artid):
     try:
