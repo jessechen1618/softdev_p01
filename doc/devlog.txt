@@ -179,7 +179,7 @@ davidX -- 2019-11-24 23:56
     - added formatting for location on image page
     - removed calls to imagga temporarily
 
-chenJ -- 2019-11-25 08:07
+jesseC -- 2019-11-25 08:07
 	- home stretch plan (see below)
 
 kelvinN -- 2019-11-25 08:26
@@ -229,7 +229,7 @@ davidX -- 2019-11-26 22:23
 davidX -- 2019-11-27 08:09
     - changed formatting of cards on home and search
 
-chenJ -- 2019-11-27 08:21
+jesseC -- 2019-11-27 08:21
     - finished curation list, which I worked on for the past few days
     - 5 selected pieces of art for roughly each genre over time
     - If we have time later, I'll add descriptions and explanations of each genre to help the user understand what they are looking at, in case they forgot their Art Appreciation notes
@@ -259,26 +259,29 @@ kelvinN -- 2019-11-28 15:25
   - TODO: add 'remove a saved art' feature
 
 ericL -- 2019-11-29 03:58
-	- add remove art feature 
-	- more styling for buttons 
-	- reorganize database queries 
+	- add remove art feature
+	- more styling for buttons
+	- reorganize database queries
 	- update readme
-	- TODO: add remove art on saved image page card 
+	- TODO: add remove art on saved image page card
 
 ericL -- 2019-11-30 19:01
-	- scratch previous TODO 
-	- reformatting files for convention and clarity 
+	- scratch previous TODO
+	- reformatting files for convention and clarity
 	- add caching tab for admin
 
 ericL -- 2019-11-30 20:24
-	- overhaul caching process 
-	- add preselected collections to home page 
-	- fix image clipping on image pages 
-	- TODO: add links to homepage for easier navigation throughout collections 
-	- TODO: add ability to delete from cache 
-	- TODO: add ability to add in bulk 
+	- overhaul caching process
+	- add preselected collections to home page
+	- fix image clipping on image pages
+	- TODO: add links to homepage for easier navigation throughout collections
+	- TODO: add ability to delete from cache
+	- TODO: add ability to add in bulk
 
 ericL -- 2019-11-30 21:06
-	- implement smooth scrolling 
-	- implement back to top button 
-	- add links to homepage for easier navigation 
+	- implement smooth scrolling
+	- implement back to top button
+	- add links to homepage for easier navigation
+
+kelvinN -- 2019-12-1 13:40
+  - changed chenJ to jesseC in devlog
