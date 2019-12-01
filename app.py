@@ -94,7 +94,18 @@ def logout():
 
 @app.route('/home', methods=['GET'])
 @protected
-def home(): return render_template('home.html', title="Home", cache=cache.get())
+def home():
+    collection = dict()
+    display = cache.get()
+    for art in display:
+        if not art[1] in collection.keys():
+            collection[art[1]] = list()
+        collection[art[1]].append(art)
+    return render_template(
+        'home.html',
+        title="Home",
+        cache=collection
+    )
 
 
 def results(searchtype, data, entered):
@@ -177,10 +188,25 @@ def settings():
 @app.route('/cache', methods=['GET', 'POST'])
 @protected
 def caching():
-    return render_template(
-        'cache.html',
-        title="Cache"
-    )
+    if(request.method == 'GET'):
+        return render_template('cache.html', title="Cache")
+    else:
+        if request.form['submit'] == 'add':
+            id = request.form['add']
+            data = query.data(
+                f'https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}')
+            if data['artistDisplayName'] == '':
+                data['artistDisplayName'] = "Unknown Artist"
+            if(cache.add_image(id, request.form['collection'], data['title'], data['artistDisplayName'], data['primaryImage'])):
+                flash("Successfully added art to cache", 'success')
+            else:
+                flash("Could not add art to cache", 'error')
+        if request.form['submit'] == 'clear':
+            if(cache.clear()):
+                flash("Successfully cleared cache", 'success')
+            else:
+                flash("Could not clear cache", 'error')
+        return redirect(url_for('caching'))
 
 
 @app.route('/image/<id>', methods=['GET', 'POST'])
@@ -263,7 +289,7 @@ def saved_art():
 
 
 if __name__ == '__main__':
-    # cache.build()
+    cache.init()
     user.init()
     app.debug = True
     app.run()

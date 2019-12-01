@@ -269,3 +269,11 @@ ericL -- 2019-11-30 19:01
 	- scratch previous TODO 
 	- reformatting files for convention and clarity 
 	- add caching tab for admin
+
+ericL -- 2019-11-30 20:24
+	- overhaul caching process 
+	- add preselected collections to home page 
+	- fix image clipping on image pages 
+	- TODO: add links to homepage for easier navigation throughout collections 
+	- TODO: add ability to delete from cache 
+	- TODO: add ability to add in bulk 

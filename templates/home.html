@@ -27,9 +27,9 @@
                 <a class="nav-link" href="/settings">Settings</a>
             </li>
             {% if session['user']  == 'admin' %}
-                <li class="nav-item">
-                    <a class="nav-link" href="/cache">Cache</a>
-                </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/cache">Cache</a>
+            </li>
             {% endif %}
         </ul>
         <ul class="navbar-nav ml-auto">
@@ -46,17 +46,20 @@
 {% endblock %}
 
 {% block body %}
+{% for collection in cache.keys() %}
+<h4 class="display-6 text-center">{{collection}}</h4>
 <div class="card-columns">
-    {% for id, title, text, url in cache %}
-    <div class="card rounded" style="min-width: 250px">
-        <a href="/image/{{id}}" style="color: black">
-            <img src={{url}} class="card-img-top img-fluid">
+    {% for art in cache[collection] %}
+    <div class="card rounded" style="min-width: 300px">
+        <a href="/image/{{art[0]}}" style="color: black">
+            <img src={{art[4]}} class="card-img-top img-fluid">
             <div class="card-body">
-                <h5 class="card-title">{{title}}</h5>
-                <p class="card-text">{{text}}</p>
+                <h5 class="card-title">{{art[2]}}</h5>
+                <p class="card-text">{{art[3]}}</p>
             </div>
         </a>
     </div>
     {% endfor %}
 </div>
+{% endfor %}
 {% endblock %}
