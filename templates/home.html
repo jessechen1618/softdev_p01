@@ -5,7 +5,7 @@
 {% endblock %}
 {% block nav %}
 {{super()}}
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav id="top" class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="/home">ArtPI</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,8 +46,15 @@
 {% endblock %}
 
 {% block body %}
+<div class="text-center">
+    {% for collection in cache.keys() %}
+    <a class="px-2" href=#{{collection | replace(" ", "")}} style="text-decoration: none; color: black;"><b>{{collection}}</b></a>
+    {% endfor %}
+</div>
+<br>
+
 {% for collection in cache.keys() %}
-<h4 class="display-6 text-center">{{collection}}</h4>
+<h4 id={{collection | replace(" ", "")}} class="display-6 text-center">{{collection}}</h4>
 <div class="card-columns">
     {% for art in cache[collection] %}
     <div class="card rounded" style="min-width: 300px">
@@ -62,4 +69,10 @@
     {% endfor %}
 </div>
 {% endfor %}
+{% endblock %}
+
+{% block back %}
+<div class="bottom-right p-2">
+    <a id="back" class="btn btn-lg btn-primary" href="#top"><b>^</b></a>
+</div>
 {% endblock %}
