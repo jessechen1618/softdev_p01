@@ -8,47 +8,56 @@ import sqlite3
 import datetime
 from .builder import builder
 
-@builder.execute(err_type = sqlite3.Error,
-    command = '''CREATE TABLE IF NOT EXISTS users (
+
+@builder.execute(err_type=sqlite3.Error,
+                 command='''CREATE TABLE IF NOT EXISTS users (
                 userid INTEGER PRIMARY KEY AUTOINCREMENT,
                 username TEXT UNIQUE CHECK (length(username) > 0),
                 password TEXT CHECK (length(password) > 0));''')
 def inituser(): pass
 
-@builder.execute(err_type = sqlite3.Error, command=
-'CREATE TABLE IF NOT EXISTS art (userid INTEGER, artid INTEGER);')
+
+@builder.execute(err_type=sqlite3.Error, command='CREATE TABLE IF NOT EXISTS art (userid INTEGER, artid INTEGER);')
 def initart(): pass
 
-@builder.execute(err_type = sqlite3.Error, command=
-'''CREATE TABLE IF NOT EXISTS comments(
+
+@builder.execute(err_type=sqlite3.Error, command='''CREATE TABLE IF NOT EXISTS comments(
     commentid INTEGER PRIMARY KEY AUTOINCREMENT,
     userid INTEGER, artid INTEGER,
     content TEXT CHECK (length(content) > 0),
     timestamp BLOB);''')
 def initcomment(): pass
 
-@builder.execute(err_type = sqlite3.Error, command = 'INSERT INTO users(username, password) VALUES (?,?);')
+
+@builder.execute(err_type=sqlite3.Error, command='INSERT INTO users(username, password) VALUES (?,?);')
 def create(un, pw): pass
 
-@builder.execute(err_type = IndexError, command = 'SELECT userid FROM users WHERE username=?;')
+
+@builder.execute(err_type=IndexError, command='SELECT userid FROM users WHERE username=?;')
 def get_id(un): pass
 
-@builder.execute(err_type = IndexError, command = 'SELECT username FROM users WHERE userid=?;')
+
+@builder.execute(err_type=IndexError, command='SELECT username FROM users WHERE userid=?;')
 def get_un(userid): pass
 
-@builder.execute(err_type = IndexError, command = 'SELECT password FROM users WHERE username=?;')
+
+@builder.execute(err_type=IndexError, command='SELECT password FROM users WHERE username=?;')
 def get_pw(un): pass
 
-@builder.execute(err_type = IndexError, command = 'SELECT COUNT(*) FROM comments where artid=?;')
+
+@builder.execute(err_type=IndexError, command='SELECT COUNT(*) FROM comments where artid=?;')
 def num_comments(artid): pass
 
-@builder.execute(err_type = IndexError, command = 'SELECT COUNT(1) FROM art WHERE userid=? AND artid=?;')
+
+@builder.execute(err_type=IndexError, command='SELECT COUNT(1) FROM art WHERE userid=? AND artid=?;')
 def is_saved(userid, artid): pass
 
-@builder.execute(err_type = sqlite3.Error, command = 'DELETE FROM art WHERE userid=? AND artid=?;')
+
+@builder.execute(err_type=sqlite3.Error, command='DELETE FROM art WHERE userid=? AND artid=?;')
 def unsave(userid, artid): pass
 
-def get_saved(userid): 
+
+def get_saved(userid):
     try:
         artids = list()
         db = sqlite3.connect("data/artpi.db")
@@ -60,6 +69,7 @@ def get_saved(userid):
     except sqlite3.Error as error:
         print(error)
         return None
+
 
 def get_comments(artid):
     try:
@@ -76,14 +86,18 @@ def get_comments(artid):
         print(error)
         return None
 
-@builder.execute(err_type= sqlite3.Error, command= 'INSERT INTO comments(userid, artid, content, timestamp) VALUES (?,?,?,?);')
+
+@builder.execute(err_type=sqlite3.Error, command='INSERT INTO comments(userid, artid, content, timestamp) VALUES (?,?,?,?);')
 def comment(userid, artid, content, datetime): pass
 
-@builder.execute(err_type = sqlite3.Error, command = 'UPDATE users SET password=? WHERE userid=?;')
+
+@builder.execute(err_type=sqlite3.Error, command='UPDATE users SET password=? WHERE userid=?;')
 def set_pw(npw, userid): pass
 
-@builder.execute(err_type = sqlite3.Error, command = 'INSERT INTO art(userid, artid) VALUES (?,?);')
+
+@builder.execute(err_type=sqlite3.Error, command='INSERT INTO art(userid, artid) VALUES (?,?);')
 def save(userid, artid): pass
+
 
 def init():
     inituser()

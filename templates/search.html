@@ -1,48 +1,48 @@
 {% extends "home.html" %}
 
 {% block body %}
-<h4 class="text-center"> The works of art available to be displayed are limited to what is in the Met Museum. </h4> <br>
+<h4 class="text-center"> The works of art available to be displayed are limited to what is in the Met Museum. </h4>
 <h6 class="text-center"> Note: Loading result will be slow, please be patient </h6>
-<form method="POST" action="/search">
-  <div class="form-group">
-    <input type="text" name="search" class="form-control">
+<br>
+<center>
+  <form method="POST" action="/search">
+    Search by:
+    <div class="custom-control custom-radio custom-control-inline">
+      <input type="radio" id="customRadioInline1" name="searchtype" class="custom-control-input" value="keyword"
+        checked>
+      <label class="custom-control-label" for="customRadioInline1">Keyword</label>
+    </div>
+    <div class="custom-control custom-radio custom-control-inline">
+      <input type="radio" id="customRadioInline2" name="searchtype" class="custom-control-input" value="artist">
+      <label class="custom-control-label" for="customRadioInline2">Artist</label>
+    </div>
+    <div class="custom-control custom-radio custom-control-inline">
+      <input type="radio" id="customRadioInline3" name="searchtype" class="custom-control-input" value="name">
+      <label class="custom-control-label" for="customRadioInline3">Name</label>
+    </div>
     <br>
-    <center>
-      Search by:
-        <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="customRadioInline1" name="searchtype" class="custom-control-input" value="keyword" checked>
-            <label class="custom-control-label" for="customRadioInline1">Keyword</label>
-          </div>
-        <div class="custom-control custom-radio custom-control-inline">
-          <input type="radio" id="customRadioInline2" name="searchtype" class="custom-control-input" value="artist">
-          <label class="custom-control-label" for="customRadioInline2">Artist</label>
-        </div>
-        <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="customRadioInline3" name="searchtype" class="custom-control-input" value="name">
-            <label class="custom-control-label" for="customRadioInline3">Name</label>
-          </div>
-          <br>
-          <br>
-    <button type="submit" name="submit" class="btn btn-success">Search</button>
-  </center>
-  </div>
-
-</form>
+    <br>
+    <div class="form-group">
+      <input type="text" name="search" class="form-control">
+      <br>
+      <button type="submit" name="submit" class="btn btn-success">Search</button>
+    </div>
+  </form>
+</center>
 <br>
 
 <div class="card-columns">
-    {% for link,title,artist,id in info %}
-        <div class="card rounded" style="min-width: 250px">
-            <a href="/image/{{id}}" style="color:black">
-                <img src={{link}} class="card-img-top img-fluid">
-                <div class="card-body">
-                    <h5 class="card-title">{{title}}</h5>
-                    <p class="card-text">{{artist}}</p>
-                </div>
-            </a>
-        </div>
-    {% endfor %}
+  {% for link,title,artist,id in info %}
+  <div class="card rounded" style="min-width: 250px">
+    <a href="/image/{{id}}" style="color:black">
+      <img src={{link}} class="card-img-top img-fluid">
+      <div class="card-body">
+        <h5 class="card-title">{{title}}</h5>
+        <p class="card-text">{{artist}}</p>
+      </div>
+    </a>
+  </div>
+  {% endfor %}
 </div>
-
 
 {% endblock %}

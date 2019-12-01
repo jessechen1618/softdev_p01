@@ -1,7 +1,6 @@
 put me to REST - Jesse "McCree" Chen, Kelvin Ng, Eric "Morty" Lau, David Xiedeng
 SoftDev1 pd1
 P01 ArRESTed Development
-2019-11-17
 DEVLOG
 
 ericL -- 2019-11-17 07:17
@@ -265,3 +264,8 @@ ericL -- 2019-11-29 03:58
 	- reorganize database queries 
 	- update readme
 	- TODO: add remove art on saved image page card 
+
+ericL -- 2019-11-30 19:01
+	- scratch previous TODO 
+	- reformatting files for convention and clarity 
+	- add caching tab for admin
