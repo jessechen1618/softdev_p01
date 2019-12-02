@@ -261,15 +261,14 @@ def image(id):
         )
 
     if (request.method == 'POST'):
-        if request.form['save'] == 'save':
-            user.save(session['userid'], id)
-            flash("Saved to your collection!", 'success')
-            return redirect(url_for('image', id=id))
-        elif request.form['save'] == 'unsave':
-            user.unsave(session['userid'], id)
-            flash("Deleted from your collection!", 'success')
-            return redirect(url_for('image', id=id))
-        else:
+        if 'save' in request.form:
+            if request.form['save'] == 'save':
+                user.save(session['userid'], id)
+                flash("Saved to your collection!", 'success')
+            elif request.form['save'] == 'unsave':
+                user.unsave(session['userid'], id)
+                flash("Deleted from your collection!", 'success')
+        elif request.form['send'] == 'com':
             if(request.form['content'] == '' or request.form['content'].isspace()):
                 flash("Please enter some text", 'error')
             else:
@@ -277,7 +276,7 @@ def image(id):
                     pass
                 else:
                     flash("Could not make comment", 'error')
-            return redirect(url_for('image', id=id))
+        return redirect(url_for('image', id=id))
 
 
 @app.route('/saved_art', methods=['GET'])
