@@ -291,3 +291,6 @@ ericL -- 2019-12-02 08:31
 
 kelvinN -- 2019-12-02 08:32
   - removed duplicate saved art
+
+davidX -- 2019-12-02 08:35
+    - tags now search when clicked
