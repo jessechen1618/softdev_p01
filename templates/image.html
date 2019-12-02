@@ -40,7 +40,10 @@
                 <b>Classification:</b> {{ classification }} <br>
                 <b>Currently in:</b> {{ repository }} <br>
                 {% for tag in tags %}
-                    <button type="button" class="btn">#{{tag}}</button>
+                    <form method='Post' action='/search'>
+                        <input type='hidden' name="searchtype" value="name">
+                        <button type="submit" class="btn" name='search' value={{tag}}>#{{tag}}</button>
+                    </form>
                 {% endfor %}
             </div>
             <!-- color info -->
