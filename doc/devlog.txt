@@ -288,3 +288,6 @@ kelvinN -- 2019-12-1 13:40
 
 ericL -- 2019-12-02 08:31
   - fix bad request error on commenting and save art
+
+kelvinN -- 2019-12-02 08:32
+  - removed duplicate saved art
