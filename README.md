@@ -59,12 +59,27 @@ pip install -r doc/requirements.txt
 
 ### Launch codes
 
-Open app.py and add your MapQuest API key and your Imagga Authorization Header.
+#### MapQuest
 
-```python
-MAPQUEST_API_KEY = "" # INSERT MAPQUEST API KEY HERE
-IMAGGA_AUTH = "" # INSERT IMAGGA AUTHORIZATION HEADER HERE
-```
+- Head over to [MapQuest](https://developer.mapquest.com/)
+- Click "Get your Free API Key"
+- Register an account
+- You should now be on a screen with the header "Manage Keys"
+- Expand the "My Application" tab
+- Copy the key labeled as "Consumer Key"
+- Open `app.py` and paste your MapQuest API Key as the value of the variable
+- `MAPQUEST_API_KEY = ''  # INSERT MAPQUEST API KEY HERE`
+
+#### Imagga
+
+- Head over to [Imagga]("https://imagga.com/")
+- Click "Get a Free API Key"
+- Register an account
+- You should now be on your User Dashboard
+- Under the section labeled "API Details", there is a row labeled "Authorization"
+- Copy the Authorization header
+- Open `app.py` and paste your header as the value of the variable.
+- `IMAGGA_AUTH = '' # INSERT IMAGGA AUTHORIZATION HEADER HERE`
 
 ### Running
 

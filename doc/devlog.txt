@@ -303,3 +303,6 @@ ericL -- 2019-12-03 02:49
 
 ericL -- 2019-12-03 03:40
 	- add protection against missing api keys and authorization
+
+ericL -- 2019-12-03 04:05
+	- add instructions to procure launch codes

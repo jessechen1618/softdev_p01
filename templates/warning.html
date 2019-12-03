@@ -5,28 +5,45 @@
 {% endblock %}
 
 {% block body %}
-{{map}}
-{{imagga}}
 {% if map %}
-{{map}}
 <b>You are missing a MapQuest API Key</b>
 <br>
-Open <code>app.py</code> and enter your MapQuest API Key.
-<br>
-<div class="bg-light p-5">
-    <code>MAPQUEST_API_KEY = ''  # INSERT MAPQUEST API KEY HERE</code>
-</div>
+Don't have an API key?
+<ol>
+    <li>Head over to <a href="https://developer.mapquest.com/">MapQuest</a></li>
+    <li>Click "Get your Free API Key"</li>
+    <li>Register an account</li>
+    <li>You should now be on a screen with the header "Manage Keys"</li>
+    <li>Expand the "My Application" tab</li>
+    <li>Copy the key labeled as "Consumer Key" </li>
+    <li>Open <code>app.py</code> and paste your MapQuest API Key as the value of the variable.</li>
+    <li>
+    <div class="bg-light p-3">
+        <code>MAPQUEST_API_KEY = ''  # INSERT MAPQUEST API KEY HERE</code>
+    </div>
+    </li>
+</ol>
 {% endif %}
+
 <br>
 {% if imagga %}
-{{imagga}}
 <b>You are missing an Imagga Authorization Header</b>
 <br>
-Open <code>app.py</code> and enter your Imagga Authorization Header.
-<br>
-<div class="bg-light p-5">
-    <code>IMAGGA_AUTH = ''  # INSERT IMAGGA AUTHORIZATION HEADER HERE</code>
-</div>
+Don't have an API key?
+<ol>
+    <li>Head over to <a href="https://imagga.com/">Imagga</a></li>
+    <li>Click "Get a Free API Key"</li>
+    <li>Register an account</li>
+    <li>You should now be on your User Dashboard</li>
+    <li>Under the section labeled "API Details", there is a row labeled "Authorization"</li>
+    <li>Copy the Authorization header</li>
+    <li>Open <code>app.py</code> and paste your header as the value of the variable.</li>
+    <li>
+    <div class="bg-light p-3">
+        <code>IMAGGA_AUTH = '' # INSERT IMAGGA AUTHORIZATION HEADER HERE</code>
+    </div>
+    </li>
+</ol>
 {% endif %}
 {% endblock %}
 
