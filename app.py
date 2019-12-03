@@ -17,11 +17,10 @@ from utl import user, cache
 from utl.builder import builder
 from utl.query import query
 
-# MAPQUEST_API_KEY = 'GN6wCdut6eE2QkB8ATz12lMHJV8tvVD5'  # INSERT MAPQUEST API KEY HERE
-# IMAGGA_AUTH = 'Basic YWNjXzE2YWNmNWJlODE0Yzk0ODo1NzM2YzRiMmQ4NzU1NzYwNmM5MjJlMjcyYWUxOGU4Ng=='  # INSERT IMAGGA AUTHORIZATION HEADER HERE
-
-MAPQUEST_API_KEY = 'rixHLpJVcVK1wHASGBwWoCjfXopqUSoD'
-IMAGGA_AUTH = 'Basic YWNjXzBkOGQyMjRlNDk3OWFjOTo5MGZlMWU1NjQ4ZTY0MWIxM2I1OGQ2ZGRhYjllZmM1Ng=='
+with open("APIkeys.json", 'r') as read_file:
+    keys = json.load(read_file)
+MAPQUEST_API_KEY = keys["MAPQUEST_API_KEY"]
+IMAGGA_AUTH = keys["IMAGGA_AUTH"]
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)

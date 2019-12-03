@@ -67,8 +67,8 @@ pip install -r doc/requirements.txt
 - You should now be on a screen with the header "Manage Keys"
 - Expand the "My Application" tab
 - Copy the key labeled as "Consumer Key"
-- Open `app.py` and paste your MapQuest API Key as the value of the variable
-- `MAPQUEST_API_KEY = ''  # INSERT MAPQUEST API KEY HERE`
+- Open `APIkeys.json` and paste your MapQuest API Key as the value of the variable
+- `MAPQUEST_API_KEY: ''`
 
 #### Imagga
 
@@ -78,8 +78,8 @@ pip install -r doc/requirements.txt
 - You should now be on your User Dashboard
 - Under the section labeled "API Details", there is a row labeled "Authorization"
 - Copy the Authorization header
-- Open `app.py` and paste your header as the value of the variable.
-- `IMAGGA_AUTH = '' # INSERT IMAGGA AUTHORIZATION HEADER HERE`
+- Open `APIkeys.json` and paste your header as the value of the variable.
+- `IMAGGA_AUTH: ''`
 
 ### Running
 

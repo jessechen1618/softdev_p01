@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 
+{% block style %}
+{% endblock %}
+
 {% block header %}
 <h1 class="display-3 text-center p-5" style="background-color:white">{{title}}</h1>
 {% endblock %}
@@ -16,10 +19,10 @@ Don't have an API key?
     <li>You should now be on a screen with the header "Manage Keys"</li>
     <li>Expand the "My Application" tab</li>
     <li>Copy the key labeled as "Consumer Key" </li>
-    <li>Open <code>app.py</code> and paste your MapQuest API Key as the value of the variable.</li>
+    <li>Open <code>APIkeys.json</code> and paste your MapQuest API Key as the value of the variable.</li>
     <li>
     <div class="bg-light p-3">
-        <code>MAPQUEST_API_KEY = ''  # INSERT MAPQUEST API KEY HERE</code>
+        <code>MAPQUEST_API_KEY: ''</code>
     </div>
     </li>
 </ol>
@@ -37,10 +40,10 @@ Don't have an API key?
     <li>You should now be on your User Dashboard</li>
     <li>Under the section labeled "API Details", there is a row labeled "Authorization"</li>
     <li>Copy the Authorization header</li>
-    <li>Open <code>app.py</code> and paste your header as the value of the variable.</li>
+    <li>Open <code>APIkeys.json</code> and paste your header as the value of the variable.</li>
     <li>
     <div class="bg-light p-3">
-        <code>IMAGGA_AUTH = '' # INSERT IMAGGA AUTHORIZATION HEADER HERE</code>
+        <code>IMAGGA_AUTH: ''</code>
     </div>
     </li>
 </ol>
