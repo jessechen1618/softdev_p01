@@ -14,7 +14,7 @@ from .query import query
                 id INTEGER PRIMARY KEY,
                 collection TEXT NOT NULL CHECK (length(collection) > 0),
                 title TEXT NOT NULL UNIQUE CHECK (length(title) > 0),
-                artist TEXT NOT NULL CHECK (length(artist) > 0), 
+                artist TEXT NOT NULL CHECK (length(artist) > 0),
                 image TEXT NOT NULL UNIQUE CHECK(length(image) > 0)
                 );''')
 def init(): pass
@@ -23,15 +23,15 @@ def init(): pass
 @builder.execute(err_type=sqlite3.Error, command='DELETE FROM cache;')
 def clear(): pass
 
-
+# adds artwork to cache
 @builder.execute(err_type=sqlite3.Error, command='INSERT INTO cache(id, collection, title, artist, image) VALUES(?,?,?,?,?);')
 def add_image(id, collection, title, artist, image): pass
 
-
+# gets size of cache
 @builder.execute(err_type=IndexError, command='SELECT COUNT(*) FROM cache;')
 def size(): pass
 
-
+# gets cached artworks
 def get():
     try:
         db = sqlite3.connect("data/artpi.db")

@@ -8,7 +8,7 @@ import sqlite3
 import datetime
 from .builder import builder
 
-
+# create table for user accounts
 @builder.execute(err_type=sqlite3.Error,
                  command='''CREATE TABLE IF NOT EXISTS users (
                 userid INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -16,11 +16,11 @@ from .builder import builder
                 password TEXT CHECK (length(password) > 0));''')
 def inituser(): pass
 
-
+# creates table for artworks
 @builder.execute(err_type=sqlite3.Error, command='CREATE TABLE IF NOT EXISTS art (userid INTEGER, artid INTEGER);')
 def initart(): pass
 
-
+# creates table for comments
 @builder.execute(err_type=sqlite3.Error, command='''CREATE TABLE IF NOT EXISTS comments(
     commentid INTEGER PRIMARY KEY AUTOINCREMENT,
     userid INTEGER, artid INTEGER,
@@ -28,35 +28,35 @@ def initart(): pass
     timestamp BLOB);''')
 def initcomment(): pass
 
-
+# insert username and password into db when creating new account
 @builder.execute(err_type=sqlite3.Error, command='INSERT INTO users(username, password) VALUES (?,?);')
 def create(un, pw): pass
 
-
+# returns userid
 @builder.execute(err_type=IndexError, command='SELECT userid FROM users WHERE username=?;')
 def get_id(un): pass
 
-
+# returns username
 @builder.execute(err_type=IndexError, command='SELECT username FROM users WHERE userid=?;')
 def get_un(userid): pass
 
-
+# returns password
 @builder.execute(err_type=IndexError, command='SELECT password FROM users WHERE username=?;')
 def get_pw(un): pass
 
-
+# returns number of comments
 @builder.execute(err_type=IndexError, command='SELECT COUNT(*) FROM comments where artid=?;')
 def num_comments(artid): pass
 
-
+# checks if artwork is already saved
 @builder.execute(err_type=IndexError, command='SELECT COUNT(1) FROM art WHERE userid=? AND artid=?;')
 def is_saved(userid, artid): pass
 
-
+# removes saved art
 @builder.execute(err_type=sqlite3.Error, command='DELETE FROM art WHERE userid=? AND artid=?;')
 def unsave(userid, artid): pass
 
-
+# returns saved art for a specific user
 def get_saved(userid):
     try:
         artids = list()
@@ -70,7 +70,7 @@ def get_saved(userid):
         print(error)
         return None
 
-
+# returns comments for a specific artwork
 def get_comments(artid):
     try:
         comments = list()
@@ -86,15 +86,15 @@ def get_comments(artid):
         print(error)
         return None
 
-
+# inserts comment made into db
 @builder.execute(err_type=sqlite3.Error, command='INSERT INTO comments(userid, artid, content, timestamp) VALUES (?,?,?,?);')
 def comment(userid, artid, content, datetime): pass
 
-
+# updates password
 @builder.execute(err_type=sqlite3.Error, command='UPDATE users SET password=? WHERE userid=?;')
 def set_pw(npw, userid): pass
 
-
+# saves artwork
 @builder.execute(err_type=sqlite3.Error, command='INSERT INTO art(userid, artid) VALUES (?,?);')
 def save(userid, artid): pass
 

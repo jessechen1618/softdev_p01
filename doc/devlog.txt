@@ -294,3 +294,6 @@ kelvinN -- 2019-12-02 08:32
 
 davidX -- 2019-12-02 08:35
     - tags now search when clicked
+
+kelvinN -- 2019-12-02 20:45
+  - added comments in code

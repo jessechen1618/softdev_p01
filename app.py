@@ -31,6 +31,7 @@ def protected(f):
             # if logged in, continue with expected function
             return f(*args, **kwargs)
         else:
+            # redirect to login page if not
             flash("You are not logged in", 'error')
             return redirect(url_for('login'))
     return wrapper
@@ -38,6 +39,7 @@ def protected(f):
 
 @app.route('/', methods=['GET'])
 def root():
+    # redirects to either home or login page depending on whether or not the user is logged in
     if 'user' in session:
         flash(f"Hello {session['user']}!", 'success')
         return redirect(url_for('home'))
@@ -51,6 +53,7 @@ def register():
         return render_template('register.html', title="Register")
 
     elif(request.method == 'POST'):
+        # checks if username exists and if passwords match. if yes, create account
         if(request.form['username'] == '' or request.form['username'].isspace()):
             flash("Fill out username", 'error')
         elif(request.form['password'] == '' or request.form['password'].isspace()):
@@ -68,12 +71,14 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if(request.method == 'GET'):
+        # checks session
         if 'user' in session:
             return redirect(url_for('home'))
         else:
             return render_template('login.html', title="Login")
 
     elif(request.method == 'POST'):
+        # checks if account esists and creates session if successful login
         if(user.get_pw(request.form['username']) == request.form['password']):
             session['userid'] = user.get_id(request.form['username'])
             session['user'] = request.form['username']
@@ -86,6 +91,7 @@ def login():
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
+    # removes session when logging out
     session.pop('user', None)
     session.pop('userid', None)
     flash("You have successfully logged out", 'success')
@@ -95,6 +101,7 @@ def logout():
 @app.route('/home', methods=['GET'])
 @protected
 def home():
+    # gets and displayed cached art in homepage
     collection = dict()
     display = cache.get()
     for art in display:
@@ -109,14 +116,17 @@ def home():
 
 
 def results(searchtype, data, entered):
+    # gets and returns information on artworks (based on the results found when something is searched)
     images, artTitle, name, ids = list(), list(), list(), list()
     count = 0
     for id in data:
         if count == 10:
-            break  # displaying less results for now
+            break
         data = query.data(
             f'https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}')
         toAdd = True
+
+        # checks wheter the user searched by name, artist, or keyword (which returns all results), and returns information accordingly
         if searchtype == 'name':
             if entered.lower() in data['title'].lower():
                 pass
@@ -135,7 +145,7 @@ def results(searchtype, data, entered):
             name.append(data['artistDisplayName'])
             ids.append(id)
         counter = 0
-        for names in name:
+        for names in name: # checks if artist of artwork is known
             if len(names) < 1:
                 name[counter] = "Unknown Artist"
             counter += 1
@@ -150,6 +160,7 @@ def search():
         return render_template('search.html', title="Search")
 
     elif (request.method == 'POST'):
+        # displays artwork and their info from results()
         entered = request.form['search']
         search = entered.replace(' ', '+')
         link = f'https://collectionapi.metmuseum.org/public/collection/v1/search?q={urllib.parse.quote(search)}'
@@ -172,6 +183,7 @@ def settings():
         return render_template('settings.html', title="Settings")
 
     elif (request.method == 'POST'):
+        # allows user to change password
         if(request.form['new'] == request.form['confirm']):
             if(user.get_pw(session['user']) == request.form['current']):
                 if(user.set_pw(request.form['new'], session['userid'])):
@@ -191,6 +203,7 @@ def caching():
     if(request.method == 'GET'):
         return render_template('cache.html', title="Cache")
     else:
+        # allows admin account to add/remove/clear artworks in cache (to display on homepage)
         if request.form['submit'] == 'add':
             id = request.form['add']
             data = query.data(
@@ -225,6 +238,7 @@ def image(id):
         imagga = imagga['result']['colors']['image_colors']
         colors = [image_colors['html_code'] for image_colors in imagga]
 
+        # detects if location of art created is known
         address = ''
         for part in location:
             if part != '':
@@ -233,6 +247,7 @@ def image(id):
         address = urllib.parse.quote(address)
         imageurl = f'https://www.mapquestapi.com/staticmap/v5/map?key=GN6wCdut6eE2QkB8ATz12lMHJV8tvVD5&center={address}'
 
+        # prepares comments to be displayed
         comments = []
         for comment in user.get_comments(id):
             cement = comment[3:]
@@ -262,6 +277,7 @@ def image(id):
 
     if (request.method == 'POST'):
         if 'save' in request.form:
+            # allows user to save or unsave art
             if request.form['save'] == 'save':
                 user.save(session['userid'], id)
                 flash("Saved to your collection!", 'success')
@@ -269,6 +285,7 @@ def image(id):
                 user.unsave(session['userid'], id)
                 flash("Deleted from your collection!", 'success')
         elif request.form['send'] == 'com':
+            # allows user to comment (while displaying username and time of comment)
             if(request.form['content'] == '' or request.form['content'].isspace()):
                 flash("Please enter some text", 'error')
             else:
@@ -282,6 +299,7 @@ def image(id):
 @app.route('/saved_art', methods=['GET'])
 @protected
 def saved_art():
+    # displays art that is saved by the user
     artids = user.get_saved(session['userid'])
     images, artTitle, name, ids = results('saved', artids, '')
     return render_template('saved_art.html', title="Saved Art", info=zip(images, artTitle, name, ids))
