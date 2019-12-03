@@ -300,3 +300,6 @@ kelvinN -- 2019-12-02 20:45
 
 ericL -- 2019-12-03 02:49
 	- add python docs to user module
+
+ericL -- 2019-12-03 03:40
+	- add protection against missing api keys and authorization

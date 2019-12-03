@@ -17,8 +17,8 @@ from utl import user, cache
 from utl.builder import builder
 from utl.query import query
 
-# mapquest GN6wCdut6eE2QkB8ATz12lMHJV8tvVD5
-# bitly 49758fd83aca5ad4f773441471c853dec4461543
+MAPQUEST_API_KEY = 'GN6wCdut6eE2QkB8ATz12lMHJV8tvVD5'  # INSERT MAPQUEST API KEY HERE
+IMAGGA_AUTH = 'Basic YWNjXzE2YWNmNWJlODE0Yzk0ODo1NzM2YzRiMmQ4NzU1NzYwNmM5MjJlMjcyYWUxOGU4Ng=='  # INSERT IMAGGA AUTHORIZATION HEADER HERE
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
@@ -37,7 +37,34 @@ def protected(f):
     return wrapper
 
 
+def missing_launch(f):
+    @functools.wraps(f)
+    def wrapper(*args, **kwargs):
+        if MAPQUEST_API_KEY == '' and IMAGGA_AUTH == '':
+            return redirect(url_for('warning', map=True, imagga=True))
+        elif MAPQUEST_API_KEY == '':
+            return redirect(url_for('warning', map=True, imagga=False))
+        elif IMAGGA_AUTH == '':
+            return redirect(url_for('warning', map=False, imagga=True))
+        else:
+            return f(*args, **kwargs)
+    return wrapper
+
+
+@app.route('/warning/<map>/<imagga>', methods=['GET'])
+def warning(map=False, imagga=False):
+    mapapi = True if map == 'True' else False
+    imagga_header = True if imagga == 'True' else False
+    return render_template(
+        'warning.html',
+        title="Warning",
+        map=mapapi,
+        imagga=imagga_header
+    )
+
+
 @app.route('/', methods=['GET'])
+@missing_launch
 def root():
     # redirects to either home or login page depending on whether or not the user is logged in
     if 'user' in session:
@@ -48,6 +75,7 @@ def root():
 
 
 @app.route('/register', methods=['GET', 'POST'])
+@missing_launch
 def register():
     if(request.method == 'GET'):
         return render_template('register.html', title="Register")
@@ -69,6 +97,7 @@ def register():
 
 
 @app.route('/login', methods=['GET', 'POST'])
+@missing_launch
 def login():
     if(request.method == 'GET'):
         # checks session
@@ -90,6 +119,7 @@ def login():
 
 
 @app.route('/logout', methods=['GET', 'POST'])
+@missing_launch
 def logout():
     # removes session when logging out
     session.pop('user', None)
@@ -100,6 +130,7 @@ def logout():
 
 @app.route('/home', methods=['GET'])
 @protected
+@missing_launch
 def home():
     # gets and displayed cached art in homepage
     collection = dict()
@@ -145,7 +176,7 @@ def results(searchtype, data, entered):
             name.append(data['artistDisplayName'])
             ids.append(id)
         counter = 0
-        for names in name: # checks if artist of artwork is known
+        for names in name:  # checks if artist of artwork is known
             if len(names) < 1:
                 name[counter] = "Unknown Artist"
             counter += 1
@@ -155,6 +186,7 @@ def results(searchtype, data, entered):
 
 @app.route('/search', methods=['GET', 'POST'])
 @protected
+@missing_launch
 def search():
     if (request.method == 'GET'):
         return render_template('search.html', title="Search")
@@ -178,6 +210,7 @@ def search():
 
 @app.route('/settings', methods=['GET', 'POST'])
 @protected
+@missing_launch
 def settings():
     if (request.method == 'GET'):
         return render_template('settings.html', title="Settings")
@@ -199,6 +232,7 @@ def settings():
 
 @app.route('/cache', methods=['GET', 'POST'])
 @protected
+@missing_launch
 def caching():
     if(request.method == 'GET'):
         return render_template('cache.html', title="Cache")
@@ -224,6 +258,7 @@ def caching():
 
 @app.route('/image/<id>', methods=['GET', 'POST'])
 @protected
+@missing_launch
 def image(id):
     if(request.method == 'GET'):
         # get image of artwork
@@ -234,7 +269,7 @@ def image(id):
         # get color info on image
         imageurl = metCol['primaryImage']
         imagga = query.data(
-            f'https://api.imagga.com/v2/colors?image_url={urllib.parse.quote(imageurl)}&extract_object_colors=0', headers=True)
+            f'https://api.imagga.com/v2/colors?image_url={urllib.parse.quote(imageurl)}&extract_object_colors=0', headers=True, auth=IMAGGA_AUTH)
         imagga = imagga['result']['colors']['image_colors']
         colors = [image_colors['html_code'] for image_colors in imagga]
 
@@ -245,7 +280,7 @@ def image(id):
                 address += part + ','
 
         address = urllib.parse.quote(address)
-        imageurl = f'https://www.mapquestapi.com/staticmap/v5/map?key=GN6wCdut6eE2QkB8ATz12lMHJV8tvVD5&center={address}'
+        imageurl = f'https://www.mapquestapi.com/staticmap/v5/map?key={MAPQUEST_API_KEY}&center={address}'
 
         # prepares comments to be displayed
         comments = []
@@ -298,6 +333,7 @@ def image(id):
 
 @app.route('/saved_art', methods=['GET'])
 @protected
+@missing_launch
 def saved_art():
     # displays art that is saved by the user
     artids = user.get_saved(session['userid'])

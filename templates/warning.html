@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block header %}
+<h1 class="display-3 text-center p-5" style="background-color:white">{{title}}</h1>
+{% endblock %}
+
+{% block body %}
+{{map}}
+{{imagga}}
+{% if map %}
+{{map}}
+<b>You are missing a MapQuest API Key</b>
+<br>
+Open <code>app.py</code> and enter your MapQuest API Key.
+<br>
+<div class="bg-light p-5">
+    <code>MAPQUEST_API_KEY = ''  # INSERT MAPQUEST API KEY HERE</code>
+</div>
+{% endif %}
+<br>
+{% if imagga %}
+{{imagga}}
+<b>You are missing an Imagga Authorization Header</b>
+<br>
+Open <code>app.py</code> and enter your Imagga Authorization Header.
+<br>
+<div class="bg-light p-5">
+    <code>IMAGGA_AUTH = ''  # INSERT IMAGGA AUTHORIZATION HEADER HERE</code>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block back %}
+<div class="text-center p-2">
+    <a id="back" class="btn btn-lg btn-success" href="/"><b>Refresh</b></a>
+</div>
+{% endblock %}
