@@ -72,7 +72,7 @@ pip install -r doc/requirements.txt
 
 #### Imagga
 
-- Head over to [Imagga]("https://imagga.com/")
+- Head over to [Imagga](https://imagga.com/)
 - Click "Get a Free API Key"
 - Register an account
 - You should now be on your User Dashboard

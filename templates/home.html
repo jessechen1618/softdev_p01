@@ -53,7 +53,7 @@
 </div>
 <br>
 
-{% for collection in cache.keys() %}
+{% for collection in cache %}
 <h4 id={{collection | replace(" ", "")}} class="display-6 text-center">{{collection}}</h4>
 <div class="card-columns">
     {% for art in cache[collection] %}

@@ -138,14 +138,18 @@ def home():
     # gets and displayed cached art in homepage
     collection = dict()
     display = cache.get()
+    collection['Ancient Egypt'] = list()
+    collection['Ancient Greece'] = list()
+    collection['Medieval and Gothic'] = list()
+    collection['Renaissance'] = list()
+    collection['Baroque'] = list()
+    collection['Impressionism + Post-Impressionism'] = list()
     for art in display:
-        if not art[1] in collection.keys():
-            collection[art[1]] = list()
         collection[art[1]].append(art)
     return render_template(
         'home.html',
         title="Home",
-        cache=collection
+        cache=collection,
     )
 
 
