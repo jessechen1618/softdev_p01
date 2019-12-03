@@ -297,3 +297,6 @@ davidX -- 2019-12-02 08:35
 
 kelvinN -- 2019-12-02 20:45
   - added comments in code
+
+ericL -- 2019-12-03 02:49
+	- add python docs to user module
