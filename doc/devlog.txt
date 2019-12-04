@@ -188,6 +188,7 @@ kelvinN -- 2019-11-25 08:26
 ericL -- 2019-11-25 12:48
 	- add commenting feature for each artpiece
 
+jesseC -- 2019-11-27 08:23
 HOME STRETCH PLAN
 - Save artwork [David, Kelvin]
 	- Completed by end of Thanksgiving break
@@ -312,3 +313,16 @@ ericL -- 2019-12-03 04:23
 
 davidX -- 2019-12-03 08:34
     - changed keys to read from APIkeys.json
+
+jesseC -- 2019-12-03 23:34
+	PROJECT COMPLETE!
+	+ Presentation Procedure Planned
+	+ design.pdf fully updated
+	+ initialized database with values for presentation
+	+ checked for bugs (none found as of time above)
+	+ devlog organized (see all of above)
+	+ Ready to present.
+	=====
+	Thanks for the hard work everyone. So long!
+
+
